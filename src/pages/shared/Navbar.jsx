@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import Logo from "../../assets/Logo.jpeg"
 import { HiOutlineMenu } from 'react-icons/hi';
 
@@ -59,12 +59,12 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
-        <a
+        <Link
           className="glow-btn transition duration-300 text-sm font-semibold"
-          href="/login"
+          to="/login"
         >
           Login
-        </a>
+        </Link>
       </div>
     </div>
   );
