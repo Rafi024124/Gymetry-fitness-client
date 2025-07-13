@@ -1,21 +1,93 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css"; // fixed import
+
 import SocialLogin from "../SocialLogin";
+import { AuthContext } from "../../contexts/authContext/AuthContext";
+import useAxios from "../../hooks/useAxios";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const { createUser } = useContext(AuthContext);
+  // const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Registration data:", data);
+  const axiosInstance = useAxios();
 
-    // Backend logic (e.g., API call) goes here:
+
+  const password = watch("password");
+
+  const getPasswordStrength = () => {
+    if (!password) return "";
+    const length = password.length >= 6;
+    const upper = /[A-Z]/.test(password);
+    const special = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const number = /\d/.test(password);
+
+    if (length && upper && special && number) return "Strong";
+    if (length && (upper || special || number)) return "Medium";
+    return "Weak";
+  };
+
+  const onSubmit = (data) => {
+    console.log("Form submitted!", data);
+    createUser(data.email, data.password)
+      .then(async(res) => {
+        console.log(res.user);
+
+
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          photoURL: data.photoURL,
+          role: 'user',
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString()
+        }
+        
+           console.log("Submitting user data to backend", userInfo); 
+
+        const userRes = await axiosInstance.post('/users',userInfo) 
+        console.log("Response from backend:", userRes.data);
+        
+        if(userRes.data.insertedId){
+             Swal.fire({
+          title: "Success!",
+          text: "Your account has been created successfully.",
+          icon: "success",
+          background: "#1F1F1F",
+          color: "#F2F2F2",
+          confirmButtonColor: "#A259FF",
+          confirmButtonText: "Continue",
+          customClass: {
+            title: "swal2-title",
+          },
+        });
+        }
+
+      })
+      .catch((err) => {
+        console.log(err);
+
+        // You can show error alert here if needed
+        Swal.fire({
+          title: "Error!",
+          text: err.message || "Something went wrong.",
+          icon: "error",
+          background: "#1F1F1F",
+          color: "#F2F2F2",
+          confirmButtonColor: "#A259FF",
+        });
+      });
+
+    // Backend logic (e.g., API call) goes here (commented)
     /*
     fetch('/api/register', {
       method: 'POST',
@@ -34,16 +106,13 @@ const Register = () => {
     */
 
     // For now, simulate successful registration redirect
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-[#0D0D0D] px-4">
-      <div className="mt-3 max-w-md w-full bg-[#1F1F1F]  p-8 shadow-glow rounded-2xl">
-        <div className="flex justify-center mb-6 ">
-          {/* logo placeholder */}
-          logo
-        </div>
+      <div className="mt-3 max-w-md w-full bg-[#1F1F1F] p-8 shadow-glow rounded-2xl">
+        <div className="flex justify-center mb-6 ">logo</div>
 
         <h2 className="text-3xl text-[#A259FF] font-bold mb-8 text-center neon-text">
           Create Your Account
@@ -74,8 +143,8 @@ const Register = () => {
               {...register("email", {
                 required: "Email is required",
                 pattern: {
-                  value: /^\S+@\S+$/i,
-                  message: "Please enter a valid email",
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                  message: "Please enter a valid email address",
                 },
               })}
               className="input input-bordered w-full bg-[#0D0D0D] text-[#F2F2F2]"
@@ -92,10 +161,10 @@ const Register = () => {
               placeholder="Enter your photo URL"
               {...register("photoURL", {
                 required: "Photo URL is required",
-                pattern: {
-                  value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|svg)$/i,
-                  message: "Please enter a valid image URL",
-                },
+                // pattern: {
+                //   value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|svg)$/i,
+                //   message: "Please enter a valid image URL",
+                // },
               })}
               className="input input-bordered w-full bg-[#0D0D0D] text-[#F2F2F2]"
             />
@@ -110,16 +179,49 @@ const Register = () => {
               type="password"
               placeholder="Enter your password"
               {...register("password", {
-                required: "Password is required",
+                required: true,
                 minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
+                  value: 6,
+                  message: "minLength",
+                },
+                validate: {
+                  hasUpperCase: (v) => /[A-Z]/.test(v) || "hasUpperCase",
+                  hasSpecialChar: (v) =>
+                    /[!@#$%^&*(),.?":{}|<>]/.test(v) || "hasSpecialChar",
+                  hasNumber: (v) => /\d/.test(v) || "hasNumber",
                 },
               })}
               className="input input-bordered w-full bg-[#0D0D0D] text-[#F2F2F2]"
             />
-            {errors.password && (
-              <p className="text-red-500 mt-1 text-sm">{errors.password.message}</p>
+
+            {errors.password?.type === "required" && (
+              <p className="text-red-500 text-sm">Password is required</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p className="text-red-500 text-sm">Password must be at least 6 characters</p>
+            )}
+            {errors.password?.type === "hasUpperCase" && (
+              <p className="text-red-500 text-sm">Include at least one uppercase letter</p>
+            )}
+            {errors.password?.type === "hasSpecialChar" && (
+              <p className="text-red-500 text-sm">Include at least one special character</p>
+            )}
+            {errors.password?.type === "hasNumber" && (
+              <p className="text-red-500 text-sm">Include at least one number</p>
+            )}
+
+            {password && (
+              <p
+                className={`mt-1 text-sm font-medium ${
+                  getPasswordStrength() === "Strong"
+                    ? "text-green-500"
+                    : getPasswordStrength() === "Medium"
+                    ? "text-yellow-400"
+                    : "text-red-500"
+                }`}
+              >
+                Strength: {getPasswordStrength()}
+              </p>
             )}
           </div>
 
@@ -131,7 +233,7 @@ const Register = () => {
           </button>
         </form>
 
-         <div className="divider divider-primary text-white">OR</div>
+        <div className="divider divider-primary text-white">OR</div>
 
         <div className="flex justify-center gap-6">
           <SocialLogin />
@@ -139,10 +241,7 @@ const Register = () => {
 
         <p className="mt-6 text-center text-[#A259FF]">
           Already have an account?{" "}
-          <Link
-            to="/login"
-            className="cursor-pointer hover:underline font-semibold"
-          >
+          <Link to="/login" className="cursor-pointer hover:underline font-semibold">
             Login here
           </Link>
         </p>
@@ -152,3 +251,22 @@ const Register = () => {
 };
 
 export default Register;
+
+/* 
+Optional CSS to add in your global stylesheet (e.g., index.css):
+
+.swal2-popup {
+  background: #1F1F1F !important;
+  color: #F2F2F2 !important;
+  font-family: 'YourPreferredFont', sans-serif;
+}
+
+.swal2-title {
+  color: #A259FF !important;
+}
+
+.swal2-confirm {
+  background-color: #A259FF !important;
+  color: #F2F2F2 !important;
+}
+*/

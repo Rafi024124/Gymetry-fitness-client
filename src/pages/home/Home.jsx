@@ -4,11 +4,12 @@ import Footer from '../shared/Footer';
 import Banner from './banner/Banner';
 import FeaturedSection from './featuredSection/FeaturedSection';
 import AboutSection from './aboutSection/AboutSection';
+import { Outlet } from 'react-router';
 
 const Home = () => {
     return (
         <div>
-           <Navbar></Navbar>  
+          <Navbar></Navbar>
            <Banner></Banner>
            <FeaturedSection></FeaturedSection>
            <AboutSection></AboutSection>

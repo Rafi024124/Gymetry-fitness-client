@@ -71,3 +71,21 @@ span::after {
   text-shadow: 0 0 6px #a259ff, 0 0 12px #a259ff;
   filter: brightness(1.2);
 }
+
+
+/* Add this to your global CSS or styles.css */
+
+.swal2-popup {
+  background: #1F1F1F !important;
+  color: #F2F2F2 !important;
+  font-family: 'YourPreferredFont', sans-serif;
+}
+
+.swal2-title {
+  color: #A259FF !important;
+}
+
+.swal2-confirm {
+  background-color: #A259FF !important;
+  color: #F2F2F2 !important;
+}

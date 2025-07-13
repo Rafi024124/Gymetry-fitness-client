@@ -7,7 +7,8 @@ import 'swiper/css/pagination';
 
 import Banner1 from '../../../assets/Banner1.jpg';
 import Banner2 from '../../../assets/Banner2.jpg';
-import Banner3 from '../../../assets/Banner3.jpg';
+import Banner4 from '../../../assets/Banner4.jpg';
+import BeATrainerButton from '../../../buttons/BeATrainerButton';
 
 const Banner = () => {
   return (
@@ -27,44 +28,68 @@ const Banner = () => {
       alt="Banner 1"
       className="w-full h-full object-cover object-top"
     />
-    <div className="absolute inset-0 flex items-center justify-start bg-black/30 px-6 sm:px-16">
-      <div className="max-w-2xl opacity-30">
-        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-snug tracking-wide animate-slide-in-left">
+    <div className="absolute inset-0 flex flex-col items-center  bg-black/30 px-6 sm:px-16">
+      <div className="max-w-2xl opacity-0">
+        <h2 className="w-[50%] text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-snug tracking-wide animate-slide-in-left">
           Push yourself, because no one else is going to do it for you.
         </h2>
         <p className="text-sm sm:text-base text-[#ccc] font-medium">
           Dedication, persistence, and grit – that's the Gymetry way.
         </p>
+       
       </div>
+       <BeATrainerButton></BeATrainerButton>
     </div>
   </div>
 </SwiperSlide>
 
-        <SwiperSlide>
-          <img src={Banner2} alt="Banner 2" className="w-full h-full object-cover" />
-        </SwiperSlide>
-        <SwiperSlide>
-  <div className="relative w-full h-full">
-    <img
-      src={Banner3}
-      alt="Banner 3"
-      className="w-full h-full object-cover"
-    />
+    <SwiperSlide>
+  <div className="relative w-full h-full grid grid-cols-1 md:grid-cols-3">
+
+    {/* Middle Image with no tint */}
+    <div className="relative">
+      <img
+        src={Banner4}
+        alt="Banner"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-[#00000022]"></div>
+    </div>
+    {/* Left Image with a purple tint */}
+    <div className="relative">
+      <img
+        src={Banner4}
+        alt="Banner"
+        className="w-full h-full object-cover"
+        style={{ filter: 'brightness(80%) hue-rotate(300deg)' }}
+      />
+      <div className="absolute inset-0 bg-[#00000033]"></div>
+    </div>
 
     
-    <div className="absolute top-10 left-10 bg-[#1F1F1F]/80 backdrop-blur-md border border-[#A259FF] text-white px-6 py-4 rounded-xl shadow-lg animate-fade-in">
-      <h3 className="text-xl sm:text-2xl font-bold text-[#A259FF] neon-text mb-2">
-        🔥 30% OFF
-      </h3>
-      <p className="text-sm sm:text-base text-[#ccc]">
-        Join our premium plan today and unlock exclusive workouts & coaching.
-      </p>
-      <button className="mt-3 px-4 py-2 text-sm font-semibold glow-btn">
-        Claim Offer
-      </button>
+
+    {/* Right Image with a cool blue tint */}
+    <div className="relative">
+      <img
+        src={Banner4}
+        alt="Banner"
+        className="w-full h-full object-cover"
+        style={{ filter: 'brightness(85%) hue-rotate(180deg)' }}
+      />
+      <div className="absolute inset-0 bg-[#00000022]"></div>
+    </div>
+
+    {/* Centered Button Over Entire Collage */}
+    <div className="absolute inset-0 flex justify-center items-center">
+     
+        <BeATrainerButton />
+      
     </div>
   </div>
 </SwiperSlide>
+
+
+
 
       </Swiper>
     </div>
