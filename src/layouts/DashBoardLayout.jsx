@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import {
   FaTachometerAlt,
@@ -16,8 +16,11 @@ import {
   FaStar,
   FaUserPlus
 } from 'react-icons/fa';
+import { AuthContext } from '../contexts/authContext/AuthContext';
 
 const DashBoardLayout = () => {
+
+  const {user} = useContext(AuthContext);
   return (
     <div className="drawer lg:drawer-open">
       <input id="main-drawer" type="checkbox" className="drawer-toggle" />
@@ -25,7 +28,7 @@ const DashBoardLayout = () => {
       {/* Main Content */}
       <div className="drawer-content flex flex-col bg-[#121212] text-white min-h-screen">
         {/* Top Navbar */}
-        <div className="navbar bg-[#1F1F1F] shadow-md px-4">
+        <div className="navbar bg-gray-900 shadow-md px-4">
           {/* Hamburger Icon */}
           <div className="flex-none lg:hidden">
             <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
@@ -42,8 +45,8 @@ const DashBoardLayout = () => {
           </div>
 
           {/* Title */}
-          <div className="flex-1 text-xl font-bold text-[#A259FF] flex items-center gap-2">
-            <FaTachometerAlt className="text-[#A259FF]" /> My Dashboard
+          <div className="flex-1 text-xl font-bold bg-gray-900 text-white flex items-center gap-2">
+            <FaTachometerAlt className="text-white" /> My Dashboard
           </div>
         </div>
 
@@ -55,77 +58,78 @@ const DashBoardLayout = () => {
       {/* Sidebar */}
       <div className="drawer-side">
         <label htmlFor="main-drawer" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-72 min-h-full bg-[#1F1F1F] text-white space-y-2 shadow-xl">
+        <ul className="menu p-4 w-72 min-h-full bg-gray-900 text-white space-y-2 shadow-xl">
 
           {/* Common */}
           <li>
-            <NavLink to="/dashboard" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaTachometerAlt /> Dashboard Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/profile" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink 
+            to={`/dashboard/myprofile?email=${user.email}`}  className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaUserCircle /> Profile
             </NavLink>
           </li>
 
           {/* Admin */}
           <li>
-            <NavLink to="/dashboard/newsletters" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/newsletters" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaRegNewspaper /> All Newsletter Subscribers
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/trainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/trainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaUsers /> All Trainers
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/pendingTrainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/pendingTrainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaInbox /> Applied Trainer
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/balance" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/balance" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaCreditCard /> Balance
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/add-class" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/add-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaPlusCircle /> Add New Class
             </NavLink>
           </li>
 
           {/* Trainer */}
           <li>
-            <NavLink to="/dashboard/manage-slots" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/manage-slots" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaClipboardList /> Manage Slots
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/add-slot" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/add-slot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaPlusCircle /> Add Slot
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/add-forum" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaEdit /> Add Forum
             </NavLink>
           </li>
 
           {/* Member */}
           <li>
-            <NavLink to="/dashboard/activity-log" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/activity-log" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaHistory /> Activity Log
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/booked-trainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/bookings" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaBookOpen /> Booked Trainers
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/become-trainer" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/become-trainer" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaUserPlus /> Become a Trainer
             </NavLink>
           </li>

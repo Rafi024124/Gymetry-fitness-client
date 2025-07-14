@@ -40,7 +40,7 @@ const AllClasses = () => {
     <div className="min-h-screen bg-[#121212] text-white px-4 py-12">
       <div className="max-w-6xl mx-auto space-y-12">
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-[#A259FF] mb-4">Explore Our Fitness Classes</h2>
+          <h2 className="text-4xl font-bold text-white mb-4">Explore Our Fitness Classes</h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-base">
             Discover a variety of fitness classes tailored to your goals. Click on a trainer to view their profile and join a class!
           </p>
@@ -51,7 +51,7 @@ const AllClasses = () => {
             classItem.description ||
             classDescriptions[classItem.className] ||
             "Join our class and begin your fitness transformation today!";
-               console.log("ClassName:", classItem.className);
+              
 
           return (
             <div
@@ -59,8 +59,8 @@ const AllClasses = () => {
               className="bg-[#1F1F1F] p-6 rounded-xl shadow-md border border-[#2a2a2a] text-center"
             >
               <div className="flex flex-col items-center space-y-4">
-                <h3 className="text-2xl font-bold text-[#A259FF] flex items-center gap-2">
-                  <FaDumbbell className="text-[#A259FF]" />
+                <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                  <FaDumbbell className="text-white" />
                   {classItem.className}
                 </h3>
 
@@ -71,20 +71,20 @@ const AllClasses = () => {
 
                 <div>
                   <p className="text-sm font-semibold text-gray-400 mb-2 flex items-center justify-center gap-2">
-                    <FaUserFriends className="text-[#A259FF]" />
+                    <FaUserFriends className="text-white" />
                     Top Trainers for this Class:
                   </p>
                   <div className="flex justify-center flex-wrap gap-6">
                     {classItem.trainers.slice(0, 5).map((trainer) => (
                       <div
                         key={trainer._id}
-                        className="w-24 text-center cursor-pointer hover:text-[#A259FF]"
+                        className="w-24 text-center cursor-pointer hover:text-orange-300"
                         onClick={() => navigate(`/trainers/${trainer._id}?class=${encodeURIComponent(classItem.className)}`)}
                       >
                         <img
                           src={trainer.profileImage}
                           alt={trainer.fullName}
-                          className="w-20 h-20 rounded-full object-cover mx-auto border-2 border-[#A259FF] mb-1"
+                          className="w-20 h-20 rounded-full object-cover mx-auto  mb-1"
                         />
                         <p className="text-sm font-medium">{trainer.fullName}</p>
                       </div>
@@ -106,7 +106,7 @@ const AllClasses = () => {
               key={i + 1}
               onClick={() => setPage(i + 1)}
               className={`px-4 py-2 rounded-md border border-[#A259FF] hover:bg-[#A259FF] transition font-medium ${
-                page === i + 1 ? "bg-[#A259FF] text-white" : "bg-[#1F1F1F] text-[#A259FF]"
+                page === i + 1 ? "bg-[#A259FF] text-white" : "bg-[#1F1F1F] text-white"
               }`}
             >
               {i + 1}

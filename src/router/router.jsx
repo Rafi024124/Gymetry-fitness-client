@@ -18,6 +18,12 @@ import TrainerBookingPage from "../pages/Trainer/TrainerBookingPage";
 import Payment from "../pages/payment/Payment";
 import MyPaymentHistory from "../pages/User/MyPaymentHistory";
 import ForumPage from "../pages/forumPage/ForumPage";
+import MyProfile from "../pages/dashboard/user/MyProfile";
+import ActivityLog from "../pages/dashboard/user/ActivityLog";
+import BookedTrainers from "../pages/dashboard/user/BookedTrainers";
+import HandleAllTrainers from "../pages/dashboard/admin/handleAllTrainers";
+import Balance from "../pages/dashboard/admin/Balance";
+import AddNewForum from "../pages/dashboard/adminAndTrainer/AddNewForum";
 
 export const router = createBrowserRouter([
   {
@@ -58,9 +64,9 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path:'forums',
-        element: <ForumPage></ForumPage>
-      }
+        path: "forums",
+        element: <ForumPage></ForumPage>,
+      },
     ],
   },
   {
@@ -96,9 +102,61 @@ export const router = createBrowserRouter([
         Component: PendingTrainers,
       },
       {
-        path: 'my-payments',
-        element: <PrivateRoute><MyPaymentHistory></MyPaymentHistory></PrivateRoute>
-      }
+        path: "my-payments",
+        element: (
+          <PrivateRoute>
+            <MyPaymentHistory></MyPaymentHistory>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "myprofile",
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "activity-log",
+        element: (
+          <PrivateRoute>
+            <ActivityLog></ActivityLog>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "bookings",
+        element: (
+          <PrivateRoute>
+            <BookedTrainers></BookedTrainers>
+          </PrivateRoute>
+        ),
+      },
+       {
+        path: "trainers",
+        element: (
+          <PrivateRoute>
+            <HandleAllTrainers></HandleAllTrainers>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "balance",
+        element: (
+          <PrivateRoute>
+            <Balance></Balance>
+          </PrivateRoute>
+        ),
+      },
+       {
+        path: "addforum",
+        element: (
+          <PrivateRoute>
+             <AddNewForum></AddNewForum>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

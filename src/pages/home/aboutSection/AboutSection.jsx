@@ -8,9 +8,9 @@ const AboutSection = () => {
         
         {/* Text Content */}
         <div className="md:w-1/2">
-          <h2 className="text-4xl font-bold text-[#A259FF] neon-text mb-6">
-            About Gymetry
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-10">
+        About Gymetry
+      </h2>
           <p className="text-[#ccc] text-lg leading-relaxed mb-6">
             At Gymetry, we believe fitness is a journey, not a destination. 
             Our mission is to empower you with expert trainers, personalized workout plans, and a thriving community — all supported by cutting-edge technology and a passion for wellness.

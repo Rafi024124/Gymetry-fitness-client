@@ -49,15 +49,15 @@ const TrainerDetails = () => {
             className="w-full md:w-60 h-60 object-cover rounded-lg"
           />
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold text-[#A259FF] flex items-center gap-2">
+            <h2 className="text-3xl font-bold text-white flex items-center gap-2">
               <FaUser /> {trainer.fullName}
             </h2>
             <p className="flex items-center gap-2">
-              <FaEnvelope className="text-[#A259FF]" />
+              <FaEnvelope className="text-white" />
               {trainer.email}
             </p>
             <p className="flex items-center gap-2">
-              <FaStar className="text-[#A259FF]" />
+              <FaStar className="text-white" />
               <span className="font-semibold">Years of Experience:</span> {trainer.yearsOfExperience}
             </p>
             <div>
@@ -122,7 +122,7 @@ const TrainerDetails = () => {
 
         {/* Available Slots */}
         <div className="bg-[#1F1F1F] p-6 rounded-xl shadow-lg">
-          <h3 className="text-2xl font-bold text-[#A259FF] mb-4">Available Slots</h3>
+          <h3 className="text-2xl font-bold text-white mb-4">Available Slots</h3>
           {trainer.availableDays?.length > 0 && trainer.availableTime?.length > 0 ? (
             trainer.availableDays.map((day) => (
               <div key={day} className="mb-4">
@@ -132,7 +132,7 @@ const TrainerDetails = () => {
                     <button
                       key={idx}
                       onClick={() => handleSlotClick(day, slot)}
-                      className="px-4 py-2 rounded-lg bg-[#292929] hover:bg-[#A259FF] transition text-white"
+                      className="px-4 py-2 rounded-lg bg-[#292929] hover:bg-blue-900 transition text-white"
                     >
                       {slot}
                     </button>
@@ -150,7 +150,7 @@ const TrainerDetails = () => {
           <h3 className="text-xl mb-4 font-bold">Want to join as a trainer?</h3>
           <Link
             to="/be-a-trainer"
-            className="inline-block bg-[#A259FF] hover:bg-[#9333ea] text-white px-6 py-3 rounded-full transition font-semibold"
+            className="inline-block bg-[#A259FF] hover:bg-orange-300 text-white px-6 py-3 rounded-full transition font-semibold"
           >
             Become a Trainer
           </Link>

@@ -54,7 +54,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-[#1F1F1F] text-[#F2F2F2] shadow-md">
+    <div className="navbar bg-gray-900 text-[#F2F2F2] shadow-md">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Menu */}
@@ -96,11 +96,11 @@ const Navbar = () => {
         </div>
         {/* Logo */}
         <div
-          className="flex items-center space-x-2 text-[#a259ff]"
+          className="flex items-center space-x-2"
           style={{ textShadow: "0 0 1px #a164f1" }}
         >
           <img src={Logo} alt="Logo" className="rounded-full w-20" />
-          <span className="text-xl font-bold">
+          <span className="text-xl font-bold text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent">
             Gy<span className="text-purple-300">m</span>etry
           </span>
         </div>

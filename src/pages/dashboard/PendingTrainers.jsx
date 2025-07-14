@@ -79,15 +79,15 @@ const handleReject = async (id) => {
     return <div className="text-center text-red-500 py-10">Error loading data</div>;
 
   return (
-    <div className="p-4 bg-[#1F1F1F] rounded-xl shadow-md text-white">
-      <h2 className="text-2xl font-semibold text-[#A259FF] mb-6">
+    <div className="p-4 bg-gray-900 rounded-xl shadow-md text-white">
+      <h2 className="text-4xl font-semibold text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-6">
         Pending Trainer Applications
       </h2>
 
       <div className="overflow-x-auto">
         <table className="table w-full text-white">
           <thead>
-            <tr className="text-left bg-[#333] text-[#A259FF]">
+            <tr className="text-left bg-[#333] text-white">
               <th>Name</th>
               <th className="hidden md:table-cell">Email</th>
               <th className="hidden md:table-cell">Age</th>
