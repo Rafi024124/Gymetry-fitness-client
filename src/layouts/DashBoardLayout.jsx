@@ -76,12 +76,12 @@ const DashBoardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/all-trainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/trainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
               <FaUsers /> All Trainers
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/applied-trainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
+            <NavLink to="/dashboard/pendingTrainers" className="hover:bg-[#A259FF]/20 hover:text-[#A259FF] rounded-lg font-medium">
               <FaInbox /> Applied Trainer
             </NavLink>
           </li>

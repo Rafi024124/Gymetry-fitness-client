@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
-import trainer from '../../assets/be-a-trainer.png'
+import trainer from '../../assets/be-a-trainer.png';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,7 @@ const daysOptions = [
   { value: 'Wed', label: 'Wednesday' },
   { value: 'Thu', label: 'Thursday' },
   { value: 'Fri', label: 'Friday' },
-  { value: 'Sat', label: 'Saturday' }
+  { value: 'Sat', label: 'Saturday' },
 ];
 
 const skillsOptions = [
@@ -32,9 +32,7 @@ const BecomeTrainerForm = () => {
     register,
     handleSubmit,
     control,
-   
     formState: { errors, isSubmitting },
-   
   } = useForm({
     defaultValues: {
       fullName: user?.displayName || '',
@@ -43,9 +41,14 @@ const BecomeTrainerForm = () => {
       profileImage: '',
       skills: [],
       availableDays: [],
-      availableTime: '',
-      otherInfo: '',
-    }
+      availableTime: [''],
+      yearsOfExperience: '',
+      socialLinks: {
+        facebook: '',
+        instagram: '',
+        linkedin: '',
+      },
+    },
   });
 
   const axiosSecure = useAxiosSecure();
@@ -53,39 +56,33 @@ const BecomeTrainerForm = () => {
   const onSubmit = async (data) => {
     const trainerData = {
       ...data,
-      availableDays: data.availableDays.map(day => day.value),
+      availableDays: data.availableDays.map((day) => day.value),
       status: 'pending',
       created_at: new Date().toISOString(),
     };
 
-    axiosSecure.post('/trainers',trainerData)
-    .then(res=>{
-        if(res.data.insertedId){
-            Swal.fire({
-                     title: "Success!",
-                     text: "Your application has been submitted successfully.",
-                     icon: "success",
-                     background: "#1F1F1F",
-                     color: "#F2F2F2",
-                     confirmButtonColor: "#A259FF",
-                     confirmButtonText: "Continue",
-                     customClass: {
-                       title: "swal2-title",
-                     },
-                   });
-        }
-    })
-   
+    axiosSecure.post('/trainers', trainerData).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Your application has been submitted successfully.',
+          icon: 'success',
+          background: '#1F1F1F',
+          color: '#F2F2F2',
+          confirmButtonColor: '#A259FF',
+          confirmButtonText: 'Continue',
+        });
+      }
+    });
   };
 
   return (
     <div className="w-full px-4 py-10 lg:px-16 bg-[#121212] text-white">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        
-        {/* Left Image Section */}
+        {/* Left Image */}
         <div className="hidden lg:block">
           <img
-            src= {trainer}
+            src={trainer}
             alt="Become a Trainer"
             className="w-full h-[900px] object-cover rounded-2xl shadow-lg"
           />
@@ -117,35 +114,136 @@ const BecomeTrainerForm = () => {
             className="w-full mb-4 px-3 py-2 rounded bg-[#292929] border border-[#555] text-gray-400"
           />
 
-          {/* Age */}
-          <label className="block mb-2 font-semibold">Age</label>
-          <input
-            type="number"
-            {...register('age', {
-              required: 'Age is required',
-              min: { value: 16, message: 'Minimum age is 16' },
-              max: { value: 100, message: 'Maximum age is 100' },
-            })}
-            className={`w-full mb-4 px-3 py-2 rounded bg-[#292929] border ${
-              errors.age ? 'border-red-500' : 'border-[#A259FF]'
-            }`}
-            placeholder="Your age"
-          />
-          {errors.age && <p className="text-red-500 text-sm">{errors.age.message}</p>}
+          {/* Age & Years of Experience */}
+          <div className="flex gap-6 mb-4">
+            <div className="flex-1">
+              <label className="block mb-2 font-semibold">
+                Age <span className="text-sm text-gray-400">(required)</span>
+              </label>
+              <input
+                type="number"
+                {...register('age', {
+                  required: 'Age is required',
+                  min: { value: 16, message: 'Minimum age is 16' },
+                  max: { value: 100, message: 'Maximum age is 100' },
+                })}
+                className={`w-full px-3 py-2 rounded bg-[#292929] border ${
+                  errors.age ? 'border-red-500' : 'border-[#A259FF]'
+                }`}
+                placeholder="Your age"
+              />
+              {errors.age && <p className="text-red-500 text-sm">{errors.age.message}</p>}
+            </div>
+
+            <div className="flex-1">
+              <label className="block mb-2 font-semibold">
+                Years of Experience <span className="text-sm text-gray-400">(required)</span>
+              </label>
+              <input
+                type="number"
+                min="0"
+                {...register('yearsOfExperience', {
+                  required: 'Years of Experience is required',
+                  min: { value: 0, message: 'Must be 0 or more' },
+                })}
+                className={`w-full px-3 py-2 rounded bg-[#292929] border ${
+                  errors.yearsOfExperience ? 'border-red-500' : 'border-[#A259FF]'
+                }`}
+                placeholder="Enter years of experience"
+              />
+              {errors.yearsOfExperience && (
+                <p className="text-red-500 text-sm">{errors.yearsOfExperience.message}</p>
+              )}
+            </div>
+          </div>
 
           {/* Profile Image */}
           <label className="block mb-2 font-semibold">Profile Image URL</label>
           <input
             type="text"
             placeholder="https://example.com/photo.jpg"
-            {...register('profileImage', {
-             
-            })}
+            {...register('profileImage')}
             className={`w-full mb-4 px-3 py-2 rounded bg-[#292929] border ${
               errors.profileImage ? 'border-red-500' : 'border-[#A259FF]'
             }`}
           />
-          {errors.profileImage && <p className="text-red-500 text-sm">{errors.profileImage.message}</p>}
+          {errors.profileImage && (
+            <p className="text-red-500 text-sm">{errors.profileImage.message}</p>
+          )}
+
+          {/* Available Days and Time Slots */}
+          <div className="flex gap-6 mb-4">
+            <div className="flex-1">
+              <label className="block mb-2 font-semibold">Available Days</label>
+              <Controller
+                name="availableDays"
+                control={control}
+                rules={{ required: 'Please select at least one day' }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    isMulti
+                    options={daysOptions}
+                    placeholder="Select Days"
+                    className="text-black"
+                    styles={{
+                      control: (base) => ({
+                        ...base,
+                        backgroundColor: 'white',
+                        borderColor: '#A259FF',
+                      }),
+                    }}
+                  />
+                )}
+              />
+              {errors.availableDays && (
+                <p className="text-red-500 text-sm">{errors.availableDays.message}</p>
+              )}
+            </div>
+
+            {/* Time Slots */}
+            <div className="flex-1">
+              <label className="block mb-2 font-semibold">Available Time Slots</label>
+              <Controller
+                name="availableTime"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <div className="space-y-2">
+                    {value.map((time, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <input
+                          type="time"
+                          value={time}
+                          onChange={(e) => {
+                            const updated = [...value];
+                            updated[index] = e.target.value;
+                            onChange(updated);
+                          }}
+                          className="w-full px-3 py-2 rounded bg-white text-black border border-[#A259FF]"
+                        />
+                        {index > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => onChange(value.filter((_, i) => i !== index))}
+                            className="text-red-400 hover:text-red-600 text-lg font-bold"
+                          >
+                            &times;
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => onChange([...value, ''])}
+                      className="text-sm text-[#A259FF] hover:underline"
+                    >
+                      + Add another time slot
+                    </button>
+                  </div>
+                )}
+              />
+            </div>
+          </div>
 
           {/* Skills */}
           <fieldset className="mb-4">
@@ -165,52 +263,31 @@ const BecomeTrainerForm = () => {
             </div>
           </fieldset>
 
-          {/* Available Days */}
-          <label className="block mb-2 font-semibold">Available Days</label>
-          <Controller
-            name="availableDays"
-            control={control}
-            rules={{ required: 'Please select at least one day' }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                isMulti
-                options={daysOptions}
-                placeholder="Select Days"
-                className="mb-4 text-black"
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    backgroundColor: 'white',
-                    borderColor: '#A259FF',
-                  }),
-                }}
-              />
-            )}
-          />
-          {errors.availableDays && (
-            <p className="text-red-500 text-sm mb-3">{errors.availableDays.message}</p>
-          )}
+          {/* Social Links */}
+          <fieldset className="mb-6">
+            <legend className="font-semibold mb-2">Social Links</legend>
 
-          {/* Available Time */}
-          <label className="block mb-2 font-semibold">Available Time</label>
-          <input
-            type="time"
-            {...register('availableTime', { required: 'Select a time' })}
-            className="w-full mb-4 px-3 py-2 rounded bg-white text-black border border-[#A259FF]"
-          />
-          {errors.availableTime && (
-            <p className="text-red-500 text-sm">{errors.availableTime.message}</p>
-          )}
+            <label className="block mb-1 font-semibold">Facebook (optional)</label>
+            <input
+              type="text"
+              {...register('socialLinks.facebook')}
+              className="w-full mb-3 px-3 py-2 rounded bg-[#292929] border border-[#A259FF]"
+            />
 
-          {/* Additional Info */}
-          <label className="block mb-2 font-semibold">Additional Info</label>
-          <textarea
-            {...register('otherInfo')}
-            rows={3}
-            placeholder="Any additional information..."
-            className="w-full mb-6 px-3 py-2 rounded bg-[#292929] border border-[#A259FF]"
-          />
+            <label className="block mb-1 font-semibold">Instagram (optional)</label>
+            <input
+              type="text"
+              {...register('socialLinks.instagram')}
+              className="w-full mb-3 px-3 py-2 rounded bg-[#292929] border border-[#A259FF]"
+            />
+
+            <label className="block mb-1 font-semibold">LinkedIn (optional)</label>
+            <input
+              type="text"
+              {...register('socialLinks.linkedin')}
+              className="w-full px-3 py-2 rounded bg-[#292929] border border-[#A259FF]"
+            />
+          </fieldset>
 
           {/* Submit */}
           <button

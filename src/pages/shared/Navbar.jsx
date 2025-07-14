@@ -17,7 +17,7 @@ const Navbar = () => {
       {[
         { to: "/", label: "Home" },
         { to: "/trainers", label: "All Trainers" },
-        { to: "/classes", label: "All Classes" },
+        { to: "/allClasses", label: "All Classes" },
         { to: "/forums", label: "Community" },
         user && { to: "/dashboard", label: "Dashboard" },
       ]

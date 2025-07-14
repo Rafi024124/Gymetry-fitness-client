@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css"; // fixed import
+import "sweetalert2/dist/sweetalert2.min.css"; 
 
 import SocialLogin from "../SocialLogin";
 import { AuthContext } from "../../contexts/authContext/AuthContext";

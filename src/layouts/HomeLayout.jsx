@@ -7,7 +7,9 @@ import { Outlet } from 'react-router';
 const HomeLayout = () => {
     return (
         <div>
-            <Home></Home>
+            <Navbar></Navbar>
+            <Outlet></Outlet>
+            <Footer></Footer>
         </div>
     );
 };
