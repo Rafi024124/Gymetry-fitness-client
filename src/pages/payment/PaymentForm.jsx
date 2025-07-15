@@ -64,13 +64,17 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
           slot,
           packageName: selectedPackage.name,
           price: selectedPackage.price,
-          className,              // <-- include className here
+          className,
           transactionId: result.paymentIntent.id,
         };
 
         try {
           const saveRes = await axiosSecure.post("/payments", paymentInfo);
           console.log("Payment saved:", saveRes.data);
+            await axiosSecure.patch(`/slots/${slot.slotId}`, { booked: true });
+
+    // ✅ Optionally show a success message
+    console.log("Slot marked as booked");
           // Optionally notify user or redirect
         } catch (err) {
           console.error("Failed to save payment:", err);
@@ -98,12 +102,11 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
           </p>
           <p className="flex items-center gap-2">
             <FaClock className="text-purple-400" />
-            <strong>Slot:</strong> {slot}
+            <strong>Slot:</strong> {slot?.slotName} ({slot?.slotTime})
           </p>
           <p className="flex items-center gap-2">
             <FaGift className="text-purple-400" />
-            <strong>Package:</strong> {selectedPackage?.name} ($
-            {selectedPackage?.price})
+            <strong>Package:</strong> {selectedPackage?.name} (${selectedPackage?.price})
           </p>
           <p className="flex items-center gap-2">
             <strong>Class:</strong> {className}

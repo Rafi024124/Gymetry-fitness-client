@@ -3,6 +3,7 @@ import { AuthContext } from '../../../contexts/authContext/AuthContext';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaUser, FaEnvelope, FaClock, FaEdit } from 'react-icons/fa';
+import Loaging from '../../../loagind/Loaging';
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
@@ -42,7 +43,7 @@ const MyProfile = () => {
     updateMutation.mutate(formData);
   };
 
-  if (isLoading) return <div className="text-center text-white">Loading...</div>;
+  if (isLoading) return <Loaging></Loaging>;
   if (error) return <div className="text-center text-red-500">Failed to load profile.</div>;
 
   return (

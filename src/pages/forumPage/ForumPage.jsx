@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import Loaging from '../../loagind/Loaging';
 
 const ForumPage = () => {
   const axiosSecure = useAxiosSecure();
@@ -37,7 +38,7 @@ const ForumPage = () => {
   };
 
   if (isLoading)
-    return <div className="text-center p-10 text-white">Loading posts...</div>;
+    return <Loaging></Loaging>;
   if (isError)
     return (
       <div className="text-center p-10 text-red-500">Error: {error.message}</div>

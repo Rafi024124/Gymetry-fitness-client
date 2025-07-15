@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-import { FaMoneyBillWave, FaClock, FaUser, FaDollarSign, FaCalendarAlt } from 'react-icons/fa';
+import { FaMoneyBillWave, FaDollarSign } from 'react-icons/fa';
+import Loaging from '../../../loagind/Loaging';
 
 const Balance = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,15 +15,14 @@ const Balance = () => {
     },
   });
 
-  if (isLoading) return <div className="text-center p-6">Loading balance data...</div>;
+  if (isLoading) return <Loaging></Loaging>;
   if (error) return <div className="text-center p-6 text-red-600">Failed to load data.</div>;
 
   const { totalBalance, lastSixPayments } = data;
 
   return (
     <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-5xl mx-auto">
-      
-       <h2 className="text-3xl md:text-4xl font-bold text-center text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-10">
+      <h2 className="text-3xl md:text-4xl font-bold text-center text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-10">
         <FaMoneyBillWave className="text-green-400" />Financial Overview
       </h2>
 
@@ -61,9 +61,15 @@ const Balance = () => {
               <tr key={payment._id} className="border-b border-gray-700 hover:bg-gray-800">
                 <td className="p-3 font-medium">{payment.trainerName || 'N/A'}</td>
                 <td className="p-3">{payment.userName || payment.userEmail || 'N/A'}</td>
-                <td className="p-3">{payment.slot || 'N/A'}</td>
+                <td className="p-3">
+                  {payment.slot
+                    ? `${payment.slot.slotName} - ${payment.slot.slotTime}`
+                    : 'N/A'}
+                </td>
                 <td className="p-3">{payment.packageName || 'N/A'}</td>
-                <td className="p-3 text-green-400 font-semibold">${payment.price?.toFixed(2)}</td>
+                <td className="p-3 text-green-400 font-semibold">
+                  ${payment.price?.toFixed(2)}
+                </td>
                 <td className="p-3 font-mono text-xs">{payment.transactionId}</td>
                 <td className="p-3">
                   <time dateTime={payment.paidAt}>

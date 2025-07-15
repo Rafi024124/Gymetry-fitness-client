@@ -95,7 +95,7 @@ const DashBoardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/add-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+            <NavLink to="/dashboard/add-new-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaPlusCircle /> Add New Class
             </NavLink>
           </li>
@@ -107,7 +107,7 @@ const DashBoardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/add-slot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+            <NavLink to="/dashboard/addSlot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
               <FaPlusCircle /> Add Slot
             </NavLink>
           </li>

@@ -24,6 +24,9 @@ import BookedTrainers from "../pages/dashboard/user/BookedTrainers";
 import HandleAllTrainers from "../pages/dashboard/admin/handleAllTrainers";
 import Balance from "../pages/dashboard/admin/Balance";
 import AddNewForum from "../pages/dashboard/adminAndTrainer/AddNewForum";
+import AddNewClass from "../pages/dashboard/admin/AddNewClass";
+import AddSlot from "../pages/dashboard/adminAndTrainer/Trainer/AddSlot";
+import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +43,7 @@ export const router = createBrowserRouter([
         Component: AllTrainers,
       },
       {
-        path: "trainers/:id",
+        path: "trainer/:id",
         Component: TrainerDetails,
       },
       {
@@ -48,7 +51,7 @@ export const router = createBrowserRouter([
         Component: AllClasses,
       },
       {
-        path: "trainer-booking/:trainerId",
+        path: "trainer/:trainerId/book",
         element: (
           <PrivateRoute>
             <TrainerBookingPage></TrainerBookingPage>
@@ -154,6 +157,30 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
              <AddNewForum></AddNewForum>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-new-class",
+        element: (
+          <PrivateRoute>
+             <AddNewClass></AddNewClass>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "addSlot",
+        element: (
+          <PrivateRoute>
+             <AddSlot></AddSlot>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-slots",
+        element: (
+          <PrivateRoute>
+             <ManageSlots></ManageSlots>
           </PrivateRoute>
         ),
       },

@@ -4,6 +4,7 @@ import { FaTrashAlt, FaCheckCircle, FaEye, FaUser, FaEnvelope, FaBirthdayCake, F
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Loading from '../../loagind/Loaging';
 import Swal from 'sweetalert2';
+import Loaging from '../../loagind/Loaging';
 
 const PendingTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -74,7 +75,7 @@ const handleReject = async (id) => {
     document.getElementById('trainer-details-modal').showModal();
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loaging></Loaging>;
   if (isError)
     return <div className="text-center text-red-500 py-10">Error loading data</div>;
 

@@ -9,7 +9,16 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 const Payment = () => {
   const location = useLocation();
   const { trainer, slot, selectedPackage, className } = location.state;
+  
 
+  
+  
+
+  
+  
+  
+  
+  
   return (
     <Elements stripe={stripePromise}>
       <PaymentForm

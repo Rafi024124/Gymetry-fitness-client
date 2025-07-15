@@ -1,160 +1,92 @@
-import { useParams, useNavigate, useLocation, Link } from 'react-router';
+import React from 'react';
+import { useParams, useSearchParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
-import { FaUser, FaEnvelope, FaStar, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
-import Loading from '../../loagind/Loaging';
 
 const TrainerDetails = () => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const class_name = searchParams.get('className');
   const navigate = useNavigate();
-  const location = useLocation();
-  const axiosSecure = useAxiosSecure();
 
-  // Get className from query string if present
-  const queryParams = new URLSearchParams(location.search);
-  const className = queryParams.get("class");
+  
 
-  const { data: trainer, isLoading, isError } = useQuery({
-    queryKey: ['trainerDetails', id],
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['trainer-details', id, class_name],  // removed trainerEmail
     queryFn: async () => {
-      const res = await axiosSecure.get(`/trainers/${id}`);
-      return res.data;
+      const url = new URL(`http://localhost:3000/trainer/${id}/details`);
+
+      if (class_name) url.searchParams.set('className', class_name);
+      // removed trainerEmail from URL
+
+    const res = await fetch(url.toString());
+const data = await res.json();  // Parse the JSON response
+
+
+return data;  // Don't forget to return it for React Query
     },
   });
 
-  if (isLoading) return <Loading />;
-  if (isError || !trainer) return <div className="text-center text-red-500">Trainer not found</div>;
+  if (isLoading) return <p className="text-center text-white">Loading trainer details...</p>;
+  if (error) return <p className="text-center text-red-400">Error loading trainer details</p>;
 
-  // On slot click, navigate to booking page passing slot and className as query params
-  const handleSlotClick = (day, slot) => {
-    const slotString = `${day} ${slot}`;
-    let bookingUrl = `/trainer-booking/${trainer._id}?slot=${encodeURIComponent(slotString)}`;
-    console.log("classname in details page",className);
+  if (!data) return null; // safeguard
+
+  const { trainer, slots } = data;
+ 
+
+
+
+  const handleSlotClick = (slot) => {
+    const params = new URLSearchParams();
+    params.set('slotName', slot.slotName);
+    params.set('slotTime', slot.slotTime);
+    params.set('slotId', slot._id);
     
-    if (className) {
-      bookingUrl += `&class=${encodeURIComponent(className)}`;
-    }
+    
 
-    navigate(bookingUrl);
+    if (class_name) params.set('className', class_name);
+
+    navigate(`/trainer/${trainer._id}/book?${params.toString()}`);
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white p-6">
-      <div className="max-w-5xl mx-auto space-y-10">
-        {/* Trainer Info */}
-        <div className="bg-[#1F1F1F] p-6 rounded-xl shadow-lg flex flex-col md:flex-row gap-8">
-          <img
-            src={trainer.profileImage}
-            alt={trainer.fullName}
-            className="w-full md:w-60 h-60 object-cover rounded-lg"
-          />
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold text-white flex items-center gap-2">
-              <FaUser /> {trainer.fullName}
-            </h2>
-            <p className="flex items-center gap-2">
-              <FaEnvelope className="text-white" />
-              {trainer.email}
-            </p>
-            <p className="flex items-center gap-2">
-              <FaStar className="text-white" />
-              <span className="font-semibold">Years of Experience:</span> {trainer.yearsOfExperience}
-            </p>
-            <div>
-              <p className="font-semibold mb-1">Skills:</p>
-              <div className="flex flex-wrap gap-2">
-                {trainer.skills?.map((skill, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 bg-[#A259FF]/20 border border-[#A259FF] rounded-full text-sm text-[#A259FF]"
-                  >
-                    {skill}
-                  </span>
-                ))}
+    <div className="p-6 bg-gray-900 text-white min-h-screen max-w-4xl mx-auto">
+      <div className="flex items-center gap-6 mb-8">
+        <img
+          src={trainer.profileImage || '/default-avatar.png'}
+          alt={trainer.fullName}
+          className="w-32 h-32 rounded-full border-4 border-blue-500"
+        />
+        <div>
+          <h2 className="text-3xl font-bold">{trainer.fullName}</h2>
+          <p className="text-gray-300">{trainer.email}</p>
+          <p className="mt-2">Skills: {trainer.skills?.join(', ') || 'N/A'}</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-2xl font-semibold mb-4">
+          Available Slots for <span className="font-bold text-orange-300">{class_name}</span> Class
+        </h3>
+        {slots.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {slots.map((slot) => (
+              <div
+                key={slot._id}
+                className="bg-gray-800 p-4 rounded-lg shadow cursor-pointer"
+                onClick={() => handleSlotClick(slot)}
+              >
+                <p className="font-semibold">
+                  {slot.slotName} ({slot.slotTime})
+                </p>
+                <p className="text-gray-400">Days: {slot.availableDays?.join(', ') || 'N/A'}</p>
+                <p className="text-gray-400">Booked: {slot.booked ? 'Yes' : 'No'}</p>
               </div>
-            </div>
-            <div>
-              <p className="font-semibold mb-1">Social Links:</p>
-              <div className="flex gap-3 text-xl">
-                {/* Facebook */}
-                {trainer.socialLinks?.facebook ? (
-                  <a
-                    href={trainer.socialLinks.facebook}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-blue-500 transition"
-                  >
-                    <FaFacebook />
-                  </a>
-                ) : (
-                  <FaFacebook className="opacity-40 cursor-not-allowed" />
-                )}
-                {/* Instagram */}
-                {trainer.socialLinks?.instagram ? (
-                  <a
-                    href={trainer.socialLinks.instagram}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-pink-400 transition"
-                  >
-                    <FaInstagram />
-                  </a>
-                ) : (
-                  <FaInstagram className="opacity-40 cursor-not-allowed" />
-                )}
-                {/* LinkedIn */}
-                {trainer.socialLinks?.linkedin ? (
-                  <a
-                    href={trainer.socialLinks.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-blue-300 transition"
-                  >
-                    <FaLinkedin />
-                  </a>
-                ) : (
-                  <FaLinkedin className="opacity-40 cursor-not-allowed" />
-                )}
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-
-        {/* Available Slots */}
-        <div className="bg-[#1F1F1F] p-6 rounded-xl shadow-lg">
-          <h3 className="text-2xl font-bold text-white mb-4">Available Slots</h3>
-          {trainer.availableDays?.length > 0 && trainer.availableTime?.length > 0 ? (
-            trainer.availableDays.map((day) => (
-              <div key={day} className="mb-4">
-                <p className="font-semibold mb-2">{day}</p>
-                <div className="flex flex-wrap gap-3">
-                  {trainer.availableTime.map((slot, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleSlotClick(day, slot)}
-                      className="px-4 py-2 rounded-lg bg-[#292929] hover:bg-blue-900 transition text-white"
-                    >
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No slots available.</p>
-          )}
-        </div>
-
-        {/* Become a Trainer CTA */}
-        <div className="text-center mt-10">
-          <h3 className="text-xl mb-4 font-bold">Want to join as a trainer?</h3>
-          <Link
-            to="/be-a-trainer"
-            className="inline-block bg-[#A259FF] hover:bg-orange-300 text-white px-6 py-3 rounded-full transition font-semibold"
-          >
-            Become a Trainer
-          </Link>
-        </div>
+        ) : (
+          <p className="text-red-400">No slots available for this trainer in this class.</p>
+        )}
       </div>
     </div>
   );
