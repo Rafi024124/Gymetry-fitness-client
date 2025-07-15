@@ -11,9 +11,7 @@ const Payment = () => {
   const { trainer, slot, selectedPackage, className } = location.state;
   
 
-  
-  
-
+ 
   
   
   

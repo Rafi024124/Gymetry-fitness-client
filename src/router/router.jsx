@@ -27,6 +27,8 @@ import AddNewForum from "../pages/dashboard/adminAndTrainer/AddNewForum";
 import AddNewClass from "../pages/dashboard/admin/AddNewClass";
 import AddSlot from "../pages/dashboard/adminAndTrainer/Trainer/AddSlot";
 import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots";
+import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSubscribers";
+
 
 export const router = createBrowserRouter([
   {
@@ -181,6 +183,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
              <ManageSlots></ManageSlots>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "newsletters",
+        element: (
+          <PrivateRoute>
+             <ShowNewsletterSubscribers></ShowNewsletterSubscribers>
           </PrivateRoute>
         ),
       },

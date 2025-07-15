@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import Loaging from '../../loagind/Loaging';
 
 const TrainerDetails = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ return data;  // Don't forget to return it for React Query
     },
   });
 
-  if (isLoading) return <p className="text-center text-white">Loading trainer details...</p>;
+  if (isLoading) return <Loaging></Loaging>;
   if (error) return <p className="text-center text-red-400">Error loading trainer details</p>;
 
   if (!data) return null; // safeguard

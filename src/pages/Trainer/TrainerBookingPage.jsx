@@ -37,6 +37,7 @@ const TrainerBookingPage = () => {
   const slotTime = searchParams.get("slotTime");
   const slotId = searchParams.get("slotId");
   const className = searchParams.get("className");
+  
 
   console.log("Slot Name:", slotName);
   console.log("Slot Time:", slotTime);
