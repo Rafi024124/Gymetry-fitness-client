@@ -66,7 +66,7 @@ const ActivityLog = () => {
 
   return (
     <div className="p-8 bg-gray-900 rounded-xl max-w-md mx-auto shadow-lg">
-      <h2 className="text-3xl font-bold mb-8 text-center text-white tracking-wide">
+      <h2 className="text-3xl font-bold mb-8 text-center neon-text tracking-wide">
         Trainer Application Status
       </h2>
 

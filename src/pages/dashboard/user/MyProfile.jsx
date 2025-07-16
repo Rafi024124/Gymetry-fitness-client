@@ -43,57 +43,66 @@ const MyProfile = () => {
     updateMutation.mutate(formData);
   };
 
-  if (isLoading) return <Loaging></Loaging>;
+  if (isLoading) return <Loaging />;
   if (error) return <div className="text-center text-red-500">Failed to load profile.</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-10">
-      <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg w-full max-w-md border border-blue-600 space-y-5">
+    <div className="min-h-screen bg-[#36454F] flex items-center justify-center px-4 py-10">
+      <div className="bg-gray-900 text-white p-8 rounded-2xl shadow-2xl w-full max-w-lg transition-all duration-300 hover:shadow-gray-900 space-y-6">
+        
         {/* Profile Image */}
-        <div className="flex justify-center">
+        <div className="flex justify-center relative">
           <img
             src={editMode ? formData.photoURL : userData?.photoURL || '/default-profile.png'}
             alt="Profile"
-            className="w-24 h-24 rounded-full object-cover border-2 border-blue-600 shadow"
+            className="w-28 h-28 rounded-full object-cover border-4 border-orange-300 shadow-md hover:scale-105 transition-transform"
           />
         </div>
 
         {/* Editable PhotoURL Input */}
         {editMode && (
-          <input
-            type="text"
-            placeholder="Image URL"
-            className="bg-gray-700 text-white px-3 py-2 w-full rounded border border-blue-600 focus:outline-none"
-            value={formData.photoURL}
-            onChange={(e) => setFormData({ ...formData, photoURL: e.target.value })}
-          />
+          <div className="flex flex-col">
+            <label className="text-sm mb-1 text-purple-300">Photo URL</label>
+            <input
+              type="text"
+              placeholder="Image URL"
+              className="bg-gray-800 text-white px-3 py-2 rounded border border-white focus:outline-none focus:ring-2 focus:ring-gray-900"
+              value={formData.photoURL}
+              onChange={(e) => setFormData({ ...formData, photoURL: e.target.value })}
+            />
+          </div>
         )}
 
         {/* Name */}
-        <div className="flex items-center gap-2 text-lg font-medium">
-          <FaUser className="text-blue-500" />
+        <div className="flex flex-col">
+          <label className="flex items-center gap-2 text-orange-300 text-sm">
+            <FaUser /> Full Name
+          </label>
           {editMode ? (
             <input
               type="text"
-              className="bg-gray-700 text-white px-3 py-2 w-full rounded border border-blue-600 focus:outline-none"
+              className="bg-gray-800 text-white px-3 py-2 mt-1 rounded border border-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             />
           ) : (
-            <span>{userData?.name || 'No Name'}</span>
+            <p className="mt-1 text-lg font-semibold text-white">
+              {userData?.name || 'No Name'}
+            </p>
           )}
         </div>
 
         {/* Email */}
         <div className="flex items-center gap-2 text-sm text-gray-300">
-          <FaEnvelope className="text-blue-500" />
-          <span>{userData?.email || user?.email}</span>
+          <FaEnvelope className="text-orange-300" />
+          {userData?.email || user?.email}
         </div>
 
         {/* Last Login */}
         <div className="flex items-center gap-2 text-sm text-gray-300">
-          <FaClock className="text-blue-500" />
-          <span>
+          <FaClock className="text-orange-300" />
+          Last Login:{" "}
+          <span className="ml-1">
             {userData?.last_log_in
               ? new Date(userData.last_log_in).toLocaleString()
               : 'Never logged in'}
@@ -110,10 +119,10 @@ const MyProfile = () => {
                 className={`px-5 py-2 rounded font-semibold transition ${
                   updateMutation.isLoading
                     ? 'bg-gray-600 cursor-not-allowed'
-                    : 'bg-blue-600 hover:bg-blue-700'
+                    : 'bg-purple-600 hover:bg-purple-700'
                 }`}
               >
-                {updateMutation.isLoading ? 'Saving...' : 'Save'}
+                {updateMutation.isLoading ? 'Saving...' : 'Save Changes'}
               </button>
               <button
                 onClick={() => setEditMode(false)}
@@ -126,7 +135,7 @@ const MyProfile = () => {
           ) : (
             <button
               onClick={handleEditClick}
-              className="flex items-center gap-2 text-blue-500 hover:underline font-medium"
+              className="flex items-center gap-2 text-orange-300 hover:underline hover:text-purple-300 font-medium mt-2"
             >
               <FaEdit /> Edit Profile
             </button>

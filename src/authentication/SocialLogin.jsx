@@ -41,7 +41,7 @@ const SocialLogin = () => {
         <div>
             <button
            onClick={handleSignInWithGoogle}
-            className="flex items-center gap-2 px-4 py-2 rounded-md border border-[#A259FF] text-[#A259FF] hover:bg-[#A259FF] hover:text-[#0D0D0D] transition shadow-glow"
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-[#A259FF] to-[#00F0FF] text-black shadow-glow hover:brightness-110 hover:bg-[#A259FF] hover:text-[#0D0D0D] transition shadow-glow"
             type="button"
           >
             <FaGoogle />

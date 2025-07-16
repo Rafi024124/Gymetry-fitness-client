@@ -41,7 +41,7 @@ const AddNewForum = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-8 bg-gray-900 rounded-2xl shadow-xl border border-gray-800">
-      <h2 className="text-3xl font-bold mb-6 text-center text-white">
+      <h2 className="text-3xl font-bold mb-6 text-center neon-text">
         📝 Add New Forum Post
       </h2>
 

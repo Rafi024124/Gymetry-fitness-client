@@ -81,7 +81,7 @@ const handleReject = async (id) => {
 
   return (
     <div className="p-4 bg-gray-900 rounded-xl shadow-md text-white">
-      <h2 className="text-4xl font-semibold text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-6">
+      <h2 className="text-4xl font-semibold neon-text mb-6 text-center">
         Pending Trainer Applications
       </h2>
 

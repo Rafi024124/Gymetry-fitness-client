@@ -68,7 +68,7 @@ const BookedTrainers = () => {
         {bookings.map((booking) => (
           <div
             key={booking._id}
-            className="bg-gray-800 text-white p-6 rounded-xl shadow-md border border-gray-700 hover:shadow-lg transition"
+            className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 hover:shadow-lg transition"
           >
             <h3 className="text-2xl font-bold flex items-center gap-2 mb-4">
               <FaUserTie className="text-blue-400" />
@@ -127,7 +127,7 @@ const BookedTrainers = () => {
             </h3>
 
             <textarea
-              className="w-full p-2 rounded bg-gray-800 border border-gray-700 text-white mb-4"
+              className="w-full p-2 rounded bg-gray-900 border border-gray-700 text-white mb-4"
               rows="4"
               placeholder="Write your feedback..."
               value={feedback}

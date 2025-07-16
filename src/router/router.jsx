@@ -28,6 +28,7 @@ import AddNewClass from "../pages/dashboard/admin/AddNewClass";
 import AddSlot from "../pages/dashboard/adminAndTrainer/Trainer/AddSlot";
 import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots";
 import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSubscribers";
+import AdminDashboardHome from "../pages/dashboard/admin/adminDashboardHome/AdminDashBoardHome";
 
 
 export const router = createBrowserRouter([
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+         index: true,
+         Component: AdminDashboardHome
+      },
       {
         path: "pendingTrainers",
         Component: PendingTrainers,

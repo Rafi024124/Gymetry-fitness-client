@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 
 import Loading from '../../loagind/Loaging';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Loaging from '../../loagind/Loaging';
 
 const AllTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,13 +21,13 @@ const AllTrainers = () => {
     queryFn: fetchTrainers,
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loaging />;
   if (isError) return <div className="text-center text-red-500 py-10">Failed to load trainers.</div>;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold mb-10 text-[#A259FF] text-center">Meet Our Trainers</h2>
+        <h2 className="text-3xl font-bold mb-10 neon-text text-center">Meet Our Trainers</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {trainers.map((trainer) => (
@@ -94,7 +95,7 @@ const AllTrainers = () => {
               )}
 
               <button
-                onClick={() => navigate(`/trainers/${trainer._id}`)}
+                onClick={() => navigate(`/trainer/${trainer._id}`)}
                 className="mt-auto bg-[#A259FF] hover:bg-purple-600 text-white py-2 rounded-md font-semibold transition"
               >
                 Know More

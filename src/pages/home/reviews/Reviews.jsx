@@ -5,7 +5,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaQuoteLeft, FaUserCircle } from 'react-icons/fa';
 
 const Reviews = () => {
   const { data: reviews = [], isLoading } = useQuery({
@@ -20,9 +20,9 @@ const Reviews = () => {
   if (reviews.length === 0) return <p className="text-white text-center py-10">No reviews found</p>;
 
   return (
-    <section className="w-full bg-[#121212] py-14 px-4">
+    <section className="w-full bg-[#0D0D0D] py-14 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-center text-[#A259FF] mb-10">
+        <h2 className="text-5xl font-bold text-center neon-text mb-12">
           What Our Members Say
         </h2>
 
@@ -39,22 +39,28 @@ const Reviews = () => {
         >
           {reviews.map(review => (
             <SwiperSlide key={review._id}>
-              <div className="bg-[#1e1e1e] border border-[#333] p-6 rounded-xl shadow-md min-h-[300px] flex flex-col justify-between mx-2">
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-1">
-                    {review.trainerName || 'Unnamed Trainer'}
-                  </h3>
-                  <p className="text-sm text-gray-400 mb-1">
-                    <strong>Class:</strong> {review.className || 'N/A'}
-                  </p>
-                  <p className="text-sm text-gray-400 mb-3">
-                    <strong>Slot:</strong> {review.slot?.slotName} ({review.slot?.slotTime})
-                  </p>
-                  <p className="text-gray-300 italic">
+              <div className="bg-[#1e1e1e] border border-[#333] p-6 rounded-2xl shadow-xl flex flex-col justify-between h-full mx-2 transition duration-300 hover:shadow-2xl">
+                
+                {/* Header: Avatar + Info */}
+                <div className="flex items-center gap-3 mb-3">
+                  <FaUserCircle className="text-4xl text-blue-500" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{review.trainerName || 'Unnamed Trainer'}</h3>
+                    <p className="text-sm text-gray-400">
+                      {review.className || 'N/A'} | {review.slot?.slotName}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Feedback Text */}
+                <div className="flex-1">
+                  <FaQuoteLeft className="text-2xl text-purple-400 mb-2" />
+                  <p className="text-gray-300 italic leading-relaxed">
                     “{review.feedback}”
                   </p>
                 </div>
 
+                {/* Rating */}
                 <div className="flex items-center gap-1 text-yellow-400 mt-4">
                   {[...Array(5)].map((_, i) => (
                     <FaStar

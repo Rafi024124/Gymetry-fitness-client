@@ -52,7 +52,8 @@ const NewsletterSubscribe = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
+    <div className='bg-[#0D0D0D] scroll-py-10'>
+      <div className="max-w-md mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
       <h3 className="text-2xl font-semibold mb-4 text-center">Subscribe to our Newsletter</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -77,7 +78,7 @@ const NewsletterSubscribe = () => {
         />
         <button
           type="submit"
-          className={`w-full py-3 rounded bg-blue-600 hover:bg-blue-700 transition ${
+          className={` w-full py-3 glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] duration-300 text-xl font-semibold rounded bg-blue-600 hover:bg-blue-700 transition ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
           disabled={loading}
@@ -85,6 +86,7 @@ const NewsletterSubscribe = () => {
           {loading ? 'Subscribing...' : 'Subscribe Now'}
         </button>
       </form>
+    </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import Loaging from '../../../loagind/Loaging';
 
 const HandleAllTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -29,7 +30,15 @@ const HandleAllTrainers = () => {
         axiosSecure
           .patch(`/trainers/status/${id}`, { status: 'rejected' })
           .then(() => {
-            Swal.fire('Rejected!', 'Trainer status updated to rejected.', 'success');
+           Swal.fire({
+  title: 'Rejected!',
+  text: 'Trainer status updated to rejected.',
+  icon: 'success',
+  background: '#1e1e1e', // dark background
+  color: '#ffffff',      // white text
+  confirmButtonColor: '#0000FF' // purple confirm button
+});
+
             refetch();
           })
           .catch(() => {
@@ -39,16 +48,17 @@ const HandleAllTrainers = () => {
     });
   };
 
-  if (isLoading) return <div className="text-white text-center p-6">Loading trainers...</div>;
+  if (isLoading) return <Loaging></Loaging>;
   if (error) return <div className="text-red-500 text-center p-6">Error loading trainers.</div>;
 
   return (
-    <div className="min-h-screen bg-[#121212] px-6 py-10">
-      <h2 className="text-3xl font-bold mb-8 text-white">All Approved Trainers</h2>
+    <div className="min-h-screen bg-[#36454F] px-1 py-10">
+      <div className='bg-gray-900 rounded-t-2xl p-2'>
+        <h2 className="text-3xl font-bold mb-8 neon-text text-center">All Approved Trainers</h2>
 
       <div className="overflow-x-auto rounded-lg shadow border border-gray-700">
         <table className="min-w-full text-sm text-left text-gray-300">
-          <thead className="bg-gray-900 text-gray-400 uppercase text-xs tracking-wider">
+          <thead className="bg-gray-950 text-gray-400 uppercase text-xs tracking-wider">
             <tr>
               <th className="py-3 px-6">Profile</th>
               <th className="py-3 px-6">Name</th>
@@ -66,13 +76,13 @@ const HandleAllTrainers = () => {
             {trainers.map((trainer) => (
               <tr
                 key={trainer._id}
-                className="border-b border-gray-700 hover:bg-[#2A2A2A] transition"
+                className="border-b border-gray-700 bg-gray-900 hover:bg-[#2A2A2A] transition"
               >
                 <td className="py-3 px-6">
                   <img
                     src={trainer.profileImage || '/default-profile.png'}
                     alt={trainer.fullName}
-                    className="w-12 h-12 object-cover rounded-full border border-[#A259FF]"
+                    className="w-12 h-12 object-cover rounded-full"
                   />
                 </td>
                 <td className="py-3 px-6">{trainer.fullName}</td>
@@ -106,6 +116,7 @@ const HandleAllTrainers = () => {
             )}
           </tbody>
         </table>
+      </div>
       </div>
     </div>
   );

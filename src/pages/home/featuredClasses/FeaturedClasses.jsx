@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { FaStar, FaUsers } from 'react-icons/fa';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import Loaging from '../../../loagind/Loaging';
 
 const FeaturedClasses = () => {
   const axiosSecure = useAxiosSecure();
@@ -17,7 +18,7 @@ const FeaturedClasses = () => {
 
   if (isLoading) {
     return (
-      <div className="text-center text-white py-10">Loading featured classes...</div>
+      <Loaging></Loaging>
     );
   }
 
@@ -28,8 +29,8 @@ const FeaturedClasses = () => {
   }
 
   return (
-    <section className="bg-gray-900 py-16 px-4 md:px-10 rounded-lg">
-      <h2 className="text-4xl font-bold text-center text-white mb-12">
+    <section className="bg-[#0D0D0D] py-16 px-4 md:px-10 rounded-lg">
+      <h2 className="text-4xl font-bold text-center neon-text mb-12">
         <FaStar className="inline text-yellow-400 mr-2" />
         Featured Classes
       </h2>

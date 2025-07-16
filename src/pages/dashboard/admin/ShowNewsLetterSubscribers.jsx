@@ -19,7 +19,7 @@ const ShowNewsletterSubscribers = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
-      <h2 className="text-3xl font-bold mb-6 text-center text-gradient bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-bold mb-6 text-center neon-text">
         Newsletter Subscribers
       </h2>
 

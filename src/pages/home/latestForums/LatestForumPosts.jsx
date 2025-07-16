@@ -19,8 +19,8 @@ const LatestForumPosts = () => {
   if (error) return <p className="text-center text-red-500 mt-8">Failed to load posts</p>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 text-white">
-      <h2 className="text-4xl font-bold mb-6 text-center">Latest Community Posts</h2>
+    <div className="  mx-auto px-20 py-8 text-white bg-[#0D0D0D]">
+      <h2 className="text-4xl lg:text-5xl py-4 neon-text font-bold mb-6 text-center">Latest Community Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post._id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">

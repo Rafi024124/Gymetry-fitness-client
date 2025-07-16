@@ -38,14 +38,14 @@ const AddNewClass = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-800 p-8 rounded-lg text-white">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Add New Class</h2>
+    <div className="max-w-xl mx-auto bg-gray-900 p-8 rounded-lg text-white">
+      <h2 className="text-3xl  font-semibold mb-6 text-center neon-text">Add New Class</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className="block mb-1">Class Name</label>
           <input
             {...register('name', { required: true })}
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
             placeholder="e.g. Power Yoga"
           />
           {errors.name && <span className="text-red-400 text-sm">Name is required</span>}
@@ -55,7 +55,7 @@ const AddNewClass = () => {
           <label className="block mb-1">Class Image URL</label>
           <input
             {...register('image', { required: true })}
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
             placeholder="https://example.com/yoga.jpg"
           />
           {errors.image && <span className="text-red-400 text-sm">Image URL is required</span>}
@@ -65,7 +65,7 @@ const AddNewClass = () => {
           <label className="block mb-1">Description</label>
           <textarea
             {...register('description', { required: true })}
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
             rows="4"
             placeholder="Write a short description..."
           ></textarea>

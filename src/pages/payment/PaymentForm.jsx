@@ -13,7 +13,8 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
   const { user } = useContext(AuthContext);
 
   const amountInCents = selectedPackage?.price * 100;
-
+  console.log(slot);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) return;
@@ -71,11 +72,9 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
         try {
           const saveRes = await axiosSecure.post("/payments", paymentInfo);
           console.log("Payment saved:", saveRes.data);
-            await axiosSecure.patch(`/slots/${slot.slotId}`, { booked: true });
-
-    // ✅ Optionally show a success message
-    console.log("Slot marked as booked");
-          // Optionally notify user or redirect
+          console.log(slot.slotId);
+          
+           
         } catch (err) {
           console.error("Failed to save payment:", err);
         }

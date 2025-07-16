@@ -75,8 +75,8 @@ const AddSlot = () => {
   if (error) return <div className="text-center text-red-500">Failed to load classes</div>;
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-800 p-8 rounded-lg text-white">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Add New Slot</h2>
+    <div className="max-w-xl mx-auto bg-gray-900 p-8 rounded-lg text-white">
+      <h2 className="text-3xl font-semibold neon-text mb-6 text-center">Add New Slot</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Slot Name */}
         <div>
@@ -84,7 +84,7 @@ const AddSlot = () => {
           <input
             {...register('slotName', { required: 'Slot Name is required' })}
             placeholder="e.g. Morning Slot"
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
           />
           {errors.slotName && <p className="text-red-400 text-sm mt-1">{errors.slotName.message}</p>}
         </div>
@@ -95,7 +95,7 @@ const AddSlot = () => {
           <input
             {...register('slotTime', { required: 'Slot Time is required' })}
             placeholder="e.g. 9:00 AM - 10:00 AM"
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
           />
           {errors.slotTime && <p className="text-red-400 text-sm mt-1">{errors.slotTime.message}</p>}
         </div>
@@ -125,7 +125,7 @@ const AddSlot = () => {
           <label className="block mb-1">Select Class</label>
           <select
             {...register('classId', { required: 'Class selection is required' })}
-            className="w-full p-2 bg-gray-700 rounded"
+            className="w-full p-2 bg-gray-800 rounded"
             defaultValue=""
           >
             <option value="" disabled>Choose a class</option>

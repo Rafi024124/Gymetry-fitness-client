@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink, Outlet } from 'react-router';
+import { Link, NavLink, Outlet } from 'react-router';
 import {
   FaTachometerAlt,
   FaUserCircle,
@@ -28,29 +28,40 @@ const DashBoardLayout = () => {
       {/* Main Content */}
       <div className="drawer-content flex flex-col bg-[#121212] text-white min-h-screen">
         {/* Top Navbar */}
-        <div className="navbar bg-gray-900 shadow-md px-4">
-          {/* Hamburger Icon */}
-          <div className="flex-none lg:hidden">
-            <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </label>
-          </div>
+        {/* Top Navbar */}
+<div className="navbar bg-gray-900 shadow-md px-4">
+  {/* Hamburger Icon */}
+  <div className="flex-none lg:hidden">
+    <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </label>
+  </div>
 
-          {/* Title */}
-          <div className="flex-1 text-xl font-bold bg-gray-900 text-white flex items-center gap-2">
-            <FaTachometerAlt className="text-white" /> My Dashboard
-          </div>
-        </div>
+  {/* Title + Home Button */}
+  <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold bg-gray-900 text-white">
+    <div className="flex items-center gap-2">
+      <FaTachometerAlt className="text-white" /> My Dashboard
+    </div>
 
-        <div className="p-6">
+    <Link
+            className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
+            to="/"
+          >
+            Home Page
+          </Link>
+  </div>
+</div>
+
+
+        <div className="p-6 bg-[#36454F] min-h-screen">
           <Outlet />
         </div>
       </div>

@@ -32,8 +32,8 @@ const FeaturedSection = () => {
             key={index}
             className="bg-[#1F1F1F]/80 backdrop-blur-sm p-6 rounded-xl border border-[#A259FF] shadow-md hover:shadow-[0_0_10px_#A259FF] transition duration-300"
           >
-            <div className="mb-4 text-[#A259FF]-">{feature.icon}</div>
-            <h3 className="text-xl font-semibold text-[#A259FF] mb-2">
+            <div className="mb-4 neon-text-">{feature.icon}</div>
+            <h3 className="text-2xl font-semibold neon-text mb-2">
               {feature.title}
             </h3>
             <p className="text-[#ccc] text-sm">{feature.description}</p>

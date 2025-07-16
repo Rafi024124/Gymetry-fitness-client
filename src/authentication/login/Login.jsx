@@ -159,7 +159,7 @@ const Login = () => {
 
         <p className="mt-6 text-center text-[#A259FF]">
           Don't have an account?{" "}
-          <Link to="/register" className="cursor-pointer hover:underline font-semibold">
+          <Link to="/register" className="cursor-pointer hover:underline font-semibold neon-text">
             Create new account
           </Link>
         </p>

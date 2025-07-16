@@ -227,7 +227,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-[#A259FF] to-[#00F0FF] text-[#F2F2F2] font-semibold py-2 rounded-md shadow-glow hover:brightness-110 transition"
+            className="w-full bg-gradient-to-r from-[#A259FF] to-[#00F0FF] text-black font-semibold py-2 rounded-md shadow-glow hover:brightness-110 transition"
           >
             Register
           </button>
@@ -239,7 +239,7 @@ const Register = () => {
           <SocialLogin />
         </div>
 
-        <p className="mt-6 text-center text-[#A259FF]">
+        <p className="mt-6 text-center text-[#A259FF] neon-text">
           Already have an account?{" "}
           <Link to="/login" className="cursor-pointer hover:underline font-semibold">
             Login here

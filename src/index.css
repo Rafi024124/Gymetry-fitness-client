@@ -1,14 +1,21 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* Neon text effect */
+
 .neon-text {
-  text-shadow: 0 0 1px #a259ff, 0 0 1px #a164f1;
+  background: linear-gradient(to right, #A259FF, #00F0FF);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: #00F0FF; 
+  -webkit-text-fill-color: transparent;
+ 
+  transition: all 0.3s ease;
 }
+
 
 /* Button glow */
 .glow-btn {
-  background: linear-gradient(90deg, #a259ff 0%, #a164f1 100%);
+  background: linear-gradient(90deg, #a259ff 0%, #00F0FF 100%);
   color: #F2F2F2;
   font-weight: 600;
   padding: 0.5rem 1.25rem;
@@ -51,8 +58,8 @@ span::after {
   bottom: -2px;
   height: 2px;
   width: 0;
-  background-color: #A259FF; /* electric purple */
-  box-shadow: 0 0 10px #a259ff, 0 0 12px #a259ff; /* glow */
+  background-color: #00F0FF; /* electric purple */
+  box-shadow: 0 0 10px #a259ff, 0 0 12px #00F0FF; /* glow */
   transition: width 0.3s ease;
   border-radius: 2px;
 }
@@ -68,14 +75,14 @@ span::after {
 }
 
 .neon-icon:hover {
-  text-shadow: 0 0 6px #a259ff, 0 0 12px #a259ff;
+  text-shadow: 0 0 6px #a259ff, 0 0 12px #00F0FF;
   filter: brightness(1.2);
 }
 
-
+/* bg-gradient-to-r from-[#A259FF] to-[#00F0FF] */
 /* Add this to your global CSS or styles.css */
 
-.swal2-popup {
+/* .swal2-popup {
   background: #1F1F1F !important;
   color: #F2F2F2 !important;
   font-family: 'YourPreferredFont', sans-serif;
@@ -88,4 +95,4 @@ span::after {
 .swal2-confirm {
   background-color: #A259FF !important;
   color: #F2F2F2 !important;
-}
+} */

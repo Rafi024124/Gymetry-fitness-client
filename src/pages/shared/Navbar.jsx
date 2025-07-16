@@ -97,12 +97,12 @@ const Navbar = () => {
         {/* Logo */}
         <div
           className="flex items-center space-x-2"
-          style={{ textShadow: "0 0 1px #a164f1" }}
+          
         >
           <img src={Logo} alt="Logo" className="rounded-full w-20" />
-          <span className="text-xl font-bold text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent">
-            Gy<span className="text-purple-300">m</span>etry
-          </span>
+          <span className="text-xl neon-text font-bold">
+  Gymetry
+</span>
         </div>
       </div>
 
@@ -132,7 +132,7 @@ const Navbar = () => {
           </>
         ) : (
           <Link
-            className="glow-btn transition duration-300 text-sm font-semibold"
+            className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
             to="/login"
           >
             Login

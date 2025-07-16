@@ -21,9 +21,9 @@ const TeamSection = () => {
   const team = trainers.slice(0, 3);
 
   return (
-    <section className="team-section max-w-6xl mx-auto p-6">
-      <h2 className="text-4xl font-bold mb-8 text-center">Meet Our Team</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <section className=" bg-[#0D0D0D] team-section mx-auto p-6">
+      <h2 className="text-5xl font-bold mb-8 text-center neon-text">Meet Our Team</h2>
+      <div className=" max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {team.map((trainer) => (
           <div key={trainer._id} className="bg-gray-800 p-6 rounded-lg text-white shadow">
             <img
