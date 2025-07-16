@@ -3,14 +3,21 @@
 
 
 .neon-text {
-  background: linear-gradient(to right, #A259FF, #00F0FF);
+  background: linear-gradient(to right, #22dde7, #00F0FF);
   background-clip: text;
   -webkit-background-clip: text;
-  color: #00F0FF; 
+  color: #00F0FF;
   -webkit-text-fill-color: transparent;
- 
+
+  /* Optional text stroke (works in WebKit browsers) */
+  
+
+  /* Glowing effect */
+
+
   transition: all 0.3s ease;
 }
+
 
 
 /* Button glow */

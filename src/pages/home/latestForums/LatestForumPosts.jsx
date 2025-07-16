@@ -2,7 +2,6 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
-// your axios secure hook
 
 const LatestForumPosts = () => {
   const axiosSecure = useAxiosSecure();
@@ -15,39 +14,51 @@ const LatestForumPosts = () => {
     },
   });
 
-  if (isLoading) return <p className="text-center text-white mt-8">Loading latest posts...</p>;
-  if (error) return <p className="text-center text-red-500 mt-8">Failed to load posts</p>;
+  if (isLoading) return <p className="text-center text-white mt-8">Loading awesome content... ⏳</p>;
+  if (error) return <p className="text-center text-red-500 mt-8">Oops! Something broke 💥</p>;
 
   return (
-    <div className="  mx-auto px-20 py-8 text-white bg-[#0D0D0D]">
-      <h2 className="text-4xl lg:text-5xl py-4 neon-text font-bold mb-6 text-center">Latest Community Posts</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {posts.map((post) => (
-          <div key={post._id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-            <img
-              src={post.imageUrl || '/default-post.jpg'}
-              alt={post.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
-              <p className="text-sm text-gray-300 mb-3">
-                By <span className="font-medium">{post.author}</span> on{' '}
-                {new Date(post.createdAt).toLocaleDateString()}
+    <div className="w-full bg-[#0D0D0D] min-h-screen py-16">
+      <section className="max-w-7xl mx-auto px-6">
+        <h2 className="text-center text-5xl font-extrabold text-cyan-300 neon-text-glow mb-14">
+          🚀 Trending in the Forum
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {posts.map((post) => (
+            <div
+              key={post._id}
+              className="relative bg-white/5 backdrop-blur-md rounded-2xl p-5 shadow-xl border border-cyan-500/10 transition-transform duration-300 transform hover:-translate-y-2 hover:rotate-1 group"
+            >
+              <img
+                src={post.imageUrl || 'https://via.placeholder.com/400x200?text=Forum+Post'}
+                alt={post.title}
+                className="w-full h-48 object-cover rounded-xl mb-4 group-hover:scale-[1.03] transition duration-300"
+              />
+              <h3 className="text-xl font-bold text-white line-clamp-2 mb-2">
+                📝 {post.title}
+              </h3>
+              <p className="text-sm text-gray-400 mb-1">
+                👤 <span className="text-pink-400">{post.author}</span> • {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <p className="text-gray-400 mb-4">
-                {post.content.length > 100 ? post.content.slice(0, 100) + '...' : post.content}
+              <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                {post.content}
               </p>
+
               <Link
                 to={`/forums`}
-                className="inline-block text-blue-400 hover:text-blue-600 font-semibold"
+                className="inline-block px-3 py-1 rounded-full text-sm font-semibold text-cyan-400 border border-cyan-400 hover:bg-cyan-400 hover:text-[#0D0D0D] transition-all duration-200"
               >
-                Read More &rarr;
+                🔍 Dive In →
               </Link>
+
+              <div className="absolute top-2 right-2 bg-cyan-500 text-[#0D0D0D] text-xs px-3 py-1 rounded-full font-bold">
+                NEW
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };

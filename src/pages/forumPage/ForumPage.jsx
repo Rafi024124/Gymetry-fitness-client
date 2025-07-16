@@ -9,7 +9,6 @@ const ForumPage = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
-
   const [page, setPage] = useState(1);
   const postsPerPage = 6;
 
@@ -23,10 +22,7 @@ const ForumPage = () => {
   });
 
   const handleVote = async (postId, voteType) => {
-    if (!user) {
-      alert('Please login to vote');
-      return;
-    }
+    if (!user) return alert('Please login to vote');
     try {
       await axiosSecure.post(`/forum-posts/${postId}/vote`, {
         voteType,
@@ -44,86 +40,79 @@ const ForumPage = () => {
   const { posts, totalPages } = data;
 
   return (
-    <div className="mt-5 mb-5 flex flex-col h-screen mx-auto px-4 py-6 bg-gray-900 text-white rounded-lg">
-      <h1 className="text-4xl font-bold mb-6 text-center flex-shrink-0">Forum</h1>
+    <div className="min-h-screen bg-[#0A0A0A] text-white py-12 px-4 sm:px-10">
+      <h1 className="text-5xl font-extrabold text-center mb-14 neon-text">💬 Gymetry Forum</h1>
 
-      {/* Scrollable posts container */}
-      <div className="flex-1 overflow-y-auto space-y-8">
-        {posts.length === 0 && <p className="text-center">No posts available.</p>}
-
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
         {posts.map((post) => {
           const currentVote = post.votesByUser?.[user?.uid || user?.email] || 0;
 
           return (
-            <article
+            <div
               key={post._id}
-              className="bg-[#292929] rounded-lg shadow-lg overflow-hidden flex gap-6"
-              style={{ minHeight: '140px' }}
+              className="bg-[#1A1A1A] backdrop-blur-md bg-opacity-60 neon-border rounded-xl overflow-hidden shadow-xl hover:shadow-neon transition-all duration-300"
             >
               <img
                 src={post.imageUrl}
                 alt={post.title}
-                className="w-[200px] h-[140px] object-cover flex-shrink-0"
-                loading="lazy"
+                className="w-full h-56 object-cover"
               />
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                  <p className="text-gray-400 mb-3 text-sm line-clamp-3">{post.content}</p>
-                  <p className="text-sm text-gray-500 mb-2">By: {post.author}</p>
-                </div>
-
-                <div className="flex items-center justify-between mt-2">
-                  <div className="flex items-center gap-4">
+              <div className="p-6 space-y-3">
+                <h2 className="text-2xl font-bold neon-text">{post.title}</h2>
+                <p className="text-gray-400 line-clamp-3">{post.content}</p>
+                <div className="flex items-center justify-between mt-3">
+                  <div className="flex gap-2 items-center text-sm text-gray-400">
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${post.author}&background=random`}
+                      alt="author"
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <span>{post.author}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleVote(post._id, 'up')}
-                      aria-label="Upvote"
-                      disabled={!user}
-                      className={`transition text-lg ${
-                        currentVote === 1 ? 'text-blue-400' : 'text-blue-500 hover:text-blue-400'
+                      className={`text-xl hover:scale-125 transition-transform duration-200 ${
+                        currentVote === 1 ? 'text-[#00F0FF]' : 'text-gray-400 hover:text-[#00F0FF]'
                       }`}
                     >
                       <FaArrowUp />
                     </button>
                     <button
                       onClick={() => handleVote(post._id, 'down')}
-                      aria-label="Downvote"
-                      disabled={!user}
-                      className={`transition text-lg ${
-                        currentVote === -1 ? 'text-red-400' : 'text-red-500 hover:text-red-400'
+                      className={`text-xl hover:scale-125 transition-transform duration-200 ${
+                        currentVote === -1 ? 'text-[#FF6B6B]' : 'text-gray-400 hover:text-[#FF6B6B]'
                       }`}
                     >
                       <FaArrowDown />
                     </button>
+                    <span className="text-white text-sm font-semibold">
+                      👍 {post.upvotes || 0} / 👎 {post.downvotes || 0}
+                    </span>
                   </div>
-                  <p className="font-semibold select-none">
-                    👍 {post.upvotes || 0}  👎 {post.downvotes || 0}
-                  </p>
                 </div>
               </div>
-            </article>
+            </div>
           );
         })}
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center gap-4 mt-6 flex-shrink-0">
+      <div className="flex justify-center items-center gap-6 mt-14">
         <button
           onClick={() => setPage((old) => Math.max(old - 1, 1))}
           disabled={page === 1}
-          className="bg-[#A259FF] px-4 py-2 rounded disabled:opacity-50"
+          className="px-6 py-2 rounded-full bg-[#A259FF] hover:bg-[#7E40E7] text-white font-semibold disabled:opacity-30"
         >
-          Prev
+          ◀ Prev
         </button>
-        <span className="text-white flex items-center">
-          {page} / {totalPages || 1}
-        </span>
+        <span className="text-white text-lg font-semibold">Page {page} / {totalPages}</span>
         <button
-          onClick={() => setPage((old) => (totalPages ? Math.min(old + 1, totalPages) : old + 1))}
+          onClick={() => setPage((old) => Math.min(old + 1, totalPages))}
           disabled={page === totalPages}
-          className="bg-[#A259FF] px-4 py-2 rounded disabled:opacity-50"
+          className="px-6 py-2 rounded-full bg-[#A259FF] hover:bg-[#7E40E7] text-white font-semibold disabled:opacity-30"
         >
-          Next
+          Next ▶
         </button>
       </div>
     </div>

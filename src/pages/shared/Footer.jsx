@@ -21,41 +21,41 @@ const Footer = () => {
           Gymetry – Redefining your fitness journey with expert trainers,
           personalized classes, and a vibrant community. Powered by passion and tech.
         </p>
-      </div>
+      </div>  
 
       <nav className='flex flex-col gap-2 text-sm'>
-        <h6 className="footer-title text-[#A259FF] font-semibold text-base neon-text">Services</h6>
-        <a className="link link-hover hover:text-[#A259FF]">Personal Training</a>
-        <a className="link link-hover hover:text-[#A259FF]">Group Classes</a>
-        <a className="link link-hover hover:text-[#A259FF]">Online Coaching</a>
-        <a className="link link-hover hover:text-[#A259FF]">Nutrition Plans</a>
+        <h6 className="footer-title text-[#00F0FF] font-semibold text-base neon-text">Services</h6>
+        <a className="link link-hover hover:text-[#00F0FF]">Personal Training</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Group Classes</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Online Coaching</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Nutrition Plans</a>
       </nav>
 
       <nav className='flex flex-col gap-2 text-sm'>
-        <h6 className="footer-title text-[#A259FF] font-semibold text-base neon-text">Company</h6>
-        <a className="link link-hover hover:text-[#A259FF]">About Us</a>
-        <a className="link link-hover hover:text-[#A259FF]">Our Trainers</a>
-        <a className="link link-hover hover:text-[#A259FF]">Careers</a>
-        <a className="link link-hover hover:text-[#A259FF]">Blog</a>
+        <h6 className="footer-title text-[#00F0FF] font-semibold text-base neon-text">Company</h6>
+        <a className="link link-hover hover:text-[#00F0FF]">About Us</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Our Trainers</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Careers</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Blog</a>
       </nav>
 
       <nav className='flex flex-col gap-2 text-sm'>
-        <h6 className="footer-title text-[#A259FF] font-semibold text-base neon-text">Support</h6>
-        <a className="link link-hover hover:text-[#A259FF]">Help Center</a>
-        <a className="link link-hover hover:text-[#A259FF]">Contact</a>
-        <a className="link link-hover hover:text-[#A259FF]">Privacy Policy</a>
-        <a className="link link-hover hover:text-[#A259FF]">Terms</a>
+        <h6 className="footer-title text-[#00F0FF] font-semibold text-base neon-text">Support</h6>
+        <a className="link link-hover hover:text-[#00F0FF]">Help Center</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Contact</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Privacy Policy</a>
+        <a className="link link-hover hover:text-[#00F0FF]">Terms</a>
       </nav>
 
       <nav>
-        <h6 className="footer-title text-[#A259FF] font-semibold text-base neon-text">Social</h6>
+        <h6 className="footer-title text-[#00F0FF] font-semibold text-base neon-text">Social</h6>
         <div className="flex space-x-4 mt-2">
           <a href="https://www.facebook.com/" target="_blank">
           
-          <FaFacebook className="text-xl hover:text-[#A259FF]" /></a>
-          <a  href="https://www.instagram.com/" target="_blank"><FaInstagram className="text-xl hover:text-[#A259FF]" /></a>
-          <a  href="https://www.twitter.com/" target="_blank"><FaTwitter className="text-xl hover:text-[#A259FF]" /></a>
-          <a  href="https://www.github.com/" target="_blank"><FaGithub className="text-xl hover:text-[#A259FF]" /></a>
+          <FaFacebook className="text-xl hover:text-[#00F0FF]" /></a>
+          <a  href="https://www.instagram.com/" target="_blank"><FaInstagram className="text-xl hover:text-[#00F0FF]" /></a>
+          <a  href="https://www.twitter.com/" target="_blank"><FaTwitter className="text-xl hover:text-[#00F0FF]" /></a>
+          <a  href="https://www.github.com/" target="_blank"><FaGithub className="text-xl hover:text-[#00F0FF]" /></a>
         </div>
       </nav>
     </footer>

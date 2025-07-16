@@ -132,7 +132,7 @@ const Navbar = () => {
           </>
         ) : (
           <Link
-            className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
+            className="glow-btn bg-gradient-to-r from-[#59e1ff] to-[#00F0FF] transition duration-300 text-sm font-semibold"
             to="/login"
           >
             Login

@@ -19,54 +19,48 @@ const AllClasses = () => {
   if (error) return <p className="text-center text-red-400 mt-10">Error loading classes</p>;
 
   return (
-    <div className="p-6 bg-gray-900 text-white min-h-screen  mx-auto">
+    <div className='w-full bg-gray-900'>
+      <div className="p-6 bg-gray-900 text-white min-h-screen max-w-7xl mx-auto">
       <h2 className="text-4xl text-center font-bold mb-12 neon-text">All Classes</h2>
 
       <div className="flex flex-col gap-10">
         {classes.map((cls) => (
           <div
             key={cls._id}
-            className="bg-gray-800 p-6 rounded-xl shadow-md flex flex-col md:flex-row items-center md:items-start gap-6"
+            className="bg-gray-800 p-6 rounded-xl shadow-md flex flex-col md:flex-row md:items-center gap-8"
           >
-            {/* Left side: Class Name and Description */}
-            <div className="md:w-1/3">
-              <h3 className="text-4xl font-extrabold neon-text mb-2">
-                {cls.name}
-              </h3>
-              <p className="text-gray-400 lowercase leading-relaxed">
-                {cls.description}
-              </p>
+            {/* Left: Class Info */}
+            <div className="md:w-1/6 flex flex-col items-center md:items-start text-center md:text-left gap-4">
+              <h3 className="text-3xl font-extrabold neon-text">{cls.name}</h3>
+              <img src={cls.image} alt="" className="w-40 h-40 rounded-xl object-cover shadow" />
+              <p className="text-gray-400 text-sm">{cls.description}</p>
             </div>
 
             {/* Divider */}
-            <div className="hidden md:block border-l border-gray-600 h-28 mx-6"></div>
+            <div className="hidden md:block border-l border-gray-600 h-40"></div>
 
-            {/* Right side: Trainers */}
-            <div className="md:w-1/2 flex flex-wrap justify-start gap-6">
+            {/* Right: Trainers */}
+            <div className="flex-1 flex flex-wrap justify-center md:justify-start gap-6 items-center">
               {cls.trainers?.length ? (
                 cls.trainers.map((trainer) => (
                   <div
                     key={trainer._id}
-                    className="cursor-pointer text-center w-20"
+                    className="cursor-pointer text-center w-24 hover:scale-105 transition-transform"
                     onClick={() =>
-                      navigate(
-                        `/trainer/${trainer._id}?className=${encodeURIComponent(cls.name)}`
-                      )
+                      navigate(`/trainer/${trainer._id}?className=${encodeURIComponent(cls.name)}`)
                     }
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
-                        navigate(
-                          `/trainer/${trainer._id}?className=${encodeURIComponent(cls.name)}`
-                        );
+                        navigate(`/trainer/${trainer._id}?className=${encodeURIComponent(cls.name)}`);
                       }
                     }}
                   >
                     <img
                       src={trainer.profileImage || '/default-avatar.png'}
                       alt={trainer.fullName}
-                      className="w-16 h-16 rounded-full border-2 border-blue-500 object-cover mx-auto"
+                      className="w-20 h-20 rounded-full border-2 border-blue-500 object-cover mx-auto"
                     />
                     <p className="text-sm mt-2">{trainer.fullName}</p>
                   </div>
@@ -78,6 +72,7 @@ const AllClasses = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

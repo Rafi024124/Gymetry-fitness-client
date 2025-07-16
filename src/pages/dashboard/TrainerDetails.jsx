@@ -51,13 +51,14 @@ const TrainerDetails = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-900 text-white min-h-screen max-w-4xl mx-auto">
+    <div className='bg-gray-900'>
+      <div className="p-6 bg-gray-900 text-white min-h-screen max-w-4xl mx-auto">
       {/* Trainer Info */}
       <div className="flex items-center gap-6 mb-8">
         <img
           src={trainer.profileImage || '/default-avatar.png'}
           alt={trainer.fullName}
-          className="w-24 h-24 rounded-full border-4 border-blue-500"
+          className="w-30 h-30 rounded-full "
         />
         <div>
           <h2 className="text-3xl font-bold flex items-center gap-2">
@@ -69,13 +70,13 @@ const TrainerDetails = () => {
             {trainer.email}
           </p>
           <div className="mt-3 flex items-center gap-2">
-            <FaDumbbell className="text-purple-400" />
+            <FaDumbbell className="neon-text" />
             <div className="flex flex-wrap gap-2">
               {trainer.skills && trainer.skills.length ? (
                 trainer.skills.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="bg-purple-700 text-purple-200 text-xs font-semibold px-3 py-1 rounded-full"
+                    className="bg-blue-500 text-purple-200 text-xs font-semibold px-3 py-1 rounded-full"
                   >
                     {skill}
                   </span>
@@ -93,7 +94,7 @@ const TrainerDetails = () => {
 
       {/* Slots Display */}
       <div>
-        <h3 className="text-2xl font-semibold mb-6">
+        <h3 className="text-4xl neon-text font-bold mb-6">
           Available Slots{' '}
           {className && (
             <>
@@ -149,7 +150,7 @@ const TrainerDetails = () => {
                 }, {})
               ).map(([clsName, clsSlots]) => (
                 <div key={clsName}>
-                  <h4 className="text-2xl font-bold text-purple-400 mb-4 border-b pb-1 border-gray-600">
+                  <h4 className="text-4xl font-bold neon-text mb-4 border-b pb-1 border-gray-600">
                     {clsName}
                   </h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -197,6 +198,8 @@ const TrainerDetails = () => {
           </p>
         )}
       </div>
+    </div>
+
     </div>
   );
 };

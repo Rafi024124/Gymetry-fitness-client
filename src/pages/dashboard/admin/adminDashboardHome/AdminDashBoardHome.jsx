@@ -66,38 +66,38 @@ const AdminDashboardHome = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
         <div className="bg-gray-800 rounded-lg p-6 text-center shadow-lg hover:shadow-purple-600 transition-shadow duration-300">
           <FaUsers className="mx-auto mb-3 text-4xl text-purple-400" />
-          <h2 className="text-xl font-semibold mb-1">Newsletter Subscribers</h2>
+          <h2 className="text-xl font-semibold mb-1 neon-text">Newsletter Subscribers</h2>
           <p className="text-3xl font-bold">{stats.totalSubscribers}</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 text-center shadow-lg hover:shadow-blue-400 transition-shadow duration-300">
           <FaUserCheck className="mx-auto mb-3 text-4xl text-blue-400" />
-          <h2 className="text-xl font-semibold mb-1">Approved Trainers</h2>
+          <h2 className="text-xl font-semibold mb-1 neon-text">Approved Trainers</h2>
           <p className="text-3xl font-bold">{stats.totalTrainers}</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 text-center shadow-lg hover:shadow-yellow-400 transition-shadow duration-300">
           <FaClock className="mx-auto mb-3 text-4xl text-yellow-400" />
-          <h2 className="text-xl font-semibold mb-1">Pending Applications</h2>
+          <h2 className="text-xl font-semibold mb-1 neon-text">Pending Applications</h2>
           <p className="text-3xl font-bold">{stats.pendingApplications}</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 text-center shadow-lg hover:shadow-pink-500 transition-shadow duration-300">
           <FaDumbbell className="mx-auto mb-3 text-4xl text-pink-500" />
-          <h2 className="text-xl font-semibold mb-1">Total Classes</h2>
+          <h2 className="text-xl font-semibold mb-1 neon-text">Total Classes</h2>
           <p className="text-3xl font-bold">{stats.totalClasses}</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 text-center shadow-lg hover:shadow-green-500 transition-shadow duration-300">
           <FaDollarSign className="mx-auto mb-3 text-4xl text-green-500" />
-          <h2 className="text-xl font-semibold mb-1">Total Revenue</h2>
+          <h2 className="text-xl font-semibold mb-1 neon-text">Total Revenue</h2>
           <p className="text-3xl font-bold text-green-500">${stats.totalBalance.toFixed(2)}</p>
         </div>
       </div>
 
       {/* Latest Trainer Applications */}
       <section>
-        <h2 className="text-3xl font-semibold mb-6 border-b border-gray-700 pb-3">
+        <h2 className="text-3xl neon-text font-semibold mb-6 border-b border-gray-700 pb-3">
           Latest Trainer Applications
         </h2>
         {latestApplications.length === 0 ? (

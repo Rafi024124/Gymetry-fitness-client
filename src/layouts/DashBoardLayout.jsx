@@ -17,10 +17,15 @@ import {
   FaUserPlus
 } from 'react-icons/fa';
 import { AuthContext } from '../contexts/authContext/AuthContext';
+import useUserRole from '../hooks/useUserRole';
 
 const DashBoardLayout = () => {
 
+
+  const {role, roleLoading} = useUserRole();
   const {user} = useContext(AuthContext);
+  console.log(role);
+  
   return (
     <div className="drawer lg:drawer-open">
       <input id="main-drawer" type="checkbox" className="drawer-toggle" />
@@ -71,80 +76,97 @@ const DashBoardLayout = () => {
         <label htmlFor="main-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-72 min-h-full bg-gray-900 text-white space-y-2 shadow-xl">
 
-          {/* Common */}
-          <li>
-            <NavLink to="/dashboard" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaTachometerAlt /> Dashboard Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink 
-            to={`/dashboard/myprofile?email=${user.email}`}  className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaUserCircle /> Profile
-            </NavLink>
-          </li>
+         {/* Common for all roles */}
+<li>
+  <NavLink to="/dashboard" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+    <FaTachometerAlt /> Dashboard Home
+  </NavLink>
+</li>
+<li>
+  <NavLink 
+    to={`/dashboard/myprofile?email=${user.email}`}  
+    className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+    <FaUserCircle /> Profile
+  </NavLink>
+</li>
 
-          {/* Admin */}
-          <li>
-            <NavLink to="/dashboard/newsletters" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaRegNewspaper /> All Newsletter Subscribers
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/trainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaUsers /> All Trainers
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/pendingTrainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaInbox /> Applied Trainer
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/balance" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaCreditCard /> Balance
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/add-new-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaPlusCircle /> Add New Class
-            </NavLink>
-          </li>
+{/* Admin-only routes */}
+{!roleLoading && role === 'admin' && (
+  <>
+    <li>
+      <NavLink to="/dashboard/newsletters" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaRegNewspaper /> All Newsletter Subscribers
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/trainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaUsers /> All Trainers
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/pendingTrainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaInbox /> Applied Trainer
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/balance" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaCreditCard /> Balance
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/add-new-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaPlusCircle /> Add New Class
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/make-admin" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaUserPlus /> Make Admin
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaEdit /> Add Forum
+      </NavLink>
+    </li>
+  </>
+)}
 
-          {/* Trainer */}
-          <li>
-            <NavLink to="/dashboard/manage-slots" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaClipboardList /> Manage Slots
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/addSlot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaPlusCircle /> Add Slot
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaEdit /> Add Forum
-            </NavLink>
-          </li>
+{/* Trainer-only routes */}
+{!roleLoading && role === 'trainer' && (
+  <>
+    <li>
+      <NavLink to="/dashboard/manage-slots" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaClipboardList /> Manage Slots
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/addSlot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaPlusCircle /> Add Slot
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaEdit /> Add Forum
+      </NavLink>
+    </li>
+  </>
+)}
 
-          {/* Member */}
-          <li>
-            <NavLink to="/dashboard/activity-log" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaHistory /> Activity Log
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/bookings" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaBookOpen /> Booked Trainers
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/make-admin" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaUserPlus /> Make Admin
-            </NavLink>
-          </li>
-         
+{/* Member-only routes */}
+{!roleLoading && (role === 'user' || role === 'trainer') && (
+  <>
+    <li>
+      <NavLink to="/dashboard/activity-log" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaHistory /> Activity Log
+      </NavLink>
+    </li>
+    <li>
+      <NavLink to="/dashboard/bookings" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+        <FaBookOpen /> Booked Trainers
+      </NavLink>
+    </li>
+  </>
+)}
 
         </ul>
       </div>

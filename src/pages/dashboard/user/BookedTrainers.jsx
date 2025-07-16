@@ -56,90 +56,72 @@ const BookedTrainers = () => {
   }
 
   if (bookings.length === 0) {
-    return <div className="text-center text-white mt-10">You haven’t booked any trainers yet.</div>;
+    return <div className="text-center text-white mt-10 text-xl font-semibold">You haven’t booked any trainers yet.</div>;
   }
 
   return (
-    <div className="max-w-5xl mx-auto p-4">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-10">
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#00F0FF] to-[#A259FF] bg-clip-text text-transparent">
         Your Booked Trainers
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {bookings.map((booking) => (
           <div
             key={booking._id}
-            className="bg-gray-900 text-white p-6 rounded-xl shadow-md border border-gray-700 hover:shadow-lg transition"
+            className="bg-[#121212] p-6 rounded-2xl shadow-lg border border-[#2a2a2a] hover:shadow-[0_0_25px_#00f0ff44] transition-all duration-300"
           >
-            <h3 className="text-2xl font-bold flex items-center gap-2 mb-4">
+            <h3 className="text-xl font-bold mb-4 text-white flex items-center gap-2">
               <FaUserTie className="text-blue-400" />
               {booking.trainerName}
             </h3>
 
-            <p className="mb-1 flex items-center gap-2">
-              <FaChalkboardTeacher className="text-green-400" />
-              <span><strong>Class:</strong> {booking.className || 'N/A'}</span>
-            </p>
-
-            <p className="mb-1 flex items-center gap-2">
-              <FaClock className="text-yellow-400" />
-              <span>
-                <strong>Slot:</strong> {`${booking.slot?.slotName || 'N/A'} (${booking.slot?.slotTime || 'N/A'})`}
-              </span>
-            </p>
-
-            <p className="mb-1 flex items-center gap-2">
-              <HiOutlineDocumentText className="text-pink-400" />
-              <span><strong>Package:</strong> {booking.packageName}</span>
-            </p>
-
-            <p className="mb-1 flex items-center gap-2">
-              <FaMoneyBillWave className="text-green-300" />
-              <span><strong>Price:</strong> ${booking.price}</span>
-            </p>
-
-            <p className="mb-1 flex items-center gap-2">
-              <FaClock className="text-indigo-300" />
-              <span><strong>Paid At:</strong> {format(new Date(booking.paidAt), 'PPpp')}</span>
-            </p>
+            <div className="space-y-2 text-sm text-gray-300">
+              <p className="flex items-center gap-2"><FaChalkboardTeacher className="text-green-400" /><span><strong>Class:</strong> {booking.className || 'N/A'}</span></p>
+              <p className="flex items-center gap-2"><FaClock className="text-yellow-400" /><span><strong>Slot:</strong> {`${booking.slot?.slotName || 'N/A'} (${booking.slot?.slotTime || 'N/A'})`}</span></p>
+              <p className="flex items-center gap-2"><HiOutlineDocumentText className="text-pink-400" /><span><strong>Package:</strong> {booking.packageName}</span></p>
+              <p className="flex items-center gap-2"><FaMoneyBillWave className="text-green-300" /><span><strong>Price:</strong> ${booking.price}</span></p>
+              <p className="flex items-center gap-2"><FaClock className="text-indigo-300" /><span><strong>Paid At:</strong> {format(new Date(booking.paidAt), 'PPpp')}</span></p>
+            </div>
 
             <button
               onClick={() => setSelectedBooking(booking)}
-              className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+              className="mt-6 w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 rounded-lg transition"
             >
-              <FaStar /> Leave a Review
+              <FaStar className="inline mr-2" /> Leave a Review
             </button>
           </div>
         ))}
       </div>
 
-      {/* Modal for Review */}
+      {/* Review Modal */}
       {selectedBooking && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 text-white p-6 rounded-lg w-full max-w-md relative">
+        <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-[#1a1a1a] rounded-xl p-6 w-full max-w-md text-white relative shadow-[0_0_40px_#00f0ff33]">
             <button
               onClick={() => setSelectedBooking(null)}
-              className="absolute top-2 right-2 text-red-400 hover:text-red-600"
+              className="absolute top-3 right-3 text-red-400 hover:text-red-500 text-xl"
             >
               <FaTimes />
             </button>
-            <h3 className="text-xl font-bold mb-4 text-center">
+            <h3 className="text-2xl font-semibold mb-4 text-center text-blue-400">
               Review for {selectedBooking.trainerName}
             </h3>
 
             <textarea
-              className="w-full p-2 rounded bg-gray-900 border border-gray-700 text-white mb-4"
+              className="w-full bg-[#111] border border-gray-700 rounded-lg p-3 mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
               placeholder="Write your feedback..."
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
             />
 
-            <div className="flex justify-center gap-1 mb-4">
+            <div className="flex justify-center gap-2 mb-5">
               {[1, 2, 3, 4, 5].map((star) => (
                 <FaStar
                   key={star}
-                  className={`text-2xl cursor-pointer ${
-                    star <= rating ? 'text-yellow-400' : 'text-gray-500'
+                  className={`text-2xl cursor-pointer transition ${
+                    star <= rating ? 'text-yellow-400 scale-110' : 'text-gray-600'
                   }`}
                   onClick={() => setRating(star)}
                 />
@@ -148,7 +130,7 @@ const BookedTrainers = () => {
 
             <button
               onClick={handleReviewSubmit}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
+              className="w-full py-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 font-semibold"
             >
               Submit Review
             </button>
