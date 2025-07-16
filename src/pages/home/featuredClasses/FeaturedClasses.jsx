@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-
 import { FaStar, FaUsers } from 'react-icons/fa';
+import { GiWeightLiftingUp } from 'react-icons/gi';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Loaging from '../../../loagind/Loaging';
 
@@ -17,15 +17,11 @@ const FeaturedClasses = () => {
   });
 
   if (isLoading) {
-    return (
-      <Loaging></Loaging>
-    );
+    return <Loaging />;
   }
 
   if (error) {
-    return (
-      <div className="text-center text-red-500 py-10">Failed to load featured classes.</div>
-    );
+    return <div className="text-center text-red-500 py-10">Failed to load featured classes.</div>;
   }
 
   return (
@@ -41,10 +37,18 @@ const FeaturedClasses = () => {
             key={idx}
             className="bg-gray-800 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
           >
-            <h3 className="text-2xl font-bold text-[#A259FF] mb-2">{cls.className}</h3>
+            {/* Class Title with Icon */}
+            <h3 className="text-3xl font-bold neon-text mb-2 flex items-center gap-2">
+              <GiWeightLiftingUp className="text-orange-400" />
+              {cls.className}
+            </h3>
+
+            {/* Description */}
             <p className="text-gray-400 mb-4">
-              {cls.description || "Join this high-demand class and level up your fitness journey!"}
+              {cls.description || 'Join this high-demand class and level up your fitness journey!'}
             </p>
+
+            {/* Booking Count */}
             <p className="flex items-center gap-2 text-sm text-gray-300">
               <FaUsers className="text-blue-400" />
               <span>{cls.bookingCount} Bookings</span>

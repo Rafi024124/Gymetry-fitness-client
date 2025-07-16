@@ -20,9 +20,11 @@ const PendingTrainers = () => {
     queryFn: fetchPendingTrainers,
   });
 
- const handleApprove = async (id) => {
+ const handleApprove = async (id,email) => {
   try {
-    const res = await axiosSecure.patch(`/trainers/status/${id}`,{status: 'approved'});
+    const res = await axiosSecure.patch(`/trainers/status/${id}`,{status: 'approved',
+      email
+    });
     if (res.data.modifiedCount > 0) {
       refetch(); 
        Swal.fire({
@@ -44,9 +46,11 @@ const PendingTrainers = () => {
     console.error(error);
   }
 };
-const handleReject = async (id) => {
+const handleReject = async (id,email) => {
   try {
-    const res = await axiosSecure.patch(`/trainers/status/${id}`,{status: 'rejected'});
+    const res = await axiosSecure.patch(`/trainers/status/${id}`,{status: 'rejected',
+      email
+    });
     if (res.data.modifiedCount > 0) {
       refetch(); 
        Swal.fire({
@@ -114,14 +118,14 @@ const handleReject = async (id) => {
                     <FaEye />
                   </button>
                   <button
-                    onClick={() => handleApprove(trainer._id)}
+                    onClick={() => handleApprove(trainer._id,trainer.email)}
                     className="text-green-400 hover:text-green-600"
                     title="Approve"
                   >
                     <FaCheckCircle />
                   </button>
                   <button
-                    onClick={() => handleReject(trainer._id)}
+                    onClick={() => handleReject(trainer._id,trainer.email)}
                     className="text-red-400 hover:text-red-600"
                     title="Delete"
                   >

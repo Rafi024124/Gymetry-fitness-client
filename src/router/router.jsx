@@ -29,6 +29,7 @@ import AddSlot from "../pages/dashboard/adminAndTrainer/Trainer/AddSlot";
 import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots";
 import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSubscribers";
 import AdminDashboardHome from "../pages/dashboard/admin/adminDashboardHome/AdminDashBoardHome";
+import MakeAdmin from "../pages/dashboard/admin/MakeAdmin";
 
 
 export const router = createBrowserRouter([
@@ -199,6 +200,10 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:'make-admin',
+        element: <PrivateRoute><MakeAdmin></MakeAdmin></PrivateRoute>
+      }
     ],
   },
 ]);

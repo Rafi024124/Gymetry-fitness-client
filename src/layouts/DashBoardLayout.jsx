@@ -140,10 +140,11 @@ const DashBoardLayout = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/become-trainer" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-              <FaUserPlus /> Become a Trainer
+            <NavLink to="/dashboard/make-admin" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
+              <FaUserPlus /> Make Admin
             </NavLink>
           </li>
+         
 
         </ul>
       </div>

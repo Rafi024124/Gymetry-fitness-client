@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import SocialLogin from "../SocialLogin";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
@@ -14,6 +14,9 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || '/';
 
   const email = watch("email");
   const password = watch("password");
@@ -30,6 +33,7 @@ const Login = () => {
           color: "#F2F2F2",
           confirmButtonColor: "#A259FF",
         });
+        navigate(from);
       })
       .catch((err) => {
         console.log(err);
@@ -159,7 +163,9 @@ const Login = () => {
 
         <p className="mt-6 text-center text-[#A259FF]">
           Don't have an account?{" "}
-          <Link to="/register" className="cursor-pointer hover:underline font-semibold neon-text">
+          <Link 
+          state={{from}}
+          to="/register" className="cursor-pointer hover:underline font-semibold neon-text">
             Create new account
           </Link>
         </p>

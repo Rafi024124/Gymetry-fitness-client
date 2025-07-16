@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaUsers, FaUserCheck, FaClock, FaDumbbell, FaDollarSign } from 'react-icons/fa';
+import Loaging from '../../../../loagind/Loaging';
+import { Link } from 'react-router';
 
 const AdminDashboardHome = () => {
   const [stats, setStats] = useState({
@@ -51,14 +53,12 @@ const AdminDashboardHome = () => {
 
   if (loading)
     return (
-      <p className="text-white p-6 text-center text-lg font-semibold">
-        Loading dashboard...
-      </p>
+      <Loaging></Loaging>
     );
 
   return (
     <div className="p-8 bg-gray-900 min-h-screen text-white rounded-2xl max-w-7xl mx-auto">
-      <h1 className="text-4xl font-extrabold mb-8 tracking-wide text-gradient bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-extrabold mb-8 neon-text">
         Admin Dashboard
       </h1>
 
@@ -115,14 +115,13 @@ const AdminDashboardHome = () => {
                   </p>
                   <p className="text-gray-400 text-sm">{app.email}</p>
                 </div>
-                <button
-                  onClick={() => {
-                    alert(`View application for ${app.fullName || app.email}`);
-                  }}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-4 py-2 rounded-md shadow-sm transition"
+                <Link
+                to={'/dashboard/pendingTrainers'}
+                 
+                  className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
                 >
                   View
-                </button>
+                </Link>
               </li>
             ))}
           </ul>

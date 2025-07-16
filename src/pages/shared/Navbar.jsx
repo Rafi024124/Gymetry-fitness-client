@@ -100,7 +100,7 @@ const Navbar = () => {
           
         >
           <img src={Logo} alt="Logo" className="rounded-full w-20" />
-          <span className="text-xl neon-text font-bold">
+          <span className="text-3xl neon-text font-bold">
   Gymetry
 </span>
         </div>
@@ -120,7 +120,7 @@ const Navbar = () => {
               <img
                 src={user?.photoURL}
                 alt="User Profile"
-                className="w-10 h-10 rounded-full border-2 border-[#A259FF] shadow-[0_0_10px_#A259FF]"
+                className="w-10 h-10 rounded-full "
               />
             </div>
             <button

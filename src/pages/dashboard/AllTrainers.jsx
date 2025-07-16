@@ -4,15 +4,16 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
 
 import Loading from '../../loagind/Loaging';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+
 import Loaging from '../../loagind/Loaging';
+import useAxios from '../../hooks/useAxios';
 
 const AllTrainers = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const navigate = useNavigate();
 
   const fetchTrainers = async () => {
-    const res = await axiosSecure.get('/trainers');
+    const res = await axiosInstance.get('/trainers');
     return res.data;
   };
 

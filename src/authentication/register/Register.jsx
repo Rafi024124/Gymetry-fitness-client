@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css"; 
 
@@ -9,7 +9,7 @@ import { AuthContext } from "../../contexts/authContext/AuthContext";
 import useAxios from "../../hooks/useAxios";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser,updateUser } = useContext(AuthContext);
   // const navigate = useNavigate();
 
   const {
@@ -18,6 +18,9 @@ const Register = () => {
     watch,
     formState: { errors },
   } = useForm();
+   const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from || '/';
 
   const axiosInstance = useAxios();
 
@@ -40,8 +43,9 @@ const Register = () => {
     console.log("Form submitted!", data);
     createUser(data.email, data.password)
       .then(async(res) => {
-        console.log(res.user);
-
+        console.log("after submitting",res.user);
+ 
+         await updateUser(data.name, data.photoURL);
 
         const userInfo = {
           name: data.name,
@@ -52,11 +56,15 @@ const Register = () => {
           last_log_in: new Date().toISOString()
         }
         
-           console.log("Submitting user data to backend", userInfo); 
+            
 
         const userRes = await axiosInstance.post('/users',userInfo) 
-        console.log("Response from backend:", userRes.data);
+        //console.log("Response from backend:", userRes.data);
         
+
+       
+
+
         if(userRes.data.insertedId){
              Swal.fire({
           title: "Success!",
@@ -70,6 +78,7 @@ const Register = () => {
             title: "swal2-title",
           },
         });
+        navigate(from);
         }
 
       })

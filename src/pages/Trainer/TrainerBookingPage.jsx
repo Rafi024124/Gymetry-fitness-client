@@ -3,6 +3,15 @@ import { useParams, useSearchParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+import {
+  FaDollarSign,
+  FaCheckCircle,
+  FaClock,
+  FaStar,
+  FaUsers,
+  FaTools,
+} from "react-icons/fa";
+
 const packages = [
   {
     name: "Basic",
@@ -37,11 +46,6 @@ const TrainerBookingPage = () => {
   const slotTime = searchParams.get("slotTime");
   const slotId = searchParams.get("slotId");
   const className = searchParams.get("className");
-  
-
-  console.log("Slot Name:", slotName);
-  console.log("Slot Time:", slotTime);
-  console.log("Slot Id:", slotId);
 
   // Fetch trainer data
   const { data: trainer, isLoading: loadingTrainer } = useQuery({
@@ -63,9 +67,9 @@ const TrainerBookingPage = () => {
     navigate("/payment", {
       state: {
         trainer,
-        slot: { slotName, slotTime ,slotId},
+        slot: { slotName, slotTime, slotId },
         selectedPackage,
-        className, // No need to fetch again, passed from URL
+        className,
       },
     });
   };
@@ -77,41 +81,68 @@ const TrainerBookingPage = () => {
   }
 
   return (
-    <div className="w-full bg-[#202020] text-[#f3f3f3] py-12">
-      <h2 className="text-4xl font-bold text-center mb-12 text-[#A259FF]">
+    <div className="w-full bg-[#202020] text-[#f3f3f3] py-12 px-4 md:px-10">
+      <h2 className="text-4xl font-bold text-center mb-12 neon-text">
         Book Your Session
       </h2>
 
-      <div className="flex flex-col md:flex-row gap-10 px-4 md:px-16 mb-14">
+      <div className="flex flex-col md:flex-row gap-10 mb-14 max-w-5xl mx-auto">
+        {/* Trainer Image */}
         <div className="flex-shrink-0 w-full md:w-1/3 flex justify-center">
           <img
             src={trainer?.profileImage || "https://via.placeholder.com/150"}
             alt={trainer?.fullName}
-            className="w-48 h-48 rounded-xl object-cover border-4 border-[#A259FF]"
+            className="w-48 h-48 rounded-xl object-cover  shadow-lg"
           />
         </div>
-        <div className="w-full md:w-2/3 bg-[#2f2f2f] p-6 rounded-xl shadow-sm border border-[#3a3a3a]">
-          <h3 className="text-2xl font-semibold mb-2">{trainer?.fullName}</h3>
-          <p className="text-[#bfbfbf]">
-            <strong>Experience:</strong> {trainer?.yearsOfExperience || "N/A"} years
+
+        {/* Trainer Info */}
+        <div className="w-full md:w-2/3 bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
+          <h3 className="text-2xl font-semibold mb-3 flex items-center gap-2">
+            <FaUsers className="text-[#A259FF]" /> {trainer?.fullName}
+          </h3>
+
+          <p className="text-gray-300 mb-2 flex items-center gap-2">
+            <FaStar className="text-yellow-400" />
+            <strong>Experience:</strong> {trainer?.yearsOfExperience || "N/A"}{" "}
+            years
           </p>
-          <p className="text-[#bfbfbf]">
+
+          <p className="text-gray-300 mb-2 flex items-center gap-2">
+            <FaClock className="text-green-400" />
             <strong>Slot Selected:</strong>{" "}
             {slotName ? `${slotName} (${slotTime})` : "N/A"}
           </p>
+
           {className && (
-            <p className="text-[#bfbfbf]">
+            <p className="text-gray-300 mb-2 flex items-center gap-2">
+              <FaTools className="neon-text" />
               <strong>Class Selected:</strong> {className}
             </p>
           )}
-          <p className="text-[#bfbfbf]">
-            <strong>Skills:</strong> {trainer?.skills?.join(", ") || "N/A"}
+
+          <p className="text-gray-300 flex flex-wrap gap-2 items-center">
+            <FaTools className="text-purple-400" />
+            <strong>Skills:</strong>{" "}
+            {trainer?.skills?.length ? (
+              trainer.skills.map((skill, i) => (
+                <span
+                  key={i}
+                  className="bg-purple-700 text-purple-200 px-3 py-1 rounded-full text-sm font-semibold"
+                >
+                  {skill}
+                </span>
+              ))
+            ) : (
+              <span className="italic text-gray-500">N/A</span>
+            )}
           </p>
         </div>
       </div>
 
-      <div className="px-4 md:px-16">
-        <h3 className="text-3xl font-semibold mb-6 text-[#A259FF]">
+      {/* Packages Section */}
+      <div className="max-w-5xl mx-auto">
+        <h3 className="text-3xl font-semibold mb-6 neon-text text-center">
           Choose a Membership
         </h3>
         <div className="grid md:grid-cols-3 gap-6">
@@ -119,17 +150,31 @@ const TrainerBookingPage = () => {
             <div
               key={pkg.name}
               onClick={() => setSelectedPackage(pkg)}
-              className={`rounded-lg p-5 cursor-pointer transition border ${
+              className={`rounded-lg p-6 cursor-pointer transition border shadow-md hover:shadow-xl ${
                 selectedPackage?.name === pkg.name
-                  ? "bg-[#3a2f52] border-[#A259FF]"
-                  : "bg-[#2b2b2b] border-[#3a3a3a] hover:border-[#A259FF]"
+                  ? "bg-gray-800 border-[#A259FF]"
+                  : "bg-gray-900 border-gray-700 hover:border-[#A259FF]"
               }`}
             >
-              <h4 className="text-xl font-bold mb-1 text-white">{pkg.name}</h4>
-              <p className="text-lg font-semibold text-[#A259FF] mb-3">${pkg.price}</p>
-              <ul className="text-sm text-[#dcdcdc] list-disc ml-5 space-y-1">
+              <h4 className="text-xl font-bold mb-2 neon-text flex items-center gap-2">
+                {pkg.name}{" "}
+                <FaCheckCircle
+                  className={`ml-auto ${
+                    selectedPackage?.name === pkg.name
+                      ? "text-[#A259FF]"
+                      : "text-gray-700"
+                  }`}
+                />
+              </h4>
+              <p className="text-2xl font-extrabold text-green-500 mb-4 flex items-center gap-1">
+                <FaDollarSign />
+                {pkg.price}
+              </p>
+              <ul className="text-sm text-gray-300 list-disc ml-5 space-y-1">
                 {pkg.benefits.map((b, i) => (
-                  <li key={i}>{b}</li>
+                  <li key={i} className="flex items-center gap-2">
+                    <FaCheckCircle className="text-green-500" /> {b}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -139,7 +184,7 @@ const TrainerBookingPage = () => {
         <div className="text-center mt-10">
           <button
             onClick={handleJoinNow}
-            className="bg-[#A259FF] hover:bg-[#8c3aff] text-white font-semibold px-8 py-3 rounded-full transition"
+            className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
           >
             Join Now
           </button>

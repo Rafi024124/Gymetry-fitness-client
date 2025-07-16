@@ -3,6 +3,16 @@ import { useParams, useSearchParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import Loaging from '../../loagind/Loaging';
 
+import {
+  FaUserCircle,
+  FaEnvelope,
+  FaDumbbell,
+  FaClock,
+  FaCalendarAlt,
+  FaCheckCircle,
+  FaTimesCircle,
+} from 'react-icons/fa';
+
 const TrainerDetails = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -20,7 +30,12 @@ const TrainerDetails = () => {
   });
 
   if (isLoading) return <Loaging />;
-  if (error) return <p className="text-center text-red-400">Error loading trainer details</p>;
+  if (error)
+    return (
+      <p className="text-center text-red-400">
+        Error loading trainer details
+      </p>
+    );
   if (!data) return null;
 
   const { trainer, slots } = data;
@@ -42,42 +57,89 @@ const TrainerDetails = () => {
         <img
           src={trainer.profileImage || '/default-avatar.png'}
           alt={trainer.fullName}
-          className="w-32 h-32 rounded-full border-4 border-blue-500"
+          className="w-24 h-24 rounded-full border-4 border-blue-500"
         />
         <div>
-          <h2 className="text-3xl font-bold">{trainer.fullName}</h2>
-          <p className="text-gray-300">{trainer.email}</p>
-          <p className="mt-2">Skills: {trainer.skills?.join(', ') || 'N/A'}</p>
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <FaUserCircle className="text-blue-400" />
+            {trainer.fullName}
+          </h2>
+          <p className="flex items-center gap-2 text-gray-300 mt-1">
+            <FaEnvelope className="text-blue-400" />
+            {trainer.email}
+          </p>
+          <div className="mt-3 flex items-center gap-2">
+            <FaDumbbell className="text-purple-400" />
+            <div className="flex flex-wrap gap-2">
+              {trainer.skills && trainer.skills.length ? (
+                trainer.skills.map((skill, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-purple-700 text-purple-200 text-xs font-semibold px-3 py-1 rounded-full"
+                  >
+                    {skill}
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-400 italic">No skills listed</span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Divider */}
+      <hr className="border-gray-700 mb-8" />
+
       {/* Slots Display */}
       <div>
-        <h3 className="text-2xl font-semibold mb-4">
-          Available Slots {className && <>for <span className="text-orange-300 font-bold">{className}</span></>}
+        <h3 className="text-2xl font-semibold mb-6">
+          Available Slots{' '}
+          {className && (
+            <>
+              for{' '}
+              <span className="text-orange-300 font-bold">{className}</span>
+            </>
+          )}
         </h3>
 
         {slots.length ? (
           className ? (
-            // If specific className is passed, show those slots only
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {slots.map((slot) => (
                 <div
                   key={slot._id}
-                  className="bg-gray-800 p-4 rounded-lg shadow cursor-pointer"
+                  className={`p-5 rounded-xl border border-gray-700 hover:border-blue-500 bg-gradient-to-tr from-gray-800 to-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer space-y-2`}
                   onClick={() => handleSlotClick(slot)}
                 >
-                  <p className="font-semibold">
-                    {slot.slotName} ({slot.slotTime})
+                  <h4 className="text-xl font-semibold text-white flex items-center gap-2">
+                    {slot.slotName}
+                    {slot.booked ? (
+                      <FaTimesCircle className="text-red-500" />
+                    ) : (
+                      <FaCheckCircle className="text-green-500" />
+                    )}
+                  </h4>
+                  <p className="text-blue-400 font-medium flex items-center gap-2">
+                    <FaClock /> Time: {slot.slotTime}
                   </p>
-                  <p className="text-gray-400">Days: {slot.availableDays?.join(', ') || 'N/A'}</p>
-                  <p className="text-gray-400">Booked: {slot.booked ? 'Yes' : 'No'}</p>
+                  <p className="text-gray-300 flex items-center gap-2">
+                    <FaCalendarAlt /> Days: {slot.availableDays?.join(', ') || 'N/A'}
+                  </p>
+                  <p
+                    className={`inline-block px-3 py-1 text-xs rounded-full font-semibold ${
+                      slot.booked
+                        ? 'bg-red-600 text-white'
+                        : 'bg-green-700 text-white'
+                    }`}
+                  >
+                    {slot.booked ? 'Booked' : 'Available'}
+                  </p>
                 </div>
               ))}
             </div>
           ) : (
-            // No className: Group by className
-            <div className="space-y-6">
+            <div className="space-y-10">
               {Object.entries(
                 slots.reduce((acc, slot) => {
                   const cls = slot.className || 'Unknown Class';
@@ -87,19 +149,40 @@ const TrainerDetails = () => {
                 }, {})
               ).map(([clsName, clsSlots]) => (
                 <div key={clsName}>
-                  <h4 className="text-xl font-bold text-orange-400 mb-2">{clsName}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <h4 className="text-2xl font-bold text-purple-400 mb-4 border-b pb-1 border-gray-600">
+                    {clsName}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {clsSlots.map((slot) => (
                       <div
                         key={slot._id}
-                        className="bg-gray-800 p-4 rounded-lg shadow cursor-pointer"
+                        className={`p-5 rounded-xl border border-gray-700 hover:border-orange-400 bg-gradient-to-tr from-gray-800 to-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer space-y-2`}
                         onClick={() => handleSlotClick(slot)}
                       >
-                        <p className="font-semibold">
-                          {slot.slotName} ({slot.slotTime})
+                        <h4 className="text-xl font-semibold text-white flex items-center gap-2">
+                          {slot.slotName}
+                          {slot.booked ? (
+                            <FaTimesCircle className="text-red-500" />
+                          ) : (
+                            <FaCheckCircle className="text-green-500" />
+                          )}
+                        </h4>
+                        <p className="text-blue-400 font-medium flex items-center gap-2">
+                          <FaClock /> Time: {slot.slotTime}
                         </p>
-                        <p className="text-gray-400">Days: {slot.availableDays?.join(', ') || 'N/A'}</p>
-                        <p className="text-gray-400">Booked: {slot.booked ? 'Yes' : 'No'}</p>
+                        <p className="text-gray-300 flex items-center gap-2">
+                          <FaCalendarAlt /> Days:{' '}
+                          {slot.availableDays?.join(', ') || 'N/A'}
+                        </p>
+                        <p
+                          className={`inline-block px-3 py-1 text-xs rounded-full font-semibold ${
+                            slot.booked
+                              ? 'bg-red-600 text-white'
+                              : 'bg-green-700 text-white'
+                          }`}
+                        >
+                          {slot.booked ? 'Booked' : 'Available'}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -108,7 +191,10 @@ const TrainerDetails = () => {
             </div>
           )
         ) : (
-          <p className="text-red-400">No slots available for this trainer{className ? ` in ${className}` : ''}.</p>
+          <p className="text-red-400 text-lg font-medium">
+            No slots available for this trainer
+            {className ? ` in ${className}` : ''}.
+          </p>
         )}
       </div>
     </div>

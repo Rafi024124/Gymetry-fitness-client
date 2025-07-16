@@ -6,7 +6,7 @@ import { FaUser, FaEnvelope, FaClock, FaEdit } from 'react-icons/fa';
 import Loaging from '../../../loagind/Loaging';
 
 const MyProfile = () => {
-  const { user } = useContext(AuthContext);
+  const { user,updateUser } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
@@ -39,8 +39,19 @@ const MyProfile = () => {
     setEditMode(true);
   };
 
-  const handleSave = () => {
-    updateMutation.mutate(formData);
+  const handleSave = async() => {
+     try {
+    // First update the backend
+    await updateMutation.mutateAsync(formData);
+
+    // Then update Firebase auth profile
+    await updateUser(formData.name, formData.photoURL);
+
+    // Optionally show success alert (e.g., with SweetAlert or Toast)
+    console.log('Profile updated in backend and Firebase!');
+  } catch (error) {
+    console.error('Failed to update profile:', error);
+  }
   };
 
   if (isLoading) return <Loaging />;
