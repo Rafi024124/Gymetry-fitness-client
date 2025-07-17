@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { FaMoneyBillWave, FaDollarSign } from 'react-icons/fa';
 import Loaging from '../../../loagind/Loaging';
+import Charts from '../Charts';
+
 
 const Balance = () => {
   const axiosSecure = useAxiosSecure();
@@ -81,6 +83,11 @@ const Balance = () => {
           </tbody>
         </table>
       </div>
+
+
+    
+ <Charts></Charts>
+
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../contexts/authContext/AuthContext';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
@@ -8,6 +8,7 @@ import { FaHeading, FaImage, FaRegFileAlt } from 'react-icons/fa';
 const AddNewForum = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const [role, setRole] = useState('');
 
   const {
     register,
@@ -16,12 +17,28 @@ const AddNewForum = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
+  useEffect(() => {
+    const fetchRole = async () => {
+      if (user?.email) {
+        try {
+          const res = await axiosSecure.get(`/users?email=${user.email}`);
+          setRole(res.data.role || 'member'); // fallback role
+        } catch (err) {
+          console.error('Failed to fetch role:', err);
+        }
+      }
+    };
+
+    fetchRole();
+  }, [user?.email, axiosSecure]);
+
   const onSubmit = async (data) => {
     const forumData = {
       title: data.title,
       content: data.content,
       imageUrl: data.imageUrl || '',
       author: user?.displayName || user?.email || 'Anonymous',
+      role: role || 'member', // include role in post data
       votes: 0,
       createdAt: new Date().toISOString(),
     };
@@ -46,6 +63,17 @@ const AddNewForum = () => {
       </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-white">
+        {/* Role (read-only) */}
+        <div>
+          <label className="text-cyan-300 mb-2 font-semibold">Role</label>
+          <input
+            type="text"
+            value={role}
+            readOnly
+            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-gray-400 cursor-not-allowed border border-cyan-500 shadow-[0_0_4px_#00F0FF]"
+          />
+        </div>
+
         {/* Title */}
         <div>
           <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">

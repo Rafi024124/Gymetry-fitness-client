@@ -113,6 +113,12 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
           <p className="flex items-center gap-3">
             <FaUser className="text-cyan-700" />
             <span>
+              <strong>Member:</strong> {user?.displayName}
+            </span>
+          </p>
+          <p className="flex items-center gap-3">
+            <FaUser className="text-cyan-700" />
+            <span>
               <strong>Trainer:</strong> {trainer?.fullName}
             </span>
           </p>

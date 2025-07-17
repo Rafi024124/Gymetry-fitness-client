@@ -11,7 +11,6 @@ const ForumPage = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
-
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -35,11 +34,9 @@ const ForumPage = () => {
         background: '#0f0f0f',
         color: '#F2F2F2',
         confirmButtonColor: '#007a7a',
-
-        
       });
-
       navigate('/login', { state: { from: location } });
+      return;
     }
 
     try {
@@ -66,6 +63,9 @@ const ForumPage = () => {
 
   const { posts, totalPages } = data;
 
+  
+ 
+
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white py-12 px-4 sm:px-10">
       <h1 className="text-5xl font-extrabold text-center mb-14 neon-text">💬 Gymetry Forum</h1>
@@ -84,18 +84,37 @@ const ForumPage = () => {
                 alt={post.title}
                 className="w-full h-56 object-cover"
               />
-              <div className="p-6 space-y-3">
-                <h2 className="text-2xl font-bold neon-text">{post.title}</h2>
-                <p className="text-gray-400 line-clamp-3">{post.content}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <div className="flex gap-2 items-center text-sm text-gray-400">
+
+              <div className="p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
                     <img
                       src={`https://ui-avatars.com/api/?name=${post.author}&background=random`}
                       alt="author"
                       className="w-8 h-8 rounded-full"
                     />
-                    <span>{post.author}</span>
+                    <span className="font-semibold">{post.author}</span>
                   </div>
+                  {post.author && (
+                    <span
+                      className={`px-2 py-0.5 text-xs font-semibold rounded-full ${
+                        post.author === 'admin'
+                          ? 'bg-red-600 text-white'
+                          : post.author === 'trainer'
+                          ? 'bg-green-600 text-white'
+                          : 'bg-green-600 text-white'
+                      }`}
+                    >
+                      {post.role}
+                    </span>
+                  )}
+                </div>
+
+                <h2 className="text-2xl font-bold neon-text">{post.title}</h2>
+                <p className="text-gray-400 line-clamp-3">{post.content}</p>
+
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-400">Posted on {new Date(post.createdAt).toLocaleDateString()}</div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleVote(post._id, 'up')}
@@ -133,7 +152,9 @@ const ForumPage = () => {
         >
           ◀ Prev
         </button>
-        <span className="text-white text-lg font-semibold">Page {page} / {totalPages}</span>
+        <span className="text-white text-lg font-semibold">
+          Page {page} / {totalPages}
+        </span>
         <button
           onClick={() => setPage((old) => Math.min(old + 1, totalPages))}
           disabled={page === totalPages}

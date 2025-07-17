@@ -1,8 +1,5 @@
 import React, { useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-
-
-
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../../contexts/authContext/AuthContext';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
@@ -44,7 +41,7 @@ const ManageSlots = () => {
     });
   };
 
-  if (isLoading) return <Loaging></Loaging>;
+  if (isLoading) return <Loaging />;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-900 rounded-lg text-white">
@@ -61,6 +58,7 @@ const ManageSlots = () => {
                 <th className="px-4 py-3">Available Days</th>
                 <th className="px-4 py-3">Class Name</th>
                 <th className="px-4 py-3">Booked</th>
+                <th className="px-4 py-3">Booked By</th> {/* 👈 New column */}
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>
@@ -81,6 +79,23 @@ const ManageSlots = () => {
                       <span className="text-green-400 font-semibold">Available</span>
                     )}
                   </td>
+
+                  {/* ✅ Show user info if slot is booked */}
+                  <td className="px-4 py-3 space-y-1">
+                    {slot.booked ? (
+                      <>
+                        <p className="font-semibold">
+                          {slot.bookedBy || 'Unknown'}
+                        </p>
+                        <p className="text-xs text-gray-300">
+                          {slot.bookedByEmail || 'N/A'}
+                        </p>
+                      </>
+                    ) : (
+                      <span className="text-gray-400 italic">N/A</span>
+                    )}
+                  </td>
+
                   <td className="px-4 py-3">
                     <button
                       disabled={slot.booked}

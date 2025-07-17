@@ -12,6 +12,7 @@ import {
   FaTools,
 } from "react-icons/fa";
 import Loaging from "../../loagind/Loaging";
+import Swal from "sweetalert2";
 
 const packages = [
   {
@@ -62,7 +63,19 @@ const TrainerBookingPage = () => {
 
   const handleJoinNow = () => {
     if (!selectedPackage) {
-      alert("Please select a package");
+      Swal.fire({
+  title: "Oops!",
+  text: "Please choose a package before proceeding.",
+  icon: "warning",
+  background: "#0f0f0f",
+  color: "#F2F2F2",
+  confirmButtonColor: "#007a7a",
+  confirmButtonText: "OK",
+  customClass: {
+    title: "swal2-title",
+  },
+});
+
       return;
     }
     navigate("/payment", {

@@ -39,15 +39,19 @@ const AddSlot = () => {
     formState: { errors },
   } = useForm();
 
-  const dayOptions = [
-    { value: 'Sun', label: 'Sunday' },
-    { value: 'Mon', label: 'Monday' },
-    { value: 'Tue', label: 'Tuesday' },
-    { value: 'Wed', label: 'Wednesday' },
-    { value: 'Thu', label: 'Thursday' },
-    { value: 'Fri', label: 'Friday' },
-    { value: 'Sat', label: 'Saturday' },
-  ];
+ const availableDayOptions = (trainerProfile?.availableDays || []).map((day) => ({
+  value: day,
+  label:
+    {
+      Sun: 'Sunday',
+      Mon: 'Monday',
+      Tue: 'Tuesday',
+      Wed: 'Wednesday',
+      Thu: 'Thursday',
+      Fri: 'Friday',
+      Sat: 'Saturday',
+    }[day] || day,
+}));
 
   if (isProfileLoading || classesLoading) return <Loaging />;
   if (profileError) return <div className="text-red-500">Failed to load trainer profile</div>;
@@ -154,19 +158,20 @@ const AddSlot = () => {
         <div>
           <label className="block mb-1 text-cyan-300">Available Days</label>
           <Controller
-            name="availableDays"
-            control={control}
-            rules={{ required: 'Select at least one day' }}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={dayOptions}
-                isMulti
-                placeholder="Select days"
-                className="text-black shadow-[0_0_4px_rgba(0,255,255,0.4)] rounded"
-              />
-            )}
-          />
+  name="availableDays"
+  control={control}
+  rules={{ required: 'Select at least one day' }}
+  render={({ field }) => (
+    <Select
+      {...field}
+      options={availableDayOptions}
+      isMulti
+      placeholder="Select available days"
+      className="text-black shadow-[0_0_4px_rgba(0,255,255,0.4)] rounded"
+    />
+  )}
+/>
+
           {errors.availableDays && (
             <p className="text-red-400 text-sm mt-1">{errors.availableDays.message}</p>
           )}
