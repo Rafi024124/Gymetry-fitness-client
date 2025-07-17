@@ -38,7 +38,7 @@ const AddNewForum = () => {
       content: data.content,
       imageUrl: data.imageUrl || '',
       author: user?.displayName || user?.email || 'Anonymous',
-      role: role || 'member', // include role in post data
+      role: role || 'member', 
       votes: 0,
       createdAt: new Date().toISOString(),
     };

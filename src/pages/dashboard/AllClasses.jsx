@@ -3,10 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import Loaging from '../../loagind/Loaging';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
+import useAxios from '../../hooks/useAxios';
+
 
 const AllClasses = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const axiosInstance = useAxios();
 
   // Pagination state
   const [page, setPage] = useState(1);
@@ -17,7 +20,7 @@ const AllClasses = () => {
   // Committed search term, used for query and updated on Search button click
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Fetch classes with pagination & search params
+  // Fetch classes with pagination & search params using axiosInstance
   const { data, isLoading, error } = useQuery({
     queryKey: ['all-classes', page, searchTerm],
     queryFn: async () => {
@@ -25,10 +28,10 @@ const AllClasses = () => {
         page: page.toString(),
         limit: '6',
         search: searchTerm,
-      });
-      const res = await fetch(`http://localhost:3000/classes-with-top-trainers?${params.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch classes');
-      return res.json();
+      }).toString();
+
+      const res = await axiosInstance.get(`/classes-with-top-trainers?${params}`);
+      return res.data;
     },
     keepPreviousData: true,
   });
@@ -56,7 +59,7 @@ const AllClasses = () => {
   };
 
   return (
-    <div className='w-full bg-gray-900'>
+    <div className="w-full bg-gray-900">
       <div className="p-6 bg-gray-900 text-white min-h-screen max-w-7xl mx-auto">
         <h2 className="text-4xl text-center font-bold mb-8 neon-text">All Classes</h2>
 

@@ -16,7 +16,7 @@ const BeATrainerButton = ({
     if (user) {
       navigate(to);
     } else {
-      // Redirect to login, but remember the target page
+      
       navigate('/login', { state: { from: to } });
     }
   };

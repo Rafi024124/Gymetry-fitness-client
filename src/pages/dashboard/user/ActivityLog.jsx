@@ -35,7 +35,7 @@ const ActivityLog = () => {
         No application found.
       </div>
     );
-    console.log(statusInfo);
+  
     
 
   const renderStatusMessage = () => {

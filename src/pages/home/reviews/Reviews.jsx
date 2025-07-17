@@ -11,7 +11,7 @@ const Reviews = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['all-reviews'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:3000/reviews');
+      const res = await fetch('https://gymetry-server.vercel.app/reviews');
       if (!res.ok) throw new Error('Failed to fetch reviews');
       return res.json();
     },

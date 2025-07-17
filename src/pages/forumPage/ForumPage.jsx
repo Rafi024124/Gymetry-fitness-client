@@ -1,14 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+
 import { AuthContext } from '../../contexts/authContext/AuthContext';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Loaging from '../../loagind/Loaging';
 import { useLocation, useNavigate } from 'react-router';
+import useAxios from '../../hooks/useAxios';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const ForumPage = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
+  const axiosSecure= useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
@@ -19,7 +22,7 @@ const ForumPage = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['forumPosts', page],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/forum-posts?page=${page}&limit=${postsPerPage}`);
+      const res = await axiosInstance.get(`/forum-posts?page=${page}&limit=${postsPerPage}`);
       return res.data;
     },
     keepPreviousData: true,

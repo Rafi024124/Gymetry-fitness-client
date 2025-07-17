@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
-import 
-{
+import {
   FaTachometerAlt,
   FaUserCircle,
   FaUsers,
@@ -15,7 +14,7 @@ import
   FaHistory,
   FaBookOpen,
   FaStar,
-  FaUserPlus
+  FaUserPlus,
 } from 'react-icons/fa';
 import { AuthContext } from '../contexts/authContext/AuthContext';
 import useUserRole from '../hooks/useUserRole';
@@ -23,6 +22,13 @@ import useUserRole from '../hooks/useUserRole';
 const DashBoardLayout = () => {
   const { role, roleLoading } = useUserRole();
   const { user } = useContext(AuthContext);
+
+  const navLinkClass = ({ isActive }) =>
+    `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
+      isActive
+        ? 'bg-cyan-700/30 text-cyan-300'
+        : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
+    }`;
 
   return (
     <div className="drawer lg:drawer-open">
@@ -34,18 +40,22 @@ const DashBoardLayout = () => {
         <div className="navbar bg-gray-900 shadow-md px-4">
           <div className="flex-none lg:hidden">
             <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </label>
           </div>
 
-          <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold bg-gray-900 text-white">
+          <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold text-white">
             <div className="flex items-center gap-2">
               <FaTachometerAlt className="text-white" /> My Dashboard
             </div>
-
-            <Link to="/" className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold">
+            <Link
+              className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] px-4 py-1.5 rounded font-semibold text-sm transition hover:opacity-90"
+              to="/"
+            >
               Home Page
             </Link>
           </div>
@@ -60,67 +70,40 @@ const DashBoardLayout = () => {
       <div className="drawer-side">
         <label htmlFor="main-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-72 min-h-full bg-gray-900 text-white space-y-2 shadow-xl">
-          {[
-            { to: "/dashboard", icon: <FaTachometerAlt />, label: "Dashboard Home" },
-            { to: `/dashboard/myprofile?email=${user.email}`, icon: <FaUserCircle />, label: "Profile" }
-          ].map(({ to, icon, label }) => (
-            <li key={to}>
-              <NavLink to={to} className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
-                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
-                }`}>
-                {icon} {label}
-              </NavLink>
-            </li>
-          ))}
 
-          {!roleLoading && role === 'admin' && ([
-            { to: "/dashboard/newsletters", icon: <FaRegNewspaper />, label: "All Newsletter Subscribers" },
-            { to: "/dashboard/trainers", icon: <FaUsers />, label: "All Trainers" },
-            { to: "/dashboard/pendingTrainers", icon: <FaInbox />, label: "Applied Trainer" },
-            { to: "/dashboard/balance", icon: <FaCreditCard />, label: "Balance" },
-            { to: "/dashboard/add-new-class", icon: <FaPlusCircle />, label: "Add New Class" },
-            { to: "/dashboard/make-admin", icon: <FaUserPlus />, label: "Make Admin" },
-            { to: "/dashboard/addforum", icon: <FaEdit />, label: "Add Forum" }
-          ].map(({ to, icon, label }) => (
-            <li key={to}>
-              <NavLink to={to} className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
-                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
-                }`}>
-                {icon} {label}
-              </NavLink>
-            </li>
-          )))}
+          {/* Common Links */}
+          <li><NavLink to="/dashboard" className={navLinkClass}><FaTachometerAlt /> Dashboard Home</NavLink></li>
+          <li><NavLink to={`/dashboard/myprofile?email=${user.email}`} className={navLinkClass}><FaUserCircle /> Profile</NavLink></li>
 
-          {!roleLoading && role === 'trainer' && ([
-            { to: "/dashboard/manage-slots", icon: <FaClipboardList />, label: "Manage Slots" },
-            { to: "/dashboard/addSlot", icon: <FaPlusCircle />, label: "Add Slot" },
-            { to: "/dashboard/addforum", icon: <FaEdit />, label: "Add Forum" }
-          ].map(({ to, icon, label }) => (
-            <li key={to}>
-              <NavLink to={to} className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
-                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
-                }`}>
-                {icon} {label}
-              </NavLink>
-            </li>
-          )))}
+          {/* Admin Links */}
+          {!roleLoading && role === 'admin' && (
+            <>
+              <li><NavLink to="/dashboard/newsletters" className={navLinkClass}><FaRegNewspaper /> All Newsletter Subscribers</NavLink></li>
+              <li><NavLink to="/dashboard/trainers" className={navLinkClass}><FaUsers /> All Trainers</NavLink></li>
+              <li><NavLink to="/dashboard/pendingTrainers" className={navLinkClass}><FaInbox /> Applied Trainer</NavLink></li>
+              <li><NavLink to="/dashboard/balance" className={navLinkClass}><FaCreditCard /> Balance</NavLink></li>
+              <li><NavLink to="/dashboard/add-new-class" className={navLinkClass}><FaPlusCircle /> Add New Class</NavLink></li>
+              <li><NavLink to="/dashboard/make-admin" className={navLinkClass}><FaUserPlus /> Make Admin</NavLink></li>
+              <li><NavLink to="/dashboard/addforum" className={navLinkClass}><FaEdit /> Add Forum</NavLink></li>
+            </>
+          )}
 
-          {!roleLoading && (role === 'user' || role === 'trainer') && ([
-            { to: "/dashboard/activity-log", icon: <FaHistory />, label: "Activity Log" },
-            { to: "/dashboard/bookings", icon: <FaBookOpen />, label: "Booked Trainers" }
-          ].map(({ to, icon, label }) => (
-            <li key={to}>
-              <NavLink to={to} className={({ isActive }) =>
-                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
-                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
-                }`}>
-                {icon} {label}
-              </NavLink>
-            </li>
-          )))}
+          {/* Trainer Links */}
+          {!roleLoading && role === 'trainer' && (
+            <>
+              <li><NavLink to="/dashboard/manage-slots" className={navLinkClass}><FaClipboardList /> Manage Slots</NavLink></li>
+              <li><NavLink to="/dashboard/addSlot" className={navLinkClass}><FaPlusCircle /> Add Slot</NavLink></li>
+              <li><NavLink to="/dashboard/addforum" className={navLinkClass}><FaEdit /> Add Forum</NavLink></li>
+            </>
+          )}
+
+          {/* Member/User Links */}
+          {!roleLoading && (role === 'user' || role === 'trainer') && (
+            <>
+              <li><NavLink to="/dashboard/activity-log" className={navLinkClass}><FaHistory /> Activity Log</NavLink></li>
+              <li><NavLink to="/dashboard/bookings" className={navLinkClass}><FaBookOpen /> Booked Trainers</NavLink></li>
+            </>
+          )}
         </ul>
       </div>
     </div>

@@ -53,7 +53,7 @@ const TrainerBookingPage = () => {
   const { data: trainer, isLoading: loadingTrainer } = useQuery({
     queryKey: ["trainer", trainerId],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3000/trainers/${trainerId}`);
+      const res = await axios.get(`https://gymetry-server.vercel.app/trainers/${trainerId}`);
       return res.data;
     },
     enabled: !!trainerId,

@@ -58,7 +58,7 @@ const ManageSlots = () => {
                 <th className="px-4 py-3">Available Days</th>
                 <th className="px-4 py-3">Class Name</th>
                 <th className="px-4 py-3">Booked</th>
-                <th className="px-4 py-3">Booked By</th> {/* 👈 New column */}
+                <th className="px-4 py-3">Booked By</th> 
                 <th className="px-4 py-3">Actions</th>
               </tr>
             </thead>

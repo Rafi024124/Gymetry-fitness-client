@@ -4,6 +4,7 @@ import { FaUser, FaClock, FaGift, FaCreditCard } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
   
@@ -13,6 +14,7 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
   const [processing, setProcessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const amountInCents = selectedPackage?.price * 100;
 
@@ -90,6 +92,8 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
               htmlContainer: "text-base",
             },
           });
+
+          navigate('/')
         } catch (err) {
           console.error("Failed to save payment:", err);
         }

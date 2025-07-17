@@ -22,7 +22,7 @@ const TrainerDetails = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['trainer-details', id, className],
     queryFn: async () => {
-      const url = new URL(`http://localhost:3000/trainer/${id}/details`);
+      const url = new URL(`https://gymetry-server.vercel.app/trainer/${id}/details`);
       if (className) url.searchParams.set('className', className);
       const res = await fetch(url.toString());
       return await res.json();

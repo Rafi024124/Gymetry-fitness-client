@@ -25,11 +25,11 @@ const AdminDashboardHome = () => {
           classesRes,
           paymentsSummaryRes,
         ] = await Promise.all([
-          axios.get('http://localhost:3000/newsletter/subscribers'),
-          axios.get('http://localhost:3000/trainers?status=approved'),
-          axios.get('http://localhost:3000/trainers/pending'),
-          axios.get('http://localhost:3000/classes'),
-          axios.get('http://localhost:3000/payments/summary'),
+          axios.get('https://gymetry-server.vercel.app/newsletter/subscribers'),
+          axios.get('https://gymetry-server.vercel.app/trainers?status=approved'),
+          axios.get('https://gymetry-server.vercel.app/pending'),
+          axios.get('https://gymetry-server.vercel.app/classes'),
+          axios.get('https://gymetry-server.vercel.app/payments/summary'),
         ]);
 
         setStats({

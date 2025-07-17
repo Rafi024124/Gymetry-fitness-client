@@ -34,6 +34,8 @@ import DashboardHomeTrainer from "../pages/dashboard/adminAndTrainer/Trainer/Das
 import DashboardHomeUser from "../pages/dashboard/user/DashboardHomeUser";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import PrivateRouteForRole from "../routes/PrivateRouteForRole";
+import Forbidden from "../pages/Forbidden";
+import AdminRoute from "../routes/AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -49,6 +51,11 @@ export const router = createBrowserRouter([
       {
         path: "trainers",
         Component: AllTrainers,
+      },
+      {
+        path:'forbidden',
+        Component: Forbidden
+
       },
       {
         path: "trainer/:id",
@@ -114,7 +121,9 @@ export const router = createBrowserRouter([
       },
       {
         path: "pendingTrainers",
-        Component: PendingTrainers,
+        element: <AdminRoute>
+          <PendingTrainers></PendingTrainers>
+        </AdminRoute>
       },
       {
         path: "my-payments",
@@ -151,17 +160,17 @@ export const router = createBrowserRouter([
        {
         path: "trainers",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             <HandleAllTrainers></HandleAllTrainers>
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "balance",
         element: (
-          <PrivateRoute>
-            <Balance></Balance>
-          </PrivateRoute>
+         <AdminRoute>
+           <Balance></Balance>
+         </AdminRoute>
         ),
       },
        {
@@ -199,14 +208,17 @@ export const router = createBrowserRouter([
       {
         path: "newsletters",
         element: (
-          <PrivateRoute>
-             <ShowNewsletterSubscribers></ShowNewsletterSubscribers>
-          </PrivateRoute>
+          <AdminRoute>
+            <ShowNewsletterSubscribers></ShowNewsletterSubscribers>
+          </AdminRoute>
         ),
       },
       {
         path:'make-admin',
-        element: <PrivateRoute><MakeAdmin></MakeAdmin></PrivateRoute>
+        element: <AdminRoute>
+
+          <MakeAdmin></MakeAdmin>
+        </AdminRoute>
       }
     ],
   },

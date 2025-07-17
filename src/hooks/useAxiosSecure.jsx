@@ -1,19 +1,22 @@
 import React, { useContext, useEffect } from 'react';
-import axios from "axios";
+import axios from 'axios';
 import { AuthContext } from '../contexts/authContext/AuthContext';
+import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
-  baseURL: `http://localhost:3000`,
+  baseURL: 'https://gymetry-server.vercel.app',
 });
 
 const useAxiosSecure = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const interceptor = axiosSecure.interceptors.request.use(
+    // Request interceptor: add Firebase token asynchronously
+    const requestInterceptor = axiosSecure.interceptors.request.use(
       async (config) => {
         if (user) {
-          const token = await user.getIdToken(); // 🔥 get Firebase access token properly
+          const token = await user.getIdToken();
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
@@ -21,10 +24,30 @@ const useAxiosSecure = () => {
       (error) => Promise.reject(error)
     );
 
+    // Response interceptor: handle 401/403 errors globally
+    const responseInterceptor = axiosSecure.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        const status = error.response?.status;
+        if (status === 403) {
+          navigate('/forbidden');
+        } else if (status === 401) {
+          logOut()
+            .then(() => {
+              navigate('/login');
+            })
+            .catch(() => {});
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    // Cleanup interceptors on unmount
     return () => {
-      axiosSecure.interceptors.request.eject(interceptor); // 🧼 clean up
+      axiosSecure.interceptors.request.eject(requestInterceptor);
+      axiosSecure.interceptors.response.eject(responseInterceptor);
     };
-  }, [user]);
+  }, [user, logOut, navigate]);
 
   return axiosSecure;
 };
