@@ -70,9 +70,9 @@ const Register = () => {
           title: "Success!",
           text: "Your account has been created successfully.",
           icon: "success",
-          background: "#1F1F1F",
+          background: "#0f0f0f",
           color: "#F2F2F2",
-          confirmButtonColor: "#A259FF",
+          confirmButtonColor: "#007a7a",
           confirmButtonText: "Continue",
           customClass: {
             title: "swal2-title",

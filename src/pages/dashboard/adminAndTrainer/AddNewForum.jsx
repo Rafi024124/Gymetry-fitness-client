@@ -29,69 +29,81 @@ const AddNewForum = () => {
     try {
       const res = await axiosSecure.post('/forums', forumData);
       if (res.data.insertedId || res.data._id) {
-        Swal.fire('Success!', 'Forum post created successfully!', 'success');
+        Swal.fire('✅ Success!', 'Forum post created successfully!', 'success');
         reset();
       } else {
         throw new Error('Failed to create forum post');
       }
     } catch (error) {
-      Swal.fire('Error!', error.message || 'Something went wrong', 'error');
+      Swal.fire('❌ Error!', error.message || 'Something went wrong', 'error');
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-8 bg-gray-900 rounded-2xl shadow-xl border border-gray-800">
-      <h2 className="text-3xl font-bold mb-6 text-center neon-text">
+    <div className="max-w-4xl mx-auto mt-10 p-8 rounded-2xl bg-[#0f0f0f] border border-[#1f1f1f] shadow-[0_0_4px_rgba(0,255,255,0.1)]">
+      <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 text-center mb-10 ">
         📝 Add New Forum Post
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-white">
         {/* Title */}
         <div>
-          <label className="flex items-center gap-2 mb-1 font-medium text-gray-300">
-            <FaHeading /> Title
+          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
+            <FaHeading className="text-cyan-300" />
+            Title
           </label>
           <input
             type="text"
             {...register('title', { required: 'Title is required' })}
-            className="w-full px-4 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. 10 Tips to Stay Fit"
+            placeholder="e.g. Top 10 Workout Hacks"
+            className={`w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white focus:outline-none border ${
+              errors.title
+                ? 'border-red-500 shadow-[0_0_4px_#FF0000]'
+                : 'border-cyan-500 shadow-[0_0_4px_#00F0FF]'
+            }`}
           />
-          {errors.title && <p className="text-red-400 text-sm mt-1">{errors.title.message}</p>}
+          {errors.title && <p className="text-red-400 mt-1 text-sm">{errors.title.message}</p>}
         </div>
 
         {/* Content */}
         <div>
-          <label className="flex items-center gap-2 mb-1 font-medium text-gray-300">
-            <FaRegFileAlt /> Content
+          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
+            <FaRegFileAlt className="text-cyan-300" />
+            Content
           </label>
           <textarea
             rows={6}
             {...register('content', { required: 'Content is required' })}
-            className="w-full px-4 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Write your full content here..."
+            placeholder="Write your thoughts here..."
+            className={`w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white focus:outline-none border ${
+              errors.content
+                ? 'border-red-500 shadow-[0_0_4px_#FF0000]'
+                : 'border-cyan-500 shadow-[0_0_4px_#00F0FF]'
+            }`}
           />
-          {errors.content && <p className="text-red-400 text-sm mt-1">{errors.content.message}</p>}
+          {errors.content && <p className="text-red-400 mt-1 text-sm">{errors.content.message}</p>}
         </div>
 
         {/* Image URL */}
         <div>
-          <label className="flex items-center gap-2 mb-1 font-medium text-gray-300">
-            <FaImage /> Image URL <span className="text-sm text-gray-500">(optional)</span>
+          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
+            <FaImage className="text-cyan-300" />
+            Image URL <span className="text-sm text-gray-400">(optional)</span>
           </label>
           <input
             type="url"
             {...register('imageUrl')}
-            className="w-full px-4 py-2 border border-gray-700 bg-gray-800 text-white placeholder-gray-400 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="https://image.com/post.jpg"
+            placeholder="https://example.com/image.jpg"
+            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white border border-cyan-500 shadow-[0_0_4px_#00F0FF] focus:outline-none"
           />
         </div>
 
-        <div className="text-center">
+        {/* Submit Button */}
+        <div className="text-center pt-4">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Posting...' : '📨 Publish Forum Post'}
           </button>

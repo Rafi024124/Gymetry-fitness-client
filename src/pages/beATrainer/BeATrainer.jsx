@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
-import trainer from '../../assets/be-a-trainer.png';
+import trainer from '../../assets/be-a-trainer1.png';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
@@ -83,7 +83,7 @@ const BecomeTrainerForm = () => {
           <img
             src={trainer}
             alt="Become a Trainer"
-            className="w-full h-[850px] object-cover rounded-3xl shadow-2xl border-2 border-[#A259FF]/40"
+            className="brightness-75 w-full h-[850px] object-cover rounded-3xl shadow-2xl"
           />
         </div>
 
@@ -185,6 +185,9 @@ const BecomeTrainerForm = () => {
                     />
                   )}
                 />
+                {errors.availableDays && (
+                  <p className="text-red-500 text-sm mt-1">{errors.availableDays.message}</p>
+                )}
               </div>
 
               <div>
@@ -230,24 +233,47 @@ const BecomeTrainerForm = () => {
               </div>
             </div>
 
+            {/* === FIXED Skills Section === */}
             <div>
               <label className="block mb-1 font-medium">Skills</label>
-              <div className="flex flex-wrap gap-3 mt-2">
-                {skillsOptions.map((skill) => (
-                  <label
-                    key={skill}
-                    className="flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer border border-[#00F0FF] bg-[#292929] text-white hover:bg-[#3a3a3a] transition-all duration-200"
-                  >
-                    <input
-                      type="checkbox"
-                      value={skill}
-                      {...register('skills')}
-                      className="hidden"
-                    />
-                    <span className="text-sm">{skill}</span>
-                  </label>
-                ))}
-              </div>
+              <Controller
+                name="skills"
+                control={control}
+                rules={{ required: 'Please select at least one skill' }}
+                render={({ field: { value = [], onChange } }) => {
+                  const toggleSkill = (skill) => {
+                    if (value.includes(skill)) {
+                      onChange(value.filter((s) => s !== skill));
+                    } else {
+                      onChange([...value, skill]);
+                    }
+                  };
+
+                  return (
+                    <div className="flex flex-wrap gap-3 mt-2">
+                      {skillsOptions.map((skill) => (
+                        <label
+                          key={skill}
+                          className={`flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer border ${
+                            value.includes(skill)
+                              ? 'border-[#00F0FF] bg-[#00F0FF]/30'
+                              : 'border-[#00F0FF] bg-[#292929]'
+                          } text-white hover:bg-[#3a3a3a] transition-all duration-200`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={value.includes(skill)}
+                            onChange={() => toggleSkill(skill)}
+                            className="hidden"
+                          />
+                          <span className="text-sm">{skill}</span>
+                        </label>
+                      ))}
+                    </div>
+                  );
+                }}
+              />
+              {errors.skills && <p className="text-red-500 text-sm mt-1">{errors.skills.message}</p>}
             </div>
 
             <div className="mt-4">

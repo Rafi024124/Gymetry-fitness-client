@@ -8,15 +8,19 @@ import 'swiper/css/pagination';
 import { FaStar, FaQuoteLeft } from 'react-icons/fa';
 
 const Reviews = () => {
-  const { data: reviews = [], isLoading } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ['all-reviews'],
     queryFn: async () => {
       const res = await fetch('http://localhost:3000/reviews');
+      if (!res.ok) throw new Error('Failed to fetch reviews');
       return res.json();
     },
   });
 
+  const reviews = Array.isArray(data) ? data : [];
+
   if (isLoading) return <p className="text-white text-center py-10">Loading reviews...</p>;
+  if (isError) return <p className="text-red-500 text-center py-10">Error: {error.message}</p>;
   if (reviews.length === 0) return <p className="text-white text-center py-10">No reviews found</p>;
 
   return (

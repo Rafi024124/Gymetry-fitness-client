@@ -30,6 +30,7 @@ import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots"
 import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSubscribers";
 import AdminDashboardHome from "../pages/dashboard/admin/adminDashboardHome/AdminDashBoardHome";
 import MakeAdmin from "../pages/dashboard/admin/MakeAdmin";
+import DashboardHomeTrainer from "../pages/dashboard/adminAndTrainer/Trainer/DashboardHomeTrainer";
 
 
 export const router = createBrowserRouter([
@@ -106,7 +107,7 @@ export const router = createBrowserRouter([
     children: [
       {
          index: true,
-         Component: AdminDashboardHome
+         Component: DashboardHomeTrainer
       },
       {
         path: "pendingTrainers",

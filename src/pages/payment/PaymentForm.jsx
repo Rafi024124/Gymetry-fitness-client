@@ -3,8 +3,10 @@ import React, { useContext, useState } from "react";
 import { FaUser, FaClock, FaGift, FaCreditCard } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
+import Swal from "sweetalert2";
 
 const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
+  
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState("");
@@ -13,8 +15,7 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
   const { user } = useContext(AuthContext);
 
   const amountInCents = selectedPackage?.price * 100;
-  console.log(slot);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) return;
@@ -72,9 +73,23 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
         try {
           const saveRes = await axiosSecure.post("/payments", paymentInfo);
           console.log("Payment saved:", saveRes.data);
-          console.log(slot.slotId);
+
           
-           
+
+           Swal.fire({
+            title: `<span class="text-cyan-300">Payment Successful!</span>`,
+            html: `<div class="text-white">Thank you for joining <strong>${className}</strong> with <strong>${trainer.fullName}</strong>!</div>`,
+            icon: "success",
+            background: "#0f0f0f",
+            color: "#fff",
+            confirmButtonColor: "#007a7a",
+            confirmButtonText: "Awesome!",
+            customClass: {
+              popup: "border border-cyan-500 rounded-xl",
+              title: "text-lg",
+              htmlContainer: "text-base",
+            },
+          });
         } catch (err) {
           console.error("Failed to save payment:", err);
         }
@@ -88,47 +103,60 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#121212] px-4 py-12">
-      <div className="w-full max-w-md bg-[#1e1e1e] border border-[#333] p-8 rounded-xl shadow-lg text-white">
-        <h2 className="text-3xl font-semibold mb-6 text-center">
-          Complete Your Payment
+    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0D0D0D] px-6 py-16">
+      <div className="w-full max-w-md bg-[#121212] border border-cyan-500 rounded-2xl p-8 shadow-[0_0_4px_rgba(0,255,255,0.7)] text-white">
+        <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 ">
+          💳 Complete Your Payment
         </h2>
 
-        <div className="mb-4 space-y-2 text-sm text-gray-300">
-          <p className="flex items-center gap-2">
-            <FaUser className="text-purple-400" />
-            <strong>Trainer:</strong> {trainer?.fullName}
+        <div className="mb-6 space-y-3 text-sm text-cyan-200">
+          <p className="flex items-center gap-3">
+            <FaUser className="text-cyan-700" />
+            <span>
+              <strong>Trainer:</strong> {trainer?.fullName}
+            </span>
           </p>
-          <p className="flex items-center gap-2">
-            <FaClock className="text-purple-400" />
-            <strong>Slot:</strong> {slot?.slotName} ({slot?.slotTime})
+          <p className="flex items-center gap-3">
+            <FaClock className="text-cyan-700" />
+            <span>
+              <strong>Slot:</strong> {slot?.slotName} ({slot?.slotTime})
+            </span>
           </p>
-          <p className="flex items-center gap-2">
-            <FaGift className="text-purple-400" />
-            <strong>Package:</strong> {selectedPackage?.name} (${selectedPackage?.price})
+          <p className="flex items-center gap-3">
+            <FaGift className="text-cyan-700" />
+            <span>
+              <strong>Package:</strong> {selectedPackage?.name} (${selectedPackage?.price})
+            </span>
           </p>
-          <p className="flex items-center gap-2">
-            <strong>Class:</strong> {className}
+          <p className="flex items-center gap-3">
+            <span>
+              <strong>Class:</strong> {className}
+            </span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-[#aaa] flex items-center gap-2">
-              <FaCreditCard className="text-purple-400" />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              htmlFor="card-element"
+              className="flex items-center gap-2 text-cyan-300 font-medium mb-2"
+            >
+              <FaCreditCard className="text-cyan-700" />
               Card Information
             </label>
-            <div className="bg-[#2c2c2c] rounded-lg p-4 border border-[#444]">
+            <div className="bg-[#222] rounded-xl p-5 border border-cyan-500 shadow-[0_0_4px_rgba(0,255,255,0.6)]">
               <CardElement
+                id="card-element"
                 options={{
                   style: {
                     base: {
                       fontSize: "16px",
-                      color: "#fff",
-                      "::placeholder": { color: "#aaa" },
+                      color: "#00fff7",
+                      "::placeholder": { color: "#66f0e6" },
+                      fontWeight: "500",
                     },
                     invalid: {
-                      color: "#e74c3c",
+                      color: "#ff4d4f",
                     },
                   },
                 }}
@@ -136,12 +164,16 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
             </div>
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm mt-1 font-semibold drop-shadow-[0_0_4px_rgba(255,0,0,0.7)]">
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
             disabled={!stripe || processing}
-            className="w-full bg-[#A259FF] hover:bg-[#8437e3] transition-colors py-3 px-4 rounded-md font-semibold text-white disabled:opacity-50"
+            className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 transition duration-300 py-3 rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {processing ? "Processing..." : `Pay $${selectedPackage?.price}`}
           </button>

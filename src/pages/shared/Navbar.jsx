@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
-import Logo from "../../assets/Logo.jpeg";
+import Logo from "../../assets/logo1.png";
 import { HiOutlineMenu } from "react-icons/hi";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
 import { useState } from "react";
@@ -54,7 +54,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-gray-900 text-[#F2F2F2] shadow-md">
+    <div className="navbar bg-gray-900 text-[#F2F2F2] shadow-md px-6">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Menu */}
@@ -64,7 +64,7 @@ const Navbar = () => {
             className="lg:hidden text-accent p-2"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
-            <HiOutlineMenu className="text-2xl text-[#A259FF] neon-icon hover:neon-icon" />
+            <HiOutlineMenu className="text-2xl text-cyan-300 neon-icon hover:neon-icon" />
           </div>
 
           <AnimatePresence>
@@ -78,13 +78,13 @@ const Navbar = () => {
                 className="absolute left-0 mt-3 p-2 w-48 shadow bg-[#1F1F1F] rounded-box z-[999]"
               >
                 {user && (
-                  <div className="mt-3 flex justify-around mb-2 items-center bg-black p-1 rounded-t-2xl">
+                  <div className="mt-3 flex gap-2 mb-2 items-center bg-black p-1 rounded-t-2xl">
                     <img
                       src={user?.photoURL}
                       alt="profile"
-                      className="w-10 h-10 rounded-full border-2 border-[#A259FF] shadow-[0_0_10px_#A259FF]"
+                      className="w-10 h-10 rounded-full border-2 border-cyan-300 shadow-[0_0_10px_#A259FF]"
                     />
-                    <h1 className="text-[9px] text-white">
+                    <h1 className="text-[12px] text-white">
                       {user?.displayName}
                     </h1>
                   </div>
@@ -100,9 +100,7 @@ const Navbar = () => {
           
         >
           <img src={Logo} alt="Logo" className="rounded-full w-20" />
-          <span className="text-3xl neon-text font-bold">
-  Gymetry
-</span>
+         
         </div>
       </div>
 
@@ -125,18 +123,19 @@ const Navbar = () => {
             </div>
             <button
               onClick={handleLogout}
-              className="glow-btn transition duration-300 text-sm font-semibold"
+             className="glow-btn bg-gradient-to-r from-cyan-400 to-cyan-300 text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-md hover:from-cyan-500 hover:to-cyan-400 transition duration-300"
             >
               Logout
             </button>
           </>
         ) : (
-          <Link
-            className="glow-btn bg-gradient-to-r from-[#59e1ff] to-[#00F0FF] transition duration-300 text-sm font-semibold"
-            to="/login"
-          >
-            Login
-          </Link>
+         <Link
+  to="/login"
+  className="glow-btn bg-gradient-to-r from-cyan-400 to-cyan-300 text-black px-6 py-2 rounded-lg text-sm font-semibold shadow-md hover:from-cyan-500 hover:to-cyan-400 transition duration-300"
+>
+  Login
+</Link>
+
         )}
       </div>
     </div>

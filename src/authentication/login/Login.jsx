@@ -29,9 +29,9 @@ const Login = () => {
           icon: "success",
           title: "Login Successful",
           text: "Welcome back!",
-          background: "#1F1F1F",
+          background: "#0f0f0f",
           color: "#F2F2F2",
-          confirmButtonColor: "#A259FF",
+          confirmButtonColor: "#007a7a",
         });
         navigate(from);
       })

@@ -72,15 +72,15 @@ const MyProfile = () => {
           <img
             src={userData?.photoURL || '/default-profile.png'}
             alt="Profile"
-            className="w-40 h-40  object-cover shadow-lg border-4 border-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF]"
+            className="w-40 h-40  object-cover shadow-lg border-4 border-gradient-to-r from-[#298ca7] via-[#00F0FF] to-[#37a7c9]"
             style={{
               borderImageSlice: 1,
               borderImageSource:
-                'linear-gradient(45deg, #A259FF, #00F0FF, #A259FF)',
+                'linear-gradient(45deg, #298ca7, #00F0FF, #298ca7)',
             }}
           />
           <h2
-            className="mt-6 text-2xl font-extrabold bg-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF]
+            className="mt-6 text-2xl font-extrabold neon-text
             bg-clip-text text-transparent select-none"
             
           >
@@ -93,7 +93,7 @@ const MyProfile = () => {
 
           <button
             onClick={handleEditClick}
-            className="mt-8 px-6 py-2 rounded-full bg-gradient-to-r from-[#A259FF] to-[#00F0FF]
+            className="glow-btn mt-8 px-6 py-2 rounded-full bg-gradient-to-r from-[#A259FF] to-[#00F0FF]
             text-white font-semibold shadow-lg hover:shadow-[#00F0FF]/20 transition duration-300 flex items-center gap-2"
           >
             <FaEdit />
@@ -108,7 +108,7 @@ const MyProfile = () => {
         >
           <h3
             className="text-3xl font-extrabold border-b border-[#A259FF]/30 pb-3
-            bg-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF] bg-clip-text text-transparent select-none"
+            neon-text select-none"
           >
             Account Details
           </h3>

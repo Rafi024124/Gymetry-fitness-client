@@ -60,7 +60,7 @@ const AllClasses = () => {
                     <img
                       src={trainer.profileImage || '/default-avatar.png'}
                       alt={trainer.fullName}
-                      className="w-20 h-20 rounded-full border-2 border-blue-500 object-cover mx-auto"
+                      className="w-20 h-20 rounded-full object-cover mx-auto"
                     />
                     <p className="text-sm mt-2">{trainer.fullName}</p>
                   </div>

@@ -62,11 +62,11 @@ const TrainerDetails = () => {
         />
         <div>
           <h2 className="text-3xl font-bold flex items-center gap-2">
-            <FaUserCircle className="text-blue-400" />
+            <FaUserCircle className="text-cyan-400" />
             {trainer.fullName}
           </h2>
           <p className="flex items-center gap-2 text-gray-300 mt-1">
-            <FaEnvelope className="text-blue-400" />
+            <FaEnvelope className="text-cyan-400" />
             {trainer.email}
           </p>
           <div className="mt-3 flex items-center gap-2">
@@ -76,7 +76,7 @@ const TrainerDetails = () => {
                 trainer.skills.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="bg-blue-500 text-purple-200 text-xs font-semibold px-3 py-1 rounded-full"
+                    className="bg-cyan-900 text-purple-200 text-sm font-semibold px-3 py-1 rounded-full"
                   >
                     {skill}
                   </span>
@@ -110,7 +110,7 @@ const TrainerDetails = () => {
               {slots.map((slot) => (
                 <div
                   key={slot._id}
-                  className={`p-5 rounded-xl border border-gray-700 hover:border-blue-500 bg-gradient-to-tr from-gray-800 to-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer space-y-2`}
+                  className={`p-5 rounded-xl border border-gray-700 hover:border-cyan-500 bg-gradient-to-tr from-gray-800 to-gray-900 hover:shadow-lg transition-transform transform hover:scale-105 cursor-pointer space-y-2`}
                   onClick={() => handleSlotClick(slot)}
                 >
                   <h4 className="text-xl font-semibold text-white flex items-center gap-2">
@@ -121,7 +121,7 @@ const TrainerDetails = () => {
                       <FaCheckCircle className="text-green-500" />
                     )}
                   </h4>
-                  <p className="text-blue-400 font-medium flex items-center gap-2">
+                  <p className="text-cyan-500 font-medium flex items-center gap-2">
                     <FaClock /> Time: {slot.slotTime}
                   </p>
                   <p className="text-gray-300 flex items-center gap-2">

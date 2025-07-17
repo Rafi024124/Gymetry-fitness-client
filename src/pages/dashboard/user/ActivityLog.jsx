@@ -35,6 +35,8 @@ const ActivityLog = () => {
         No application found.
       </div>
     );
+    console.log(statusInfo);
+    
 
   const renderStatusMessage = () => {
     switch (statusInfo.status) {
@@ -85,24 +87,24 @@ const ActivityLog = () => {
           </div>
 
           {showFeedback && (
-            <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 px-4">
-              <div className="bg-gray-800 text-white p-8 rounded-xl max-w-sm w-full shadow-lg border border-gray-700">
-                <h3 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-3">
-                  Rejection Feedback
-                </h3>
-                <p className="whitespace-pre-wrap text-gray-300 leading-relaxed min-h-[80px]">
-                  {statusInfo.feedback || 'No feedback provided.'}
-                </p>
-                <button
-                  onClick={() => setShowFeedback(false)}
-                  className="mt-8 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition duration-300 w-full"
-                  aria-label="Close feedback modal"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
+  <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 px-4">
+    <div className="bg-gray-800 text-white p-8 rounded-xl max-w-sm w-full shadow-lg border border-gray-700">
+      <h3 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-3">
+        Rejection Feedback
+      </h3>
+      <p className="whitespace-pre-wrap text-gray-300 leading-relaxed min-h-[80px]">
+        {statusInfo.feedback || 'No feedback provided.'}
+      </p>
+      <button
+        onClick={() => setShowFeedback(false)}
+        className="mt-8 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition duration-300 w-full"
+        aria-label="Close feedback modal"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
         </>
       )}
     </div>

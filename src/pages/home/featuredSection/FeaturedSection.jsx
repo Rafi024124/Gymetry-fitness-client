@@ -62,7 +62,7 @@ const FeaturedSection = () => {
 
   return (
     <section className="bg-[#0D0D0D] py-16 px-6 md:px-20 text-[#F2F2F2] overflow-hidden">
-      <h2 className=" text-cyan-300 neon-text-glow text-3xl md:text-4xl font-bold text-center bg-clip-text bg-gradient-to-r from-[#A259FF] to-[#00F0FF] mb-10">
+      <h2 className=" text-cyan-500 neon-text-glow text-3xl md:text-4xl font-bold text-center bg-clip-text bg-gradient-to-r from-[#A259FF] to-[#00F0FF] mb-10">
         Why Choose Gymetry?
       </h2>
 

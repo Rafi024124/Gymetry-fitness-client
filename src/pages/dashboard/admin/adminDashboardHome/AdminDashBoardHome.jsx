@@ -58,7 +58,7 @@ const AdminDashboardHome = () => {
 
   return (
     <div className="p-8 bg-gray-900 min-h-screen text-white rounded-2xl max-w-7xl mx-auto">
-      <h1 className="text-4xl font-extrabold mb-8 neon-text">
+      <h1 className="text-4xl font-extrabold mb-8 neon-text text-stroke">
         Admin Dashboard
       </h1>
 
@@ -97,7 +97,7 @@ const AdminDashboardHome = () => {
 
       {/* Latest Trainer Applications */}
       <section>
-        <h2 className="text-3xl neon-text font-semibold mb-6 border-b border-gray-700 pb-3">
+        <h2 className="text-stroke text-3xl neon-text font-semibold mb-6 border-b border-gray-700 pb-3">
           Latest Trainer Applications
         </h2>
         {latestApplications.length === 0 ? (

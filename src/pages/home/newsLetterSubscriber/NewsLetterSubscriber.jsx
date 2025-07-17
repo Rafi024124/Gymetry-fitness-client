@@ -39,7 +39,14 @@ const NewsletterSubscribe = () => {
       const data = await res.json();
 
       if (res.ok) {
-        Swal.fire('Success', data.message, 'success');
+        Swal.fire({
+          icon: "success",
+          title: "Subscription Successful",
+          text: "Thank You!",
+          background: "#0f0f0f",
+          color: "#F2F2F2",
+          confirmButtonColor: "#007a7a",
+        });
         setFormData({ name: '', email: '' });
       } else {
         Swal.fire('Error', data.message || 'Subscription failed', 'error');

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
-import {
+import 
+{
   FaTachometerAlt,
   FaUserCircle,
   FaUsers,
@@ -20,12 +21,9 @@ import { AuthContext } from '../contexts/authContext/AuthContext';
 import useUserRole from '../hooks/useUserRole';
 
 const DashBoardLayout = () => {
+  const { role, roleLoading } = useUserRole();
+  const { user } = useContext(AuthContext);
 
-
-  const {role, roleLoading} = useUserRole();
-  const {user} = useContext(AuthContext);
-  console.log(role);
-  
   return (
     <div className="drawer lg:drawer-open">
       <input id="main-drawer" type="checkbox" className="drawer-toggle" />
@@ -33,38 +31,25 @@ const DashBoardLayout = () => {
       {/* Main Content */}
       <div className="drawer-content flex flex-col bg-[#121212] text-white min-h-screen">
         {/* Top Navbar */}
-        {/* Top Navbar */}
-<div className="navbar bg-gray-900 shadow-md px-4">
-  {/* Hamburger Icon */}
-  <div className="flex-none lg:hidden">
-    <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </label>
-  </div>
+        <div className="navbar bg-gray-900 shadow-md px-4">
+          <div className="flex-none lg:hidden">
+            <label htmlFor="main-drawer" className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </label>
+          </div>
 
-  {/* Title + Home Button */}
-  <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold bg-gray-900 text-white">
-    <div className="flex items-center gap-2">
-      <FaTachometerAlt className="text-white" /> My Dashboard
-    </div>
+          <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold bg-gray-900 text-white">
+            <div className="flex items-center gap-2">
+              <FaTachometerAlt className="text-white" /> My Dashboard
+            </div>
 
-    <Link
-            className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
-            to="/"
-          >
-            Home Page
-          </Link>
-  </div>
-</div>
-
+            <Link to="/" className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold">
+              Home Page
+            </Link>
+          </div>
+        </div>
 
         <div className="p-6 bg-[#36454F] min-h-screen">
           <Outlet />
@@ -75,99 +60,67 @@ const DashBoardLayout = () => {
       <div className="drawer-side">
         <label htmlFor="main-drawer" className="drawer-overlay"></label>
         <ul className="menu p-4 w-72 min-h-full bg-gray-900 text-white space-y-2 shadow-xl">
+          {[
+            { to: "/dashboard", icon: <FaTachometerAlt />, label: "Dashboard Home" },
+            { to: `/dashboard/myprofile?email=${user.email}`, icon: <FaUserCircle />, label: "Profile" }
+          ].map(({ to, icon, label }) => (
+            <li key={to}>
+              <NavLink to={to} className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
+                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
+                }`}>
+                {icon} {label}
+              </NavLink>
+            </li>
+          ))}
 
-         {/* Common for all roles */}
-<li>
-  <NavLink to="/dashboard" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-    <FaTachometerAlt /> Dashboard Home
-  </NavLink>
-</li>
-<li>
-  <NavLink 
-    to={`/dashboard/myprofile?email=${user.email}`}  
-    className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-    <FaUserCircle /> Profile
-  </NavLink>
-</li>
+          {!roleLoading && role === 'admin' && ([
+            { to: "/dashboard/newsletters", icon: <FaRegNewspaper />, label: "All Newsletter Subscribers" },
+            { to: "/dashboard/trainers", icon: <FaUsers />, label: "All Trainers" },
+            { to: "/dashboard/pendingTrainers", icon: <FaInbox />, label: "Applied Trainer" },
+            { to: "/dashboard/balance", icon: <FaCreditCard />, label: "Balance" },
+            { to: "/dashboard/add-new-class", icon: <FaPlusCircle />, label: "Add New Class" },
+            { to: "/dashboard/make-admin", icon: <FaUserPlus />, label: "Make Admin" },
+            { to: "/dashboard/addforum", icon: <FaEdit />, label: "Add Forum" }
+          ].map(({ to, icon, label }) => (
+            <li key={to}>
+              <NavLink to={to} className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
+                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
+                }`}>
+                {icon} {label}
+              </NavLink>
+            </li>
+          )))}
 
-{/* Admin-only routes */}
-{!roleLoading && role === 'admin' && (
-  <>
-    <li>
-      <NavLink to="/dashboard/newsletters" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaRegNewspaper /> All Newsletter Subscribers
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/trainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaUsers /> All Trainers
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/pendingTrainers" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaInbox /> Applied Trainer
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/balance" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaCreditCard /> Balance
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/add-new-class" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaPlusCircle /> Add New Class
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/make-admin" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaUserPlus /> Make Admin
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaEdit /> Add Forum
-      </NavLink>
-    </li>
-  </>
-)}
+          {!roleLoading && role === 'trainer' && ([
+            { to: "/dashboard/manage-slots", icon: <FaClipboardList />, label: "Manage Slots" },
+            { to: "/dashboard/addSlot", icon: <FaPlusCircle />, label: "Add Slot" },
+            { to: "/dashboard/addforum", icon: <FaEdit />, label: "Add Forum" }
+          ].map(({ to, icon, label }) => (
+            <li key={to}>
+              <NavLink to={to} className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
+                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
+                }`}>
+                {icon} {label}
+              </NavLink>
+            </li>
+          )))}
 
-{/* Trainer-only routes */}
-{!roleLoading && role === 'trainer' && (
-  <>
-    <li>
-      <NavLink to="/dashboard/manage-slots" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaClipboardList /> Manage Slots
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/addSlot" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaPlusCircle /> Add Slot
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/addforum" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaEdit /> Add Forum
-      </NavLink>
-    </li>
-  </>
-)}
-
-{/* Member-only routes */}
-{!roleLoading && (role === 'user' || role === 'trainer') && (
-  <>
-    <li>
-      <NavLink to="/dashboard/activity-log" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaHistory /> Activity Log
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/dashboard/bookings" className="hover:bg-gray-400 hover:text-white rounded-lg font-medium">
-        <FaBookOpen /> Booked Trainers
-      </NavLink>
-    </li>
-  </>
-)}
-
+          {!roleLoading && (role === 'user' || role === 'trainer') && ([
+            { to: "/dashboard/activity-log", icon: <FaHistory />, label: "Activity Log" },
+            { to: "/dashboard/bookings", icon: <FaBookOpen />, label: "Booked Trainers" }
+          ].map(({ to, icon, label }) => (
+            <li key={to}>
+              <NavLink to={to} className={({ isActive }) =>
+                `flex items-center gap-2 p-2 rounded-lg font-medium transition duration-300 ${
+                  isActive ? 'bg-cyan-700/30 text-cyan-300' : 'hover:bg-cyan-700/20 hover:text-cyan-300 text-white'
+                }`}>
+                {icon} {label}
+              </NavLink>
+            </li>
+          )))}
         </ul>
       </div>
     </div>

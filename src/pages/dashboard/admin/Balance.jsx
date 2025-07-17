@@ -22,7 +22,7 @@ const Balance = () => {
 
   return (
     <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-5xl mx-auto">
-      <h2 className="text-3xl md:text-4xl font-bold text-center text-gradient bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text text-transparent mb-10">
+      <h2 className="text-3xl md:text-4xl font-bold text-center neon-text mb-10">
         <FaMoneyBillWave className="text-green-400" />Financial Overview
       </h2>
 

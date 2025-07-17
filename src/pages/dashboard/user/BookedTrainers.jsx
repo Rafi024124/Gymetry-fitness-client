@@ -41,7 +41,14 @@ const BookedTrainers = () => {
         rating,
         submittedAt: new Date(),
       });
-      Swal.fire('Success!', 'Review submitted successfully.', 'success');
+      Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Review Submitted Successfully",
+          background: "#0f0f0f",
+          color: "#F2F2F2",
+          confirmButtonColor: "#007a7a",
+        });
       setSelectedBooking(null);
       setFeedback('');
       setRating(0);

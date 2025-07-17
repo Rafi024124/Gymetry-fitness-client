@@ -2,8 +2,18 @@
 @plugin "daisyui";
 
 
+
+
+ .text-stroke {
+  -webkit-text-stroke: 0.6px #3c767b; /* Cyan stroke */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+
 .neon-text {
-  background: linear-gradient(to right, #22dde7, #00F0FF);
+ background: linear-gradient(to right, #91eef5, #4aa3ab, #00F0FF);
+
   background-clip: text;
   -webkit-background-clip: text;
   color: #00F0FF;
@@ -22,12 +32,12 @@
 
 /* Button glow */
 .glow-btn {
-  background: linear-gradient(90deg, #a259ff 0%, #00F0FF 100%);
-  color: #F2F2F2;
-  font-weight: 600;
+  background: linear-gradient(90deg, #22d3ee 0%, #06b6d4 100%); /* cyan-300 to cyan-500 */
+  color: black;
+  font-weight: 700;
   padding: 0.5rem 1.25rem;
   border-radius: 8px;
-  box-shadow: 0 0 2px #a259ff, 0 0 2px #00f0ff;
+  box-shadow: 0 0 2px #22d3ee, 0 0 2px #06b6d4;
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
@@ -55,8 +65,9 @@
 
 .glow-btn:hover {
   filter: brightness(1.1);
-  box-shadow: 0 0 4px #a259ff, 0 0 4px #00f0ff;
+  box-shadow: 0 0 4px #22d3ee, 0 0 4px #06b6d4;
 }
+
 
 span::after {
   content: '';

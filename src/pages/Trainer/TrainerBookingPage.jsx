@@ -11,6 +11,7 @@ import {
   FaUsers,
   FaTools,
 } from "react-icons/fa";
+import Loaging from "../../loagind/Loaging";
 
 const packages = [
   {
@@ -76,13 +77,13 @@ const TrainerBookingPage = () => {
 
   if (loadingTrainer) {
     return (
-      <div className="text-center py-10 text-xl text-purple-400">Loading...</div>
+      <Loaging></Loaging>
     );
   }
 
   return (
     <div className="w-full bg-[#202020] text-[#f3f3f3] py-12 px-4 md:px-10">
-      <h2 className="text-4xl font-bold text-center mb-12 neon-text">
+      <h2 className="text-4xl font-bold text-center mb-12 neon-text ">
         Book Your Session
       </h2>
 
@@ -99,7 +100,7 @@ const TrainerBookingPage = () => {
         {/* Trainer Info */}
         <div className="w-full md:w-2/3 bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-700">
           <h3 className="text-2xl font-semibold mb-3 flex items-center gap-2">
-            <FaUsers className="text-[#A259FF]" /> {trainer?.fullName}
+            <FaUsers className="text-cyan-600" /> {trainer?.fullName}
           </h3>
 
           <p className="text-gray-300 mb-2 flex items-center gap-2">
@@ -122,13 +123,13 @@ const TrainerBookingPage = () => {
           )}
 
           <p className="text-gray-300 flex flex-wrap gap-2 items-center">
-            <FaTools className="text-purple-400" />
+            <FaTools className="text-cyan-400" />
             <strong>Skills:</strong>{" "}
             {trainer?.skills?.length ? (
               trainer.skills.map((skill, i) => (
                 <span
                   key={i}
-                  className="bg-purple-700 text-purple-200 px-3 py-1 rounded-full text-sm font-semibold"
+                  className="bg-cyan-800 text-purple-200 px-3 py-1 rounded-full text-sm font-semibold"
                 >
                   {skill}
                 </span>
@@ -152,8 +153,8 @@ const TrainerBookingPage = () => {
               onClick={() => setSelectedPackage(pkg)}
               className={`rounded-lg p-6 cursor-pointer transition border shadow-md hover:shadow-xl ${
                 selectedPackage?.name === pkg.name
-                  ? "bg-gray-800 border-[#A259FF]"
-                  : "bg-gray-900 border-gray-700 hover:border-[#A259FF]"
+                  ? "bg-gray-800 border-cyan-600"
+                  : "bg-gray-900 border-gray-700 hover:border-cyan-500"
               }`}
             >
               <h4 className="text-xl font-bold mb-2 neon-text flex items-center gap-2">
@@ -161,7 +162,7 @@ const TrainerBookingPage = () => {
                 <FaCheckCircle
                   className={`ml-auto ${
                     selectedPackage?.name === pkg.name
-                      ? "text-[#A259FF]"
+                      ? "text-cyan-400"
                       : "text-gray-700"
                   }`}
                 />
