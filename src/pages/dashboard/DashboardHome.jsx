@@ -1,8 +1,10 @@
 import React from 'react';
 import useUserRole from '../../hooks/useUserRole';
-import AdminDashboardHome from './admin/adminDashboardHome/AdminDashBoardHome';
+
 import TrainerDashboardHome from './adminAndTrainer/Trainer/DashboardHomeTrainer';
 import DashboardHomeUser from './user/DashboardHomeUser';
+import DashBoardHomeAdmin from './admin/adminDashboardHome/DashBoardHomeAdmin';
+
 
 const DashboardHome = () => {
 
@@ -11,7 +13,7 @@ const DashboardHome = () => {
         <div>
             {!roleLoading && role === 'admin' && (
             <>
-              <AdminDashboardHome></AdminDashboardHome>
+              <DashBoardHomeAdmin></DashBoardHomeAdmin>
             </>
           )}
             {!roleLoading && role === 'trainer' && (

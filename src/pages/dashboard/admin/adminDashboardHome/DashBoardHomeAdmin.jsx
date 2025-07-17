@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';  // removed as requested
 import { FaUsers, FaUserCheck, FaClock, FaDumbbell, FaDollarSign } from 'react-icons/fa';
 import Loaging from '../../../../loagind/Loaging';
 import { Link } from 'react-router';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
-const AdminDashboardHome = () => {
+
+const DashBoardHomeAdmin = () => {
   const [stats, setStats] = useState({
     totalSubscribers: 0,
     totalTrainers: 0,
@@ -14,6 +16,8 @@ const AdminDashboardHome = () => {
   });
   const [latestApplications, setLatestApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const axiosSecure = useAxiosSecure();  // use your secure axios instance
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,11 +29,11 @@ const AdminDashboardHome = () => {
           classesRes,
           paymentsSummaryRes,
         ] = await Promise.all([
-          axios.get('https://gymetry-server.vercel.app/newsletter/subscribers'),
-          axios.get('https://gymetry-server.vercel.app/trainers?status=approved'),
-          axios.get('https://gymetry-server.vercel.app/pending'),
-          axios.get('https://gymetry-server.vercel.app/classes'),
-          axios.get('https://gymetry-server.vercel.app/payments/summary'),
+          axiosSecure.get('newsletter/subscribers'),
+          axiosSecure.get('trainers?status=approved'),
+          axiosSecure.get('/trainers/pending'),
+          axiosSecure.get('classes'),
+          axiosSecure.get('payments/summary'),
         ]);
 
         setStats({
@@ -49,7 +53,7 @@ const AdminDashboardHome = () => {
     };
 
     fetchData();
-  }, []);
+  }, [axiosSecure]);
 
   if (loading)
     return (
@@ -116,8 +120,7 @@ const AdminDashboardHome = () => {
                   <p className="text-gray-400 text-sm">{app.email}</p>
                 </div>
                 <Link
-                to={'/dashboard/pendingTrainers'}
-                 
+                  to={'/dashboard/pendingTrainers'}
                   className="glow-btn bg-gradient-to-r from-[#A259FF] to-[#00F0FF] transition duration-300 text-sm font-semibold"
                 >
                   View
@@ -131,4 +134,4 @@ const AdminDashboardHome = () => {
   );
 };
 
-export default AdminDashboardHome;
+export default DashBoardHomeAdmin;

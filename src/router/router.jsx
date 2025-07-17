@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import HomeLayout from "../layouts/HomeLayout";
-import Navbar from "../pages/shared/Navbar";
+
 import Home from "../pages/home/home";
 import Login from "../authentication/login/Login";
 import AuthenticationLayout from "../layouts/AuthenticationLayout";
@@ -28,10 +28,9 @@ import AddNewClass from "../pages/dashboard/admin/AddNewClass";
 import AddSlot from "../pages/dashboard/adminAndTrainer/Trainer/AddSlot";
 import ManageSlots from "../pages/dashboard/adminAndTrainer/Trainer/ManageSlots";
 import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSubscribers";
-import AdminDashboardHome from "../pages/dashboard/admin/adminDashboardHome/AdminDashBoardHome";
+
 import MakeAdmin from "../pages/dashboard/admin/MakeAdmin";
-import DashboardHomeTrainer from "../pages/dashboard/adminAndTrainer/Trainer/DashboardHomeTrainer";
-import DashboardHomeUser from "../pages/dashboard/user/DashboardHomeUser";
+
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import PrivateRouteForRole from "../routes/PrivateRouteForRole";
 import Forbidden from "../pages/Forbidden";
