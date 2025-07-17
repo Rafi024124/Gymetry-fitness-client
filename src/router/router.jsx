@@ -31,6 +31,9 @@ import ShowNewsletterSubscribers from "../pages/dashboard/admin/ShowNewsLetterSu
 import AdminDashboardHome from "../pages/dashboard/admin/adminDashboardHome/AdminDashBoardHome";
 import MakeAdmin from "../pages/dashboard/admin/MakeAdmin";
 import DashboardHomeTrainer from "../pages/dashboard/adminAndTrainer/Trainer/DashboardHomeTrainer";
+import DashboardHomeUser from "../pages/dashboard/user/DashboardHomeUser";
+import DashboardHome from "../pages/dashboard/DashboardHome";
+import PrivateRouteForRole from "../routes/PrivateRouteForRole";
 
 
 export const router = createBrowserRouter([
@@ -58,17 +61,17 @@ export const router = createBrowserRouter([
       {
         path: "trainer/:trainerId/book",
         element: (
-          <PrivateRoute>
-            <TrainerBookingPage></TrainerBookingPage>
-          </PrivateRoute>
-        ),
+    <PrivateRouteForRole allowedRoles={['user']}>
+      <TrainerBookingPage></TrainerBookingPage>
+    </PrivateRouteForRole>
+        )
       },
       {
         path: "payment",
         element: (
-          <PrivateRoute>
-            <Payment />
-          </PrivateRoute>
+    <PrivateRouteForRole allowedRoles={['user']}>
+      <Payment></Payment>
+    </PrivateRouteForRole>
         ),
       },
       {
@@ -107,7 +110,7 @@ export const router = createBrowserRouter([
     children: [
       {
          index: true,
-         Component: DashboardHomeTrainer
+         Component: DashboardHome
       },
       {
         path: "pendingTrainers",

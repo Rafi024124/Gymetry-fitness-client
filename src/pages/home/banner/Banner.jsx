@@ -9,8 +9,11 @@ import Banner1 from '../../../assets/Banner1.jpg';
 import Banner2 from '../../../assets/Banner2.jpg';
 import Banner4 from '../../../assets/Banner4.jpg';
 import BeATrainerButton from '../../../buttons/BeATrainerButton';
+import useUserRole from '../../../hooks/useUserRole';
 
 const Banner = () => {
+
+   const { role, roleLoading } = useUserRole();
   return (
     <div className="w-full h-[400px] md:h-[500px]">
       <Swiper
@@ -38,7 +41,11 @@ const Banner = () => {
         </p>
        
       </div>
-       <BeATrainerButton></BeATrainerButton>
+        {!roleLoading && role === 'user' && (
+            <>
+              <BeATrainerButton></BeATrainerButton>
+            </>
+          )}
     </div>
   </div>
 </SwiperSlide>

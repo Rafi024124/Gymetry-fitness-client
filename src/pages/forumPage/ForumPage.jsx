@@ -3,10 +3,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 import Loaging from '../../loagind/Loaging';
+import { useLocation, useNavigate } from 'react-router';
 
 const ForumPage = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -22,7 +27,21 @@ const ForumPage = () => {
   });
 
   const handleVote = async (postId, voteType) => {
-    if (!user) return alert('Please login to vote');
+    if (!user) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Login Required',
+        text: 'You must be logged in to vote on posts.',
+        background: '#0f0f0f',
+        color: '#F2F2F2',
+        confirmButtonColor: '#007a7a',
+
+        
+      });
+
+      navigate('/login', { state: { from: location } });
+    }
+
     try {
       await axiosSecure.post(`/forum-posts/${postId}/vote`, {
         voteType,
@@ -31,6 +50,14 @@ const ForumPage = () => {
       queryClient.invalidateQueries(['forumPosts', page]);
     } catch (err) {
       console.error('Vote failed:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Vote Failed',
+        text: 'Something went wrong while submitting your vote.',
+        background: '#0f0f0f',
+        color: '#F2F2F2',
+        confirmButtonColor: '#007a7a',
+      });
     }
   };
 
@@ -102,7 +129,7 @@ const ForumPage = () => {
         <button
           onClick={() => setPage((old) => Math.max(old - 1, 1))}
           disabled={page === 1}
-          className="px-6 py-2 rounded-full bg-[#A259FF] hover:bg-[#7E40E7] text-white font-semibold disabled:opacity-30"
+          className="px-6 py-2 rounded-full glow-btn text-white font-semibold disabled:opacity-30"
         >
           ◀ Prev
         </button>
@@ -110,7 +137,7 @@ const ForumPage = () => {
         <button
           onClick={() => setPage((old) => Math.min(old + 1, totalPages))}
           disabled={page === totalPages}
-          className="px-6 py-2 rounded-full bg-[#A259FF] hover:bg-[#7E40E7] text-white font-semibold disabled:opacity-30"
+          className="px-6 py-2 rounded-full glow-btn text-white font-semibold disabled:opacity-30"
         >
           Next ▶
         </button>

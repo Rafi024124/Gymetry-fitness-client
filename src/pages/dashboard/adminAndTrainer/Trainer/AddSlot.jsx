@@ -11,6 +11,26 @@ import Loaging from '../../../../loagind/Loaging';
 const AddSlot = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+
+  // Fetch trainer profile data (read-only applied data)
+  const { data: trainerProfile, isLoading: isProfileLoading, error: profileError } = useQuery({
+    queryKey: ['trainerProfile', user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/trainer-profile?email=${encodeURIComponent(user.email)}`);
+      return res.data;
+    },
+  });
+
+  // Fetch classes as before
+  const { data: classes = [], isLoading: classesLoading, error: classesError } = useQuery({
+    queryKey: ['classes'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/classes');
+      return res.data;
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -19,13 +39,19 @@ const AddSlot = () => {
     formState: { errors },
   } = useForm();
 
-  const { data: classes = [], isLoading, error } = useQuery({
-    queryKey: ['classes'],
-    queryFn: async () => {
-      const res = await axiosSecure.get('/classes');
-      return res.data;
-    },
-  });
+  const dayOptions = [
+    { value: 'Sun', label: 'Sunday' },
+    { value: 'Mon', label: 'Monday' },
+    { value: 'Tue', label: 'Tuesday' },
+    { value: 'Wed', label: 'Wednesday' },
+    { value: 'Thu', label: 'Thursday' },
+    { value: 'Fri', label: 'Friday' },
+    { value: 'Sat', label: 'Saturday' },
+  ];
+
+  if (isProfileLoading || classesLoading) return <Loaging />;
+  if (profileError) return <div className="text-red-500">Failed to load trainer profile</div>;
+  if (classesError) return <div className="text-red-500">Failed to load classes</div>;
 
   const onSubmit = async (data) => {
     try {
@@ -65,27 +91,37 @@ const AddSlot = () => {
     }
   };
 
-  const dayOptions = [
-    { value: 'Sun', label: 'Sunday' },
-    { value: 'Mon', label: 'Monday' },
-    { value: 'Tue', label: 'Tuesday' },
-    { value: 'Wed', label: 'Wednesday' },
-    { value: 'Thu', label: 'Thursday' },
-    { value: 'Fri', label: 'Friday' },
-    { value: 'Sat', label: 'Saturday' },
-  ];
-
-  if (isLoading) return <Loaging />;
-  if (error)
-    return (
-      <div className="text-center text-red-500">Failed to load classes</div>
-    );
-
   return (
     <div className="max-w-xl mx-auto px-6 py-10 bg-[#0f0f0f] text-white rounded-2xl shadow-[0_0_4px_rgba(0,255,255,0.6)] backdrop-blur-md border border-cyan-500">
       <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
         Add New Slot
       </h2>
+
+      {/* Read-only applied trainer data */}
+      <div className="mb-8 p-4 bg-gray-800 rounded-lg border border-cyan-500 shadow-inner">
+        <h3 className="text-xl font-semibold mb-4 text-cyan-300">Your Trainer Profile</h3>
+
+        <p>
+          <strong>Full Name: </strong> {trainerProfile?.fullName || user?.displayName || 'N/A'}
+        </p>
+        <p>
+          <strong>Email: </strong> {trainerProfile?.email || user?.email || 'N/A'}
+        </p>
+        <p>
+          <strong>Age: </strong> {trainerProfile?.age || 'N/A'}
+        </p>
+        <p>
+          <strong>Skills: </strong>{' '}
+          {trainerProfile?.skills?.length ? trainerProfile.skills.join(', ') : 'N/A'}
+        </p>
+        <p>
+          <strong>Available Days: </strong>{' '}
+          {trainerProfile?.availableDays?.length
+            ? trainerProfile.availableDays.join(', ')
+            : 'N/A'}
+        </p>
+        {/* Add any other read-only fields you want */}
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Slot Name */}
@@ -132,9 +168,7 @@ const AddSlot = () => {
             )}
           />
           {errors.availableDays && (
-            <p className="text-red-400 text-sm mt-1">
-              {errors.availableDays.message}
-            </p>
+            <p className="text-red-400 text-sm mt-1">{errors.availableDays.message}</p>
           )}
         </div>
 

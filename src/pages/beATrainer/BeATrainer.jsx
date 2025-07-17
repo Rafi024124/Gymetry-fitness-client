@@ -5,6 +5,7 @@ import { AuthContext } from '../../contexts/authContext/AuthContext';
 import trainer from '../../assets/be-a-trainer1.png';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const daysOptions = [
   { value: 'Sun', label: 'Sunday' },
@@ -28,6 +29,7 @@ const skillsOptions = [
 
 const BecomeTrainerForm = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -72,6 +74,9 @@ const BecomeTrainerForm = () => {
           confirmButtonColor: '#A259FF',
           confirmButtonText: 'Continue',
         });
+
+       navigate('/');
+
       }
     });
   };
