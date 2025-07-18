@@ -36,7 +36,7 @@ const Login = () => {
         navigate(from);
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         Swal.fire({
           icon: "error",
           title: "Login Failed",

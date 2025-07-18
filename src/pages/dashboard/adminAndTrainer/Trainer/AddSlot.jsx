@@ -86,12 +86,19 @@ const AddSlot = () => {
         reset();
       }
     } catch (error) {
-      console.error('Add slot failed', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed to Add Slot',
-        text: error.message || 'Try again later',
-      });
+      if (error.response?.status === 409) {
+  Swal.fire({
+    icon: 'warning',
+    title: 'Duplicate Slot',
+    text: 'This slot already exists. Please choose a different time or name.',
+  });
+} else {
+  Swal.fire({
+    icon: 'error',
+    title: 'Failed to Add Slot',
+    text: error.message || 'Try again later',
+  });
+}
     }
   };
 

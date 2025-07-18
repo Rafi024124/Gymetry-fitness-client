@@ -56,30 +56,51 @@ const BecomeTrainerForm = () => {
   const axiosSecure = useAxiosSecure();
 
   const onSubmit = async (data) => {
-    const trainerData = {
-      ...data,
-      availableDays: data.availableDays.map((day) => day.value),
-      status: 'pending',
-      created_at: new Date().toISOString(),
-    };
-
-    axiosSecure.post('/trainers', trainerData).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Your application has been submitted successfully.',
-          icon: 'success',
-          background: '#1F1F1F',
-          color: '#F2F2F2',
-          confirmButtonColor: '#A259FF',
-          confirmButtonText: 'Continue',
-        });
-
-       navigate('/');
-
-      }
-    });
+  const trainerData = {
+    ...data,
+    availableDays: data.availableDays.map((day) => day.value),
+    status: 'pending',
+    created_at: new Date().toISOString(),
   };
+
+  try {
+    const res = await axiosSecure.post('/trainers', trainerData);
+    if (res.data.insertedId) {
+      Swal.fire({
+        title: 'Success!',
+        text: 'Your application has been submitted successfully.',
+        icon: 'success',
+        background: '#1F1F1F',
+        color: '#F2F2F2',
+        confirmButtonColor: '#A259FF',
+        confirmButtonText: 'Continue',
+      });
+      navigate('/');
+    }
+  } catch (error) {
+    if (error.response?.status === 409) {
+      // Duplicate entry
+      Swal.fire({
+        title: 'Already Applied!',
+        text: 'You have already applied for the trainer role.',
+        icon: 'warning',
+        background: '#1F1F1F',
+        color: '#F2F2F2',
+        confirmButtonColor: '#A259FF',
+      });
+    } else {
+      // Other errors
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong. Please try again later.',
+        icon: 'error',
+        background: '#1F1F1F',
+        color: '#F2F2F2',
+        confirmButtonColor: '#A259FF',
+      });
+    }
+  }
+};
 
   return (
     <div className="w-full px-4 py-16 lg:px-20 bg-gradient-to-br from-[#1F1F1F] via-[#121212] to-[#1F1F1F] text-white min-h-screen">

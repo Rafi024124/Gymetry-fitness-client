@@ -35,6 +35,9 @@ import DashboardHome from "../pages/dashboard/DashboardHome";
 import PrivateRouteForRole from "../routes/PrivateRouteForRole";
 import Forbidden from "../pages/Forbidden";
 import AdminRoute from "../routes/AdminRoute";
+import TrainerRoute from "../routes/TrainerRoute";
+import AdminTrainerRoute from "../routes/AdminTrainerRoute";
+
 
 
 export const router = createBrowserRouter([
@@ -175,33 +178,33 @@ export const router = createBrowserRouter([
        {
         path: "addforum",
         element: (
-          <PrivateRoute>
-             <AddNewForum></AddNewForum>
-          </PrivateRoute>
+          <AdminTrainerRoute>
+            <AddNewForum></AddNewForum>
+          </AdminTrainerRoute>
         ),
       },
       {
         path: "add-new-class",
         element: (
-          <PrivateRoute>
-             <AddNewClass></AddNewClass>
-          </PrivateRoute>
+          <AdminRoute>
+            <AddNewClass></AddNewClass>
+          </AdminRoute>
         ),
       },
       {
         path: "addSlot",
         element: (
-          <PrivateRoute>
-             <AddSlot></AddSlot>
-          </PrivateRoute>
+          <TrainerRoute>
+            <AddSlot></AddSlot>
+          </TrainerRoute>
         ),
       },
       {
         path: "manage-slots",
         element: (
-          <PrivateRoute>
-             <ManageSlots></ManageSlots>
-          </PrivateRoute>
+          <TrainerRoute>
+            <ManageSlots></ManageSlots>
+          </TrainerRoute>
         ),
       },
       {

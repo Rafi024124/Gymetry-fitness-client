@@ -9,6 +9,10 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
 
 
 .neon-text {
