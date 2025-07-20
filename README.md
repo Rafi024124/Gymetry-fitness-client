@@ -21,8 +21,8 @@ GYMETRY is a full-featured MERN stack Fitness Tracker web application that conne
 ---
 
 ## 🔐 Admin Credentials:
-- **Email:** admin@gymetry.com  
-- **Password:** admin123
+- **Email:** admin@gmail.com  
+- **Password:** Admin123@
 
 ---
 
