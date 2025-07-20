@@ -49,6 +49,8 @@ GYMETRY is a full-featured MERN stack Fitness Tracker web application that conne
 - **UI Libraries:** Tailwind CSS, SweetAlert2, Neon-styled custom components
 - **Data Visualization:** Recharts (Pie Chart / Bar Chart)
 
+
+//Hello world
 ---
 
 ## 🧠 Project Structure:
