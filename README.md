@@ -166,7 +166,34 @@ Feel free to explore and fork the project. Contributions and suggestions are wel
 
 
 
+🚀 How to Run Locally
+1️⃣ Clone the repository
+git clone https://github.com/Rafi024124/Cholo-Kotha-Boli-App.git
 
+2️⃣ Go to the project folder
+cd Cholo-Kotha-Boli-App
+
+3️⃣ Install backend dependencies
+cd server
+npm install
+
+4️⃣ Create a .env file in the server folder
+Add your environment variables like:
+MONGO_URI=your_mongodb_connection_string JWT_SECRET=your_jwt_secret FIREBASE_API_KEY=your_firebase_api_key
+
+5️⃣ Start the backend server
+npm run start
+
+6️⃣ Install frontend dependencies
+Open a new terminal tab/window, then:
+cd ../client
+npm install
+
+7️⃣ Start the frontend
+npm start
+
+8️⃣ Open your browser and go to
+http://localhost:3000
 
 
 
