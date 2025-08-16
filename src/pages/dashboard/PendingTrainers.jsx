@@ -258,7 +258,7 @@ const PendingTrainers = () => {
           </h3>
 
           <p className="mb-2 text-gray-300">
-            Provide feedback for rejection of{' '}
+            Provide a feedback for rejection of{' '}
             <strong>{rejectingTrainer?.fullName}</strong>:
           </p>
 
