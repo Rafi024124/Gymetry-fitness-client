@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaDumbbell } from 'react-icons/fa';
+import { ThemeContext } from '../contexts/ThemeContext';
+
 
 const Loaging = () => {
+  const { theme } = useContext(ThemeContext);
+
+  const bgColor = theme === 'dark' ? 'bg-[#1F1F1F]' : 'bg-sky-100';
+  const spinnerColor = theme === 'dark' ? 'text-gray-400' : 'text-blue-600';
+
   return (
-    <div className="flex justify-center items-center h-screen bg-[#1F1F1F]">
-      <div className="text-6xl text-gray-400 dumbbell-spinner">
+    <div className={`flex justify-center items-center h-screen ${bgColor}`}>
+      <div className={`text-6xl ${spinnerColor} dumbbell-spinner`}>
         <FaDumbbell />
       </div>
 

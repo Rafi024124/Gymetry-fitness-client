@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GiMuscleUp, GiWeightLiftingUp, GiMeal } from 'react-icons/gi';
 import { motion as Motion } from 'framer-motion';
+import { ThemeContext } from '../../../contexts/ThemeContext';
+
 
 const features = [
   {
     title: 'Expert Trainers',
     description: 'Work with certified professionals to reach your fitness goals faster and smarter.',
-    icon: <GiMuscleUp className="text-5xl text-[#00F0FF]" />,
+    icon: <GiMuscleUp className="text-5xl" />,
   },
   {
     title: 'Diverse Classes',
     description: 'Choose from yoga, HIIT, strength training, and more – available in-person and online.',
-    icon: <GiWeightLiftingUp className="text-5xl text-[#00F0FF]" />,
+    icon: <GiWeightLiftingUp className="text-5xl" />,
   },
   {
     title: 'Nutrition Guidance',
     description: 'Personalized meal plans and nutritional coaching for optimal performance.',
-    icon: <GiMeal className="text-5xl text-[#00F0FF]" />,
+    icon: <GiMeal className="text-5xl" />,
   },
 ];
 
 const FeaturedSection = () => {
+  const { theme } = useContext(ThemeContext); // use theme
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -60,9 +61,16 @@ const FeaturedSection = () => {
     }
   };
 
+  // Set colors based on theme
+  const bgColor = theme === 'dark' ? 'bg-[#1F1F1F]/80 border-[#00F0FF]/50 shadow-[0_0_25px_#00F0FF80]' 
+                                   : 'bg-sky-100/80 border-sky-300/50 shadow-[0_0_25px_#38BDF8AA]';
+  const iconColor = theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-500';
+  const titleColor = theme === 'dark' ? 'text-[#00F0FF] drop-shadow-glow' : 'text-sky-700 drop-shadow-md';
+  const descColor = theme === 'dark' ? 'text-[#bbb]' : 'text-gray-800';
+
   return (
-    <section className="bg-[#0D0D0D] py-16 px-6 md:px-20 text-[#F2F2F2] overflow-hidden">
-      <h2 className=" text-cyan-500 neon-text-glow text-3xl md:text-4xl font-bold text-center bg-clip-text bg-gradient-to-r from-[#A259FF] to-[#00F0FF] mb-10">
+    <section className={`${theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-200'} py-16 px-2 overflow-hidden`}>
+      <h2 className={`text-3xl md:text-4xl font-bold text-center mb-10 ${theme === 'dark' ? 'text-cyan-500 neon-text-glow' : 'text-sky-700'}`}>
         Why Choose Gymetry?
       </h2>
 
@@ -70,13 +78,13 @@ const FeaturedSection = () => {
         {features.map((feature, index) => (
           <Motion.div
             key={index}
-            className={`absolute transition-all duration-700 ease-in-out w-full max-w-md p-6 rounded-xl bg-[#1F1F1F]/80 backdrop-blur-md border border-[#00F0FF]/50 shadow-[0_0_25px_#00F0FF80] text-center ${getCardStyle(index)}`}
+            className={`absolute transition-all duration-700 ease-in-out w-full max-w-md p-6 rounded-xl ${bgColor} text-center ${getCardStyle(index)}`}
           >
-            <div className="mb-4">{feature.icon}</div>
-            <h3 className="text-2xl font-semibold text-[#00F0FF] mb-2 drop-shadow-glow">
+            <div className={`mb-4 ${iconColor}`}>{feature.icon}</div>
+            <h3 className={`text-2xl font-semibold mb-2 ${titleColor}`}>
               {feature.title}
             </h3>
-            <p className="text-[#bbb] text-sm">{feature.description}</p>
+            <p className={`text-sm ${descColor}`}>{feature.description}</p>
           </Motion.div>
         ))}
       </div>

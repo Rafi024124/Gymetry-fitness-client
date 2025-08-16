@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { FaMoneyBillWave, FaDollarSign } from 'react-icons/fa';
 import Loaging from '../../../loagind/Loaging';
 import Charts from '../Charts';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 
 
 const Balance = () => {
+  const { theme } = useContext(ThemeContext);
   const axiosSecure = useAxiosSecure();
 
   const { data, isLoading, error } = useQuery({
@@ -17,20 +19,36 @@ const Balance = () => {
     },
   });
 
-  if (isLoading) return <Loaging></Loaging>;
-  if (error) return <div className="text-center p-6 text-red-600">Failed to load data.</div>;
+  if (isLoading) return <Loaging />;
+  if (error)
+    return (
+      <div
+        className={`text-center p-6 ${
+          theme === 'dark' ? 'text-red-600' : 'text-red-800'
+        }`}
+      >
+        Failed to load data.
+      </div>
+    );
 
   const { totalBalance, lastSixPayments } = data;
 
+  const containerBg = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-sky-50 text-gray-900';
+  const cardBg = theme === 'dark' ? 'bg-gray-800' : 'bg-white';
+  const tableHeaderBg = theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-sky-200 text-gray-700';
+  const tableRowHover = theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-sky-100';
+
   return (
-    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg max-w-5xl mx-auto">
-      <h2 className="text-3xl md:text-4xl font-bold text-center neon-text mb-10">
-        <FaMoneyBillWave className="text-green-400" />Financial Overview
+    <div className={`${containerBg} p-6 rounded-lg shadow-lg max-w-5xl mx-auto`}>
+      <h2 className="text-3xl md:text-4xl font-bold text-center neon-text mb-10 flex items-center justify-center gap-2">
+        <FaMoneyBillWave className="text-green-400" /> Financial Overview
       </h2>
 
-      <div className="mb-8 p-4 bg-gray-800 rounded-lg flex justify-between items-center">
+      <div className={`mb-8 p-4 ${cardBg} rounded-lg flex justify-between items-center`}>
         <div>
-          <p className="text-gray-400 uppercase tracking-wide">Total Balance</p>
+          <p className={theme === 'dark' ? 'text-gray-400 uppercase tracking-wide' : 'text-gray-600 uppercase tracking-wide'}>
+            Total Balance
+          </p>
           <p className="text-4xl font-extrabold flex items-center gap-2">
             <FaDollarSign className="text-green-500" /> ${totalBalance?.toFixed(2)}
           </p>
@@ -38,9 +56,9 @@ const Balance = () => {
       </div>
 
       <h3 className="text-xl font-semibold mb-4">Recent Transactions</h3>
-      <div className="overflow-x-auto rounded-lg border border-gray-700">
+      <div className={`overflow-x-auto rounded-lg border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'}`}>
         <table className="min-w-full text-left text-sm">
-          <thead className="bg-gray-800 text-gray-400 uppercase">
+          <thead className={tableHeaderBg}>
             <tr>
               <th className="p-3">Trainer</th>
               <th className="p-3">User</th>
@@ -60,7 +78,7 @@ const Balance = () => {
               </tr>
             )}
             {lastSixPayments.map((payment) => (
-              <tr key={payment._id} className="border-b border-gray-700 hover:bg-gray-800">
+              <tr key={payment._id} className={`border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} ${tableRowHover}`}>
                 <td className="p-3 font-medium">{payment.trainerName || 'N/A'}</td>
                 <td className="p-3">{payment.userName || payment.userEmail || 'N/A'}</td>
                 <td className="p-3">
@@ -84,10 +102,7 @@ const Balance = () => {
         </table>
       </div>
 
-
-    
- <Charts></Charts>
-
+      <Charts />
     </div>
   );
 };

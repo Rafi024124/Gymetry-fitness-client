@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { motion as Motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
-
 import Loaging from '../../loagind/Loaging';
 import useAxios from '../../hooks/useAxios';
+import { ThemeContext } from '../../contexts/ThemeContext';
+
 
 const AllTrainers = () => {
+  const { theme } = useContext(ThemeContext);
   const axiosInstance = useAxios();
   const navigate = useNavigate();
 
@@ -27,8 +29,19 @@ const AllTrainers = () => {
       <div className="text-center text-red-500 py-10">Failed to load trainers.</div>
     );
 
+  // Theme-based classes
+  const sectionBg = theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100';
+  const cardBg = theme === 'dark' ? 'bg-[#1f1f1f]/60 text-white' : 'bg-white text-gray-900';
+  const borderColor = theme === 'dark' ? 'border-[#A259FF]/30' : 'border-sky-300/30';
+  const nameColor = theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-600';
+  const socialHover = theme === 'dark' ? '#00F0FF' : '#0ea5e9';
+  const buttonGradient = theme === 'dark' ? 'from-[#A259FF] to-[#00F0FF]' : 'from-sky-400 to-sky-600';
+ 
+  const textGray = theme === 'dark' ? 'text-gray-300' : 'text-gray-700';
+  const textItalic = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
+
   return (
-    <section className="bg-[#0D0D0D] py-16 px-6 md:px-12 min-h-screen">
+    <section className={`${sectionBg} py-16 px-6 md:px-12 min-h-screen`}>
       <h2 className="text-4xl font-extrabold text-center mb-14 bg-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF] bg-clip-text text-transparent animate-pulse">
         Meet Our Trainers
       </h2>
@@ -42,23 +55,23 @@ const AllTrainers = () => {
             whileHover={{ scale: 1.05, rotateX: 3, rotateY: 3 }}
             transition={{ duration: 0.4, delay: idx * 0.1 }}
             viewport={{ once: true }}
-            className="relative group bg-[#1f1f1f]/60 text-white p-6 rounded-2xl backdrop-blur-xl border border-[#A259FF]/30 shadow-xl overflow-hidden flex flex-col items-center text-center"
+            className={`relative group p-6 rounded-2xl backdrop-blur-xl border-2 ${borderColor} shadow-xl overflow-hidden flex flex-col items-center text-center ${cardBg}`}
           >
             {/* Glowing border ring */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[#00F0FF] group-hover:shadow-[0_0_25px_#00F0FF] transition-all duration-500 pointer-events-none"></div>
+            <div className={`absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[${socialHover}] group-hover:shadow-[0_0_25px_${socialHover}] transition-all duration-500 pointer-events-none`}></div>
 
             {/* Profile Image */}
             <img
               src={trainer.profileImage || '/default-profile.png'}
               alt={trainer.fullName}
-              className="w-32 h-32 rounded-full object-cover  shadow-lg mb-4 transition-transform group-hover:scale-110"
+              className="w-32 h-32 rounded-full object-cover shadow-lg mb-4 transition-transform group-hover:scale-110"
             />
 
             {/* Name */}
-            <h3 className="text-xl font-semibold mb-1 text-[#00F0FF]">{trainer.fullName}</h3>
+            <h3 className={`text-xl font-semibold mb-1 ${nameColor}`}>{trainer.fullName}</h3>
 
             {/* Experience */}
-            <p className="text-sm text-gray-300 mb-3">
+            <p className={`text-sm mb-3 ${textGray}`}>
               Experience: <span className="font-medium">{trainer.yearsOfExperience ?? 'N/A'} yrs</span>
             </p>
 
@@ -69,7 +82,7 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#3b5998] hover:text-[#00F0FF] transition-shadow duration-300 shadow-[0_0_8px_#3b5998] hover:shadow-[0_0_20px_#00F0FF] rounded-full p-2"
+                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
                   aria-label="Facebook"
                 >
                   <FaFacebookF size={18} />
@@ -80,7 +93,7 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#E1306C] hover:text-[#00F0FF] transition-shadow duration-300 shadow-[0_0_8px_#E1306C] hover:shadow-[0_0_20px_#00F0FF] rounded-full p-2"
+                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
                   aria-label="Instagram"
                 >
                   <FaInstagram size={18} />
@@ -91,7 +104,7 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#0077b5] hover:text-[#00F0FF] transition-shadow duration-300 shadow-[0_0_8px_#0077b5] hover:shadow-[0_0_20px_#00F0FF] rounded-full p-2"
+                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
                   aria-label="LinkedIn"
                 >
                   <FaLinkedinIn size={18} />
@@ -100,20 +113,20 @@ const AllTrainers = () => {
             </div>
 
             {/* Availability */}
-            <p className="text-sm text-gray-300 mb-4">
+            <p className={`text-sm mb-4 ${textGray}`}>
               Available: <span className="font-medium">{trainer.availableDays?.join(', ') || 'N/A'}</span> at{' '}
               <span className="font-medium">{trainer.availableTime || 'N/A'}</span>
             </p>
 
             {/* Other Info */}
             {trainer.otherInfo && (
-              <p className="text-sm text-gray-400 italic mb-5 max-w-[260px]">{trainer.otherInfo}</p>
+              <p className={`text-sm italic mb-5 max-w-[260px] ${textItalic}`}>{trainer.otherInfo}</p>
             )}
 
             {/* Button */}
             <button
               onClick={() => navigate(`/trainer/${trainer._id}`)}
-              className="mt-auto bg-gradient-to-r from-[#A259FF] to-[#00F0FF] hover:from-[#7F3FFF] hover:to-[#00D4D4] text-white py-2 px-6 rounded-full font-semibold shadow-lg hover:shadow-[#00F0FF]/70 transition duration-300"
+              className={`mt-auto bg-gradient-to-r ${buttonGradient} hover:from-[#7F3FFF] hover:to-[#00D4D4] text-white py-2 px-6 rounded-full font-semibold shadow-lg hover:shadow-[${socialHover}]/70 transition duration-300`}
             >
               Know More
             </button>
