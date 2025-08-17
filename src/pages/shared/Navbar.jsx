@@ -64,7 +64,7 @@ const Navbar = () => {
         theme === "dark" ? "bg-gray-900 text-[#F2F2F2]" : "bg-sky-200 text-gray-900"
       }`}
     >
-      <div className="max-w-7xl mx-auto navbar shadow-md">
+      <div className="max-w-7xl mx-auto navbar ">
         <div className="navbar-start">
           {/* Mobile Menu */}
           <div className="dropdown relative">

@@ -6,13 +6,27 @@ import Swal from 'sweetalert2';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { AuthContext } from '../../../../contexts/authContext/AuthContext';
+
 import Loaging from '../../../../loagind/Loaging';
+import { ThemeContext } from '../../../../contexts/ThemeContext';
 
 const AddSlot = () => {
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext); // ✅ use themeContext
   const axiosSecure = useAxiosSecure();
 
-  // Fetch trainer profile data (read-only applied data)
+  const isDark = theme === 'dark';
+  const bgMain = isDark ? 'bg-[#0f0f0f]' : 'bg-white';
+  const textMain = isDark ? 'text-white' : 'text-gray-900';
+  const inputBg = isDark ? 'bg-gray-900' : 'bg-gray-100';
+  const borderColor = isDark ? 'border-cyan-500' : 'border-blue-400';
+  const shadowColor = isDark
+    ? 'shadow-[0_0_4px_rgba(0,255,255,0.6)]'
+    : 'shadow-[0_0_4px_rgba(0,123,255,0.4)]';
+  const profileBg = isDark ? 'bg-gray-800' : 'bg-gray-100';
+  const profileText = isDark ? 'text-cyan-300' : 'text-blue-700';
+
+  // Fetch trainer profile
   const { data: trainerProfile, isLoading: isProfileLoading, error: profileError } = useQuery({
     queryKey: ['trainerProfile', user?.email],
     enabled: !!user?.email,
@@ -22,7 +36,7 @@ const AddSlot = () => {
     },
   });
 
-  // Fetch classes as before
+  // Fetch classes
   const { data: classes = [], isLoading: classesLoading, error: classesError } = useQuery({
     queryKey: ['classes'],
     queryFn: async () => {
@@ -31,18 +45,11 @@ const AddSlot = () => {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm();
 
- const availableDayOptions = (trainerProfile?.availableDays || []).map((day) => ({
-  value: day,
-  label:
-    {
+  const availableDayOptions = (trainerProfile?.availableDays || []).map((day) => ({
+    value: day,
+    label: {
       Sun: 'Sunday',
       Mon: 'Monday',
       Tue: 'Tuesday',
@@ -51,7 +58,7 @@ const AddSlot = () => {
       Fri: 'Friday',
       Sat: 'Saturday',
     }[day] || day,
-}));
+  }));
 
   if (isProfileLoading || classesLoading) return <Loaging />;
   if (profileError) return <div className="text-red-500">Failed to load trainer profile</div>;
@@ -87,123 +94,105 @@ const AddSlot = () => {
       }
     } catch (error) {
       if (error.response?.status === 409) {
-  Swal.fire({
-    icon: 'warning',
-    title: 'Duplicate Slot',
-    text: 'This slot already exists. Please choose a different time or name.',
-  });
-} else {
-  Swal.fire({
-    icon: 'error',
-    title: 'Failed to Add Slot',
-    text: error.message || 'Try again later',
-  });
-}
+        Swal.fire({
+          icon: 'warning',
+          title: 'Duplicate Slot',
+          text: 'This slot already exists. Please choose a different time or name.',
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed to Add Slot',
+          text: error.message || 'Try again later',
+        });
+      }
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto px-6 py-10 bg-[#0f0f0f] text-white rounded-2xl shadow-[0_0_4px_rgba(0,255,255,0.6)] backdrop-blur-md border border-cyan-500">
+    <div className={`max-w-xl mx-auto px-6 py-10 ${bgMain} ${textMain} rounded-2xl ${shadowColor} backdrop-blur-md border ${borderColor}`}>
       <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
         Add New Slot
       </h2>
 
-      {/* Read-only applied trainer data */}
-      <div className="mb-8 p-4 bg-gray-800 rounded-lg border border-cyan-500 shadow-inner">
-        <h3 className="text-xl font-semibold mb-4 text-cyan-300">Your Trainer Profile</h3>
-
-        <p>
-          <strong>Full Name: </strong> {trainerProfile?.fullName || user?.displayName || 'N/A'}
-        </p>
-        <p>
-          <strong>Email: </strong> {trainerProfile?.email || user?.email || 'N/A'}
-        </p>
-        <p>
-          <strong>Age: </strong> {trainerProfile?.age || 'N/A'}
-        </p>
-        <p>
-          <strong>Skills: </strong>{' '}
-          {trainerProfile?.skills?.length ? trainerProfile.skills.join(', ') : 'N/A'}
-        </p>
-        <p>
-          <strong>Available Days: </strong>{' '}
-          {trainerProfile?.availableDays?.length
-            ? trainerProfile.availableDays.join(', ')
-            : 'N/A'}
-        </p>
-        {/* Add any other read-only fields you want */}
+      {/* Trainer Profile */}
+      <div className={`mb-8 p-4 ${profileBg} rounded-lg border ${borderColor} shadow-inner`}>
+        <h3 className={`text-xl font-semibold mb-4 ${profileText}`}>Your Trainer Profile</h3>
+        <p><strong>Full Name: </strong> {trainerProfile?.fullName || user?.displayName || 'N/A'}</p>
+        <p><strong>Email: </strong> {trainerProfile?.email || user?.email || 'N/A'}</p>
+        <p><strong>Age: </strong> {trainerProfile?.age || 'N/A'}</p>
+        <p><strong>Skills: </strong> {trainerProfile?.skills?.length ? trainerProfile.skills.join(', ') : 'N/A'}</p>
+        <p><strong>Available Days: </strong> {trainerProfile?.availableDays?.length ? trainerProfile.availableDays.join(', ') : 'N/A'}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Slot Name */}
         <div>
-          <label className="block mb-1 text-cyan-300">Slot Name</label>
+          <label className={`block mb-1 ${profileText}`}>Slot Name</label>
           <input
             {...register('slotName', { required: 'Slot Name is required' })}
             placeholder="e.g. Morning Slot"
-            className="w-full px-4 py-2 bg-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]"
+            className={`w-full px-4 py-2 ${inputBg} rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]`}
           />
-          {errors.slotName && (
-            <p className="text-red-400 text-sm mt-1">{errors.slotName.message}</p>
-          )}
+          {errors.slotName && <p className="text-red-400 text-sm mt-1">{errors.slotName.message}</p>}
         </div>
 
         {/* Slot Time */}
         <div>
-          <label className="block mb-1 text-cyan-300">Slot Time</label>
+          <label className={`block mb-1 ${profileText}`}>Slot Time</label>
           <input
             {...register('slotTime', { required: 'Slot Time is required' })}
             placeholder="e.g. 9:00 AM - 10:00 AM"
-            className="w-full px-4 py-2 bg-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]"
+            className={`w-full px-4 py-2 ${inputBg} rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]`}
           />
-          {errors.slotTime && (
-            <p className="text-red-400 text-sm mt-1">{errors.slotTime.message}</p>
-          )}
+          {errors.slotTime && <p className="text-red-400 text-sm mt-1">{errors.slotTime.message}</p>}
         </div>
 
         {/* Available Days */}
         <div>
-          <label className="block mb-1 text-cyan-300">Available Days</label>
+          <label className={`block mb-1 ${profileText}`}>Available Days</label>
           <Controller
-  name="availableDays"
-  control={control}
-  rules={{ required: 'Select at least one day' }}
-  render={({ field }) => (
-    <Select
-      {...field}
-      options={availableDayOptions}
-      isMulti
-      placeholder="Select available days"
-      className="text-black shadow-[0_0_4px_rgba(0,255,255,0.4)] rounded"
-    />
-  )}
-/>
-
-          {errors.availableDays && (
-            <p className="text-red-400 text-sm mt-1">{errors.availableDays.message}</p>
-          )}
+            name="availableDays"
+            control={control}
+            rules={{ required: 'Select at least one day' }}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={availableDayOptions}
+                isMulti
+                placeholder="Select available days"
+                classNamePrefix={isDark ? 'react-select-dark' : 'react-select-light'}
+                styles={{
+                  control: (base) => ({ ...base, backgroundColor: isDark ? '#1f1f1f' : '#fff' }),
+                  menu: (base) => ({ ...base, backgroundColor: isDark ? '#1f1f1f' : '#fff', color: isDark ? '#fff' : '#000' }),
+                  singleValue: (base) => ({ ...base, color: isDark ? '#fff' : '#000' }),
+                  multiValue: (base) => ({ ...base, backgroundColor: isDark ? '#333' : '#ddd', color: isDark ? '#fff' : '#000' }),
+                  option: (base, state) => ({
+                    ...base,
+                    backgroundColor: state.isFocused ? (isDark ? '#555' : '#eee') : isDark ? '#1f1f1f' : '#fff',
+                    color: isDark ? '#fff' : '#000',
+                  }),
+                }}
+              />
+            )}
+          />
+          {errors.availableDays && <p className="text-red-400 text-sm mt-1">{errors.availableDays.message}</p>}
         </div>
 
         {/* Select Class */}
         <div>
-          <label className="block mb-1 text-cyan-300">Select Class</label>
+          <label className={`block mb-1 ${profileText}`}>Select Class</label>
           <select
             {...register('classId', { required: 'Class selection is required' })}
-            className="w-full px-4 py-2 bg-gray-900 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]"
+            className={`w-full px-4 py-2 ${inputBg} rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-[0_0_4px_rgba(0,255,255,0.5)]`}
             defaultValue=""
           >
-            <option value="" disabled>
-              Choose a class
-            </option>
+            <option value="" disabled>Choose a class</option>
             {classes.map((cls) => (
-              <option key={cls._id} value={cls._id}>
-                {cls.name}
-              </option>
+              <option key={cls._id} value={cls._id}>{cls.name}</option>
             ))}
           </select>
-          {errors.classId && (
-            <p className="text-red-400 text-sm mt-1">{errors.classId.message}</p>
-          )}
+          {errors.classId && <p className="text-red-400 text-sm mt-1">{errors.classId.message}</p>}
         </div>
 
         {/* Submit Button */}

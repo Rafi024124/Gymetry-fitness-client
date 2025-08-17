@@ -55,7 +55,7 @@ const NewsletterSubscribe = () => {
     } finally {
       setLoading(false);
     }
-  };
+};
 
   // Theme-based styles
   const containerBg = theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100';

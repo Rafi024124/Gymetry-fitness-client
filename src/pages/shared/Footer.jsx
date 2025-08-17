@@ -15,7 +15,8 @@ const Footer = () => {
 
   return (
     <footer className={`${containerBg} py-14`}>
-      <div className={`max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 px-4 ${cardBg}`}>
+      <hr></hr>
+      <div className={`max-w-7xl mx-auto py-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 px-4 ${cardBg}`}>
         {/* Logo & Description */}
         <div className="col-span-2 flex flex-col items-start gap-2">
           <img

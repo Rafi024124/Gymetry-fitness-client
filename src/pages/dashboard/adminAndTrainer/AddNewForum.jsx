@@ -4,10 +4,12 @@ import { AuthContext } from '../../../contexts/authContext/AuthContext';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { FaHeading, FaImage, FaRegFileAlt } from 'react-icons/fa';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 
 const AddNewForum = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext); // get current theme
   const [role, setRole] = useState('');
 
   const {
@@ -22,13 +24,12 @@ const AddNewForum = () => {
       if (user?.email) {
         try {
           const res = await axiosSecure.get(`/users?email=${user.email}`);
-          setRole(res.data.role || 'member'); // fallback role
+          setRole(res.data.role || 'member');
         } catch (err) {
           console.error('Failed to fetch role:', err);
         }
       }
     };
-
     fetchRole();
   }, [user?.email, axiosSecure]);
 
@@ -38,7 +39,7 @@ const AddNewForum = () => {
       content: data.content,
       imageUrl: data.imageUrl || '',
       author: user?.displayName || user?.email || 'Anonymous',
-      role: role || 'member', 
+      role: role || 'member',
       votes: 0,
       createdAt: new Date().toISOString(),
     };
@@ -56,73 +57,75 @@ const AddNewForum = () => {
     }
   };
 
+  // 🎨 Light/Dark theme styles
+  const containerBg = theme === 'dark' ? 'bg-[#0f0f0f] border-[#1f1f1f] text-white' : 'bg-white border-gray-300 text-gray-900';
+  const inputBg = theme === 'dark' ? 'bg-[#1a1a1a] text-white placeholder-gray-400 border-cyan-500' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300';
+  const shadowColor = theme === 'dark' ? 'shadow-[0_0_4px_#00F0FF]' : 'shadow-[0_0_4px_rgba(0,0,0,0.1)]';
+  const errorBorder = theme === 'dark' ? 'border-red-500 shadow-[0_0_4px_#FF0000]' : 'border-red-500 shadow-[0_0_4px_rgba(255,0,0,0.3)]';
+
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-8 rounded-2xl bg-[#0f0f0f] border border-[#1f1f1f] shadow-[0_0_4px_rgba(0,255,255,0.1)]">
-      <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 text-center mb-10 ">
+    <div className={`max-w-4xl mx-auto mt-10 p-8 rounded-2xl border ${containerBg} ${shadowColor}`}>
+      <h2 className="text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
         📝 Add New Forum Post
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-white">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Role (read-only) */}
         <div>
-          <label className="text-cyan-300 mb-2 font-semibold">Role</label>
+          <label className="mb-2 font-semibold">Role</label>
           <input
             type="text"
             value={role}
             readOnly
-            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] text-gray-400 cursor-not-allowed border border-cyan-500 shadow-[0_0_4px_#00F0FF]"
+            className={`w-full px-4 py-3 rounded-xl cursor-not-allowed border ${inputBg} ${shadowColor}`}
           />
         </div>
 
         {/* Title */}
         <div>
-          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
-            <FaHeading className="text-cyan-300" />
+          <label className="flex items-center gap-2 mb-2 font-semibold">
+            <FaHeading />
             Title
           </label>
           <input
             type="text"
             {...register('title', { required: 'Title is required' })}
             placeholder="e.g. Top 10 Workout Hacks"
-            className={`w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white focus:outline-none border ${
-              errors.title
-                ? 'border-red-500 shadow-[0_0_4px_#FF0000]'
-                : 'border-cyan-500 shadow-[0_0_4px_#00F0FF]'
+            className={`w-full px-4 py-3 rounded-xl focus:outline-none border ${
+              errors.title ? errorBorder : `${inputBg} ${shadowColor}`
             }`}
           />
-          {errors.title && <p className="text-red-400 mt-1 text-sm">{errors.title.message}</p>}
+          {errors.title && <p className="text-red-500 mt-1 text-sm">{errors.title.message}</p>}
         </div>
 
         {/* Content */}
         <div>
-          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
-            <FaRegFileAlt className="text-cyan-300" />
+          <label className="flex items-center gap-2 mb-2 font-semibold">
+            <FaRegFileAlt />
             Content
           </label>
           <textarea
             rows={6}
             {...register('content', { required: 'Content is required' })}
             placeholder="Write your thoughts here..."
-            className={`w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white focus:outline-none border ${
-              errors.content
-                ? 'border-red-500 shadow-[0_0_4px_#FF0000]'
-                : 'border-cyan-500 shadow-[0_0_4px_#00F0FF]'
+            className={`w-full px-4 py-3 rounded-xl focus:outline-none border ${
+              errors.content ? errorBorder : `${inputBg} ${shadowColor}`
             }`}
           />
-          {errors.content && <p className="text-red-400 mt-1 text-sm">{errors.content.message}</p>}
+          {errors.content && <p className="text-red-500 mt-1 text-sm">{errors.content.message}</p>}
         </div>
 
         {/* Image URL */}
         <div>
-          <label className="flex items-center gap-2 text-cyan-300 mb-2 font-semibold">
-            <FaImage className="text-cyan-300" />
-            Image URL <span className="text-sm text-gray-400">(optional)</span>
+          <label className="flex items-center gap-2 mb-2 font-semibold">
+            <FaImage />
+            Image URL <span className="text-sm text-gray-500">(optional)</span>
           </label>
           <input
             type="url"
             {...register('imageUrl')}
             placeholder="https://example.com/image.jpg"
-            className="w-full px-4 py-3 rounded-xl bg-[#1a1a1a] placeholder-gray-400 text-white border border-cyan-500 shadow-[0_0_4px_#00F0FF] focus:outline-none"
+            className={`w-full px-4 py-3 rounded-xl focus:outline-none border ${inputBg} ${shadowColor}`}
           />
         </div>
 

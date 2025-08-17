@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FaSearch, FaUserShield, FaUserTimes } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { ThemeContext } from "../../../contexts/ThemeContext";
 
 const MakeAdmin = () => {
   const axiosSecure = useAxiosSecure();
+  const { theme } = useContext(ThemeContext);
   const [emailQuery, setEmailQuery] = useState("");
 
   const {
@@ -39,8 +41,8 @@ const MakeAdmin = () => {
       showCancelButton: true,
       confirmButtonText: "Yes",
       cancelButtonText: "Cancel",
-      background: "#1F1F1F",
-      color: "#F2F2F2",
+      background: theme === "dark" ? "#1F1F1F" : "#FFFFFF",
+      color: theme === "dark" ? "#F2F2F2" : "#1f2937",
       confirmButtonColor: "#A259FF",
       cancelButtonColor: "#555",
     });
@@ -56,18 +58,25 @@ const MakeAdmin = () => {
     }
   };
 
+  // 🎨 Theme styles
+  const containerBg = theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900";
+  const inputBg = theme === "dark" ? "bg-gray-800 text-white" : "bg-white text-gray-900 border border-gray-300";
+  const tableBg = theme === "dark" ? "bg-[#333] text-gray-200" : "bg-gray-200 text-gray-800";
+  const tableRowHover = theme === "dark" ? "hover:bg-[#2c2c2c]" : "hover:bg-gray-300";
+  const searchIconColor = theme === "dark" ? "text-gray-400" : "text-gray-600";
+
   return (
-    <div className="p-6 bg-gray-900 text-white rounded-xl shadow-xl min-h-[80vh]">
+    <div className={`p-6 rounded-xl shadow-xl min-h-[80vh] ${containerBg}`}>
       <h2 className="text-3xl font-bold mb-6 text-center text-transparent bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text">
         Admin Panel
       </h2>
 
       <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
-        <div className="flex items-center bg-gray-800 border border-gray-700 rounded w-full md:w-1/2 px-4">
-          <FaSearch className="text-gray-400" />
+        <div className={`flex items-center rounded w-full md:w-1/2 px-4 ${inputBg}`}>
+          <FaSearch className={`${searchIconColor}`} />
           <input
             type="text"
-            className="bg-transparent px-3 py-2 outline-none w-full text-white"
+            className="bg-transparent px-3 py-2 outline-none w-full"
             placeholder="Search user by email"
             value={emailQuery}
             onChange={(e) => setEmailQuery(e.target.value)}
@@ -83,8 +92,8 @@ const MakeAdmin = () => {
 
       {users.length > 0 && (
         <div className="overflow-x-auto">
-          <table className="table w-full text-white">
-            <thead className="bg-[#333] text-gray-200">
+          <table className={`table w-full ${tableBg}`}>
+            <thead>
               <tr>
                 <th>Email</th>
                 <th>Created At</th>
@@ -94,15 +103,17 @@ const MakeAdmin = () => {
             </thead>
             <tbody>
               {users.map((u) => (
-                <tr key={u._id} className="hover:bg-[#2c2c2c]">
+                <tr key={u._id} className={`${tableRowHover}`}>
                   <td>{u.email}</td>
                   <td>{new Date(u.created_at).toLocaleDateString()}</td>
                   <td>
                     <span
                       className={`badge px-3 py-1 rounded-full text-sm ${u.role === "admin"
-                          ? "bg-green-500 text-black"
-                          : "bg-gray-700 text-white"
-                        }`}
+                        ? "bg-green-500 text-black"
+                        : theme === "dark"
+                        ? "bg-gray-700 text-white"
+                        : "bg-gray-300 text-gray-900"
+                      }`}
                     >
                       {u.role || "user"}
                     </span>
@@ -111,9 +122,9 @@ const MakeAdmin = () => {
                     <button
                       onClick={() => handleRoleChange(u._id, u.role || "user")}
                       className={`px-4 py-2 rounded text-sm font-medium flex items-center justify-center gap-1 ${u.role === "admin"
-                          ? "bg-red-600 hover:bg-red-700 text-white"
-                          : "bg-blue-500 hover:bg-blue-600 text-white"
-                        }`}
+                        ? "bg-red-600 hover:bg-red-700 text-white"
+                        : "bg-blue-500 hover:bg-blue-600 text-white"
+                      }`}
                     >
                       {u.role === "admin" ? (
                         <>

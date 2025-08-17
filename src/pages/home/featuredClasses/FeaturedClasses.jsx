@@ -29,7 +29,7 @@ const FeaturedClasses = () => {
                                  : 'bg-sky-100/60 border-sky-400/30 shadow-[0_0_20px_#38BDF8AA]';
   const titleColor = theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-700';
   const descColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-800';
-  const glowRing = theme === 'dark' ? 'bg-[#00F0FF]/10' : 'bg-sky-400/20';
+  const glowRing = theme === 'dark' ? 'bg-[#00F0FF]/10' : 'bg-sky-300/20';
   const headingText = theme === 'dark' 
     ? 'bg-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF] text-transparent bg-clip-text animate-pulse'
     : 'text-sky-700';

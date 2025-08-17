@@ -3,17 +3,18 @@ import React, { useContext, useState } from "react";
 import { FaUser, FaClock, FaGift, FaCreditCard } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../contexts/authContext/AuthContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
 const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
-  
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState("");
   const [processing, setProcessing] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
 
   const amountInCents = selectedPackage?.price * 100;
@@ -73,17 +74,14 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
         };
 
         try {
-          const saveRes = await axiosSecure.post("/payments", paymentInfo);
-          console.log("Payment saved:", saveRes.data);
+          await axiosSecure.post("/payments", paymentInfo);
 
-          
-
-           Swal.fire({
+          Swal.fire({
             title: `<span class="text-cyan-300">Payment Successful!</span>`,
-            html: `<div class="text-white">Thank you for joining <strong>${className}</strong> with <strong>${trainer.fullName}</strong>!</div>`,
+            html: `<div class="${theme === 'dark' ? 'text-white' : 'text-black'}">Thank you for joining <strong>${className}</strong> with <strong>${trainer.fullName}</strong>!</div>`,
             icon: "success",
-            background: "#0f0f0f",
-            color: "#fff",
+            background: theme === 'dark' ? "#0f0f0f" : "#f8f8f8",
+            color: theme === 'dark' ? "#fff" : "#000",
             confirmButtonColor: "#007a7a",
             confirmButtonText: "Awesome!",
             customClass: {
@@ -93,7 +91,7 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
             },
           });
 
-          navigate('/')
+          navigate("/");
         } catch (err) {
           console.error("Failed to save payment:", err);
         }
@@ -106,34 +104,39 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
     setProcessing(false);
   };
 
+  // Theme-based styles
+  const containerBg = theme === 'dark' ? "bg-[#121212] text-white" : "bg-white text-black";
+  const cardBg = theme === 'dark' ? "bg-[#222] border-cyan-500 shadow-[0_0_4px_rgba(0,255,255,0.6)]" : "bg-slate-100 border-gray-300 shadow-md";
+  const textColor = theme === 'dark' ? "text-cyan-200" : "text-gray-900";
+
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0D0D0D] px-6 py-16">
-      <div className="w-full max-w-md bg-[#121212] border border-cyan-500 rounded-2xl p-8 shadow-[0_0_4px_rgba(0,255,255,0.7)] text-white">
-        <h2 className="text-3xl font-bold mb-8 text-center text-cyan-400 ">
+    <div className={`min-h-screen flex flex-col justify-center items-center px-6 py-16 ${theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-50'}`}>
+      <div className={`w-full max-w-md ${containerBg} rounded-2xl p-8 ${theme === 'dark' ? 'shadow-[0_0_4px_rgba(0,255,255,0.7)]' : 'shadow-md'}`}>
+        <h2 className={`text-3xl font-bold mb-8 text-center ${theme === 'dark' ? 'text-cyan-400' : 'text-cyan-700'}`}>
           💳 Complete Your Payment
         </h2>
 
-        <div className="mb-6 space-y-3 text-sm text-cyan-200">
+        <div className={`mb-6 space-y-3 text-sm ${textColor}`}>
           <p className="flex items-center gap-3">
-            <FaUser className="text-cyan-700" />
+            <FaUser className={theme === 'dark' ? 'text-cyan-700' : 'text-cyan-600'} />
             <span>
               <strong>Member:</strong> {user?.displayName}
             </span>
           </p>
           <p className="flex items-center gap-3">
-            <FaUser className="text-cyan-700" />
+            <FaUser className={theme === 'dark' ? 'text-cyan-700' : 'text-cyan-600'} />
             <span>
               <strong>Trainer:</strong> {trainer?.fullName}
             </span>
           </p>
           <p className="flex items-center gap-3">
-            <FaClock className="text-cyan-700" />
+            <FaClock className={theme === 'dark' ? 'text-cyan-700' : 'text-cyan-600'} />
             <span>
               <strong>Slot:</strong> {slot?.slotName} ({slot?.slotTime})
             </span>
           </p>
           <p className="flex items-center gap-3">
-            <FaGift className="text-cyan-700" />
+            <FaGift className={theme === 'dark' ? 'text-cyan-700' : 'text-cyan-600'} />
             <span>
               <strong>Package:</strong> {selectedPackage?.name} (${selectedPackage?.price})
             </span>
@@ -147,22 +150,19 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="card-element"
-              className="flex items-center gap-2 text-cyan-300 font-medium mb-2"
-            >
-              <FaCreditCard className="text-cyan-700" />
+            <label htmlFor="card-element" className={`flex items-center gap-2 font-medium mb-2 ${textColor}`}>
+              <FaCreditCard className={theme === 'dark' ? 'text-cyan-700' : 'text-cyan-600'} />
               Card Information
             </label>
-            <div className="bg-[#222] rounded-xl p-5 border border-cyan-500 shadow-[0_0_4px_rgba(0,255,255,0.6)]">
+            <div className={`rounded-xl p-5 ${cardBg}`}>
               <CardElement
                 id="card-element"
                 options={{
                   style: {
                     base: {
                       fontSize: "16px",
-                      color: "#00fff7",
-                      "::placeholder": { color: "#66f0e6" },
+                      color: theme === 'dark' ? "#00fff7" : "#0f0f0f",
+                      "::placeholder": { color: theme === 'dark' ? "#66f0e6" : "#999" },
                       fontWeight: "500",
                     },
                     invalid: {
@@ -183,7 +183,11 @@ const PaymentForm = ({ trainer, slot, selectedPackage, className }) => {
           <button
             type="submit"
             disabled={!stripe || processing}
-            className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 transition duration-300 py-3 rounded-xl font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className={`w-full py-3 rounded-xl font-semibold transition duration-300 
+              ${theme === 'dark' 
+                ? 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500' 
+                : 'bg-gradient-to-r from-cyan-400 to-purple-400 hover:from-cyan-300 hover:to-purple-300'} 
+              disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             {processing ? "Processing..." : `Pay $${selectedPackage?.price}`}
           </button>

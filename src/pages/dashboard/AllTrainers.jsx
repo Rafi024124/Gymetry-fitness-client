@@ -7,7 +7,6 @@ import Loaging from '../../loagind/Loaging';
 import useAxios from '../../hooks/useAxios';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
-
 const AllTrainers = () => {
   const { theme } = useContext(ThemeContext);
   const axiosInstance = useAxios();
@@ -36,7 +35,6 @@ const AllTrainers = () => {
   const nameColor = theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-600';
   const socialHover = theme === 'dark' ? '#00F0FF' : '#0ea5e9';
   const buttonGradient = theme === 'dark' ? 'from-[#A259FF] to-[#00F0FF]' : 'from-sky-400 to-sky-600';
- 
   const textGray = theme === 'dark' ? 'text-gray-300' : 'text-gray-700';
   const textItalic = theme === 'dark' ? 'text-gray-400' : 'text-gray-500';
 
@@ -58,7 +56,21 @@ const AllTrainers = () => {
             className={`relative group p-6 rounded-2xl backdrop-blur-xl border-2 ${borderColor} shadow-xl overflow-hidden flex flex-col items-center text-center ${cardBg}`}
           >
             {/* Glowing border ring */}
-            <div className={`absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-[${socialHover}] group-hover:shadow-[0_0_25px_${socialHover}] transition-all duration-500 pointer-events-none`}></div>
+            <div
+              className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-500"
+              style={{
+                border: `2px solid transparent`,
+              }}
+            >
+              <div
+                className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-500"
+                style={{
+                  boxShadow: `0 0 25px ${socialHover}`,
+                  borderColor: socialHover,
+                  opacity: 0,
+                }}
+              />
+            </div>
 
             {/* Profile Image */}
             <img
@@ -82,7 +94,8 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
+                  className="transition-shadow duration-300 rounded-full p-2"
+                  style={{ color: socialHover }}
                   aria-label="Facebook"
                 >
                   <FaFacebookF size={18} />
@@ -93,7 +106,8 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
+                  className="transition-shadow duration-300 rounded-full p-2"
+                  style={{ color: socialHover }}
                   aria-label="Instagram"
                 >
                   <FaInstagram size={18} />
@@ -104,7 +118,8 @@ const AllTrainers = () => {
                   href={trainer.socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`hover:text-[${socialHover}] transition-shadow duration-300 rounded-full p-2`}
+                  className="transition-shadow duration-300 rounded-full p-2"
+                  style={{ color: socialHover }}
                   aria-label="LinkedIn"
                 >
                   <FaLinkedinIn size={18} />
@@ -126,7 +141,7 @@ const AllTrainers = () => {
             {/* Button */}
             <button
               onClick={() => navigate(`/trainer/${trainer._id}`)}
-              className={`mt-auto bg-gradient-to-r ${buttonGradient} hover:from-[#7F3FFF] hover:to-[#00D4D4] text-white py-2 px-6 rounded-full font-semibold shadow-lg hover:shadow-[${socialHover}]/70 transition duration-300`}
+              className={`mt-auto bg-gradient-to-r ${buttonGradient} text-white py-2 px-6 rounded-full font-semibold shadow-lg transition duration-300`}
             >
               Know More
             </button>
