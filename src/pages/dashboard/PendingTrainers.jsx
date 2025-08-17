@@ -114,10 +114,10 @@ const PendingTrainers = () => {
     );
 
   // 🎨 Theme Colors
-  const sectionBg = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100';
+  const sectionBg = theme === 'dark' ? 'bg-gray-900' : 'bg-sky-100';
   
   const textColor = theme === 'dark' ? 'text-white' : 'text-gray-900';
-  const headingText = theme === 'dark' ? 'text-[#A259FF] neon-text' : 'text-sky-600';
+  
   const tableHeaderBg = theme === 'dark' ? 'bg-[#333]' : 'bg-gray-200';
   const tableRowHover = theme === 'dark' ? 'hover:bg-[#2c2c2c]' : 'hover:bg-gray-200';
   //const skillBadgeBg = theme === 'dark' ? 'bg-[#A259FF]/20 border-[#A259FF] text-[#A259FF]' : 'bg-sky-200 border-sky-400 text-sky-700';
@@ -128,8 +128,8 @@ const PendingTrainers = () => {
   const skillBadgeBg = theme === 'dark' ? 'bg-[#00F0FF]/20 text-[#00F0FF] border-[#00F0FF]/50' 
                                        : 'bg-sky-100 text-sky-600 border-sky-300';
   return (
-    <div className={`p-4 rounded-xl ${sectionBg}`}>
-      <h2 className={`text-4xl font-semibold neon-text mb-6 text-center ${headingText}`}>
+    <div className={`py-4 rounded-xl ${sectionBg} mt-10`}>
+      <h2 className={`text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500`}>
         Pending Trainer Applications
       </h2>
 

@@ -9,6 +9,7 @@ import {
 import { Pie } from 'react-chartjs-2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import Loaging from '../../loagind/Loaging';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -25,7 +26,7 @@ const Charts = () => {
     },
   });
 
-  if (isLoading) return <p className={theme === 'dark' ? 'text-white' : 'text-gray-800'}>Loading chart...</p>;
+  if (isLoading) return <Loaging></Loaging>;
   if (error) return <p className="text-red-500">Failed to load chart data.</p>;
 
   const { paymentsCount, newsletterCount } = data;

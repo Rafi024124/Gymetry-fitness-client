@@ -69,7 +69,7 @@ const FeaturedSection = () => {
   const descColor = theme === 'dark' ? 'text-[#bbb]' : 'text-gray-800';
 
   return (
-    <section className={`${theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100'} py-16 px-2 overflow-hidden`}>
+    <section className={`${theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100'} py-16 px-6 overflow-hidden`}>
       <h2 className={`text-3xl md:text-4xl font-bold text-center mb-10 ${theme === 'dark' ? 'text-cyan-500 neon-text-glow' : 'text-sky-700'}`}>
         Why Choose Gymetry?
       </h2>

@@ -46,8 +46,8 @@ const AddNewClass = () => {
   const buttonBg = theme === 'dark' ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white';
 
   return (
-    <div className={`max-w-xl mx-auto p-8 rounded-lg ${containerBg}`}>
-      <h2 className="text-3xl font-semibold mb-6 text-center neon-text">Add New Class</h2>
+    <div className={`max-w-xl mx-auto p-8 rounded-lg ${containerBg} mt-10`}>
+      <h2 className="text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Add New Class</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label className={`block mb-1 ${labelText}`}>Class Name</label>

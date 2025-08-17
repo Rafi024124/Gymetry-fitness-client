@@ -109,7 +109,7 @@ const MyProfile = () => {
 
         {/* Main Content */}
         <div className={`md:col-span-2 p-10 space-y-8 rounded-3xl ${cardBg}`}>
-          <h3 className={`text-3xl font-extrabold border-b pb-3 ${neonText} select-none`}>
+          <h3 className="text-3xl font-bold  mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
             Account Details
           </h3>
 

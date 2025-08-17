@@ -39,8 +39,8 @@ const Balance = () => {
   const tableRowHover = theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-sky-100';
 
   return (
-    <div className={`${containerBg} p-6 rounded-lg shadow-lg max-w-5xl mx-auto`}>
-      <h2 className="text-3xl md:text-4xl font-bold text-center neon-text mb-10 flex items-center justify-center gap-2">
+    <div className={`${containerBg} mt-2 p-6 rounded-lg shadow-lg max-w-5xl mx-auto`}>
+      <h2 className="text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
         <FaMoneyBillWave className="text-green-400" /> Financial Overview
       </h2>
 

@@ -89,7 +89,11 @@ const Banner = () => {
     {/* Centered Button Over Entire Collage */}
     <div className="absolute inset-0 flex justify-center items-center">
      
-        <BeATrainerButton />
+        {!roleLoading && role === 'user' && (
+            <>
+              <BeATrainerButton></BeATrainerButton>
+            </>
+          )}
       
     </div>
   </div>

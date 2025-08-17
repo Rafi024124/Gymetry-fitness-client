@@ -39,7 +39,7 @@ const TeamSection = () => {
   const buttonGradient = theme === 'dark' ? 'from-[#A259FF] to-[#00F0FF]' : 'from-sky-400 to-sky-600';
   const glowRing = theme === 'dark'
     ? 'bg-[#00F0FF]/10'
-    : 'bg-sky-400/20';
+    : 'bg-sky-400/10';
 
   return (
     <section className={`${sectionBg} py-20 px-4 md:px-10 overflow-hidden`}>

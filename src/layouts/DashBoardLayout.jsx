@@ -41,7 +41,7 @@ const DashBoardLayout = () => {
   const contentBg = theme === 'dark' ? 'bg-[#121212] text-white' : 'bg-sky-50 text-black';
   const navbarBg = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-sky-200 text-black';
   const sidebarBg = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-sky-200 text-black';
-
+  const iconColor = theme === "dark" ? "text-cyan-400" : "text-sky-400";
   return (
     <div className="drawer lg:drawer-open">
       <input id="main-drawer" type="checkbox" className="drawer-toggle" />
@@ -53,7 +53,7 @@ const DashBoardLayout = () => {
           <div className="flex-none lg:hidden">
             <label
               htmlFor="main-drawer"
-              className="btn btn-ghost text-[#A259FF] hover:bg-[#A259FF]/20"
+              className={`btn btn-ghost ${iconColor} `}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ const DashBoardLayout = () => {
 
           <div className="flex-1 flex items-center justify-between gap-4 text-xl font-bold">
             <div className="flex items-center gap-2">
-              <FaTachometerAlt className={theme === 'dark' ? 'text-white' : 'text-black'} /> My Dashboard
+              <FaTachometerAlt className={theme === 'dark' ? 'text-white' : 'text-black'} />Dashboard
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
@@ -92,7 +92,7 @@ const DashBoardLayout = () => {
           </div>
         </div>
 
-        <div className="p-6 min-h-screen">
+        <div className="min-h-screen">
           <Outlet />
         </div>
       </div>

@@ -62,15 +62,19 @@ const AllTrainers = () => {
       
       <div className="flex justify-end mb-6 max-w-7xl mx-auto">
         <select
-          value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
-          className="px-4 py-2 rounded border"
-        >
-          <option value="ageAsc">Age: Low → High</option>
-          <option value="ageDesc">Age: High → Low</option>
-          <option value="timeAsc">Available Time: Early → Late</option>
-          <option value="timeDesc">Available Time: Late → Early</option>
-        </select>
+  value={sortOption}
+  onChange={(e) => setSortOption(e.target.value)}
+  className={`px-4 py-2 rounded border ${
+    theme === 'dark'
+      ? 'bg-black text-white border-gray-600'
+      : 'bg-white text-black border-gray-300'
+  }`}
+>
+  <option value="ageAsc">Age: Low → High</option>
+  <option value="ageDesc">Age: High → Low</option>
+  <option value="timeAsc">Available Time: Early → Late</option>
+  <option value="timeDesc">Available Time: Late → Early</option>
+</select>
       </div>
 
       {/* Trainers Grid */}

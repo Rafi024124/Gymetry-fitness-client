@@ -15,7 +15,7 @@ const AllClasses = () => {
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortOption, setSortOption] = useState(''); // New sort option
+  const [sortOption, setSortOption] = useState('');
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['all-classes', page, searchTerm],
@@ -53,13 +53,12 @@ const AllClasses = () => {
     setSearchTerm(searchInput.trim());
   };
 
-  // Sorting by number of trainers
   const sortedClasses = [...classes].sort((a, b) => {
     switch (sortOption) {
       case 'trainersAsc':
-        return (a.trainers?.length || 0) - (b.trainers?.length || 0); // Few → Many
+        return (a.trainers?.length || 0) - (b.trainers?.length || 0);
       case 'trainersDesc':
-        return (b.trainers?.length || 0) - (a.trainers?.length || 0); // Many → Few
+        return (b.trainers?.length || 0) - (a.trainers?.length || 0);
       default:
         return 0;
     }
@@ -73,6 +72,7 @@ const AllClasses = () => {
   const neonText = theme === 'dark' ? 'neon-text' : '';
   const textGray = theme === 'dark' ? 'text-gray-300' : 'text-gray-700';
   const textRed = theme === 'dark' ? 'text-red-400' : 'text-red-600';
+  const dividerColor = theme === 'dark' ? 'border-gray-600' : 'border-gray-300';
 
   return (
     <div className={`${sectionBg} py-16 px-4 md:px-12 min-h-screen`}>
@@ -96,8 +96,6 @@ const AllClasses = () => {
         >
           Search
         </button>
-
-        {/* Sort Dropdown */}
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value)}
@@ -110,54 +108,64 @@ const AllClasses = () => {
       </div>
 
       {/* Classes List */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="flex flex-col gap-10">
         {sortedClasses.length > 0 ? (
           sortedClasses.map((cls) => (
             <div
               key={cls._id}
-              className={`flex flex-col md:flex-row rounded-2xl shadow-xl overflow-hidden ${cardBg} p-6 md:p-8 gap-6 hover:scale-105 transform transition-transform duration-300`}
+              className={`flex flex-col md:flex-row rounded-2xl shadow-xl overflow-hidden ${cardBg} p-6 md:p-8 gap-6 hover:scale-105 transform transition-transform duration-300 h-auto md:h-72`}
             >
-              {/* Class Info */}
-              <div className="md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left gap-4">
-                <h3 className={`text-2xl md:text-3xl font-extrabold ${neonText}`}>{cls.name}</h3>
+              {/* Left: Class Image */}
+              <div className="md:w-1/3 flex-shrink-0 flex justify-center items-center mb-4 md:mb-0">
                 <img
                   src={cls.image}
                   alt={cls.name}
-                  className="w-40 h-40 rounded-xl object-cover shadow-lg"
+                  className="w-40 h-40 sm:w-36 sm:h-36 rounded-xl object-cover shadow-lg"
                 />
-                <p className={`text-sm ${textGray}`}>{cls.description}</p>
               </div>
 
-              {/* Divider */}
-              <div className="hidden md:block border-l border-gray-600 h-40"></div>
+              {/* Right: Info */}
+              <div className="flex-1 flex flex-col justify-between gap-4">
+                <div>
+                  <h3 className={`text-2xl md:text-3xl font-extrabold ${neonText}`}>
+                    {cls.name}
+                  </h3>
+                  <p className={`text-sm ${textGray} line-clamp-3`}>
+                    {cls.description}
+                  </p>
+                </div>
 
-              {/* Trainers */}
-              <div className="flex-1 flex flex-wrap justify-center md:justify-start gap-6 items-center">
-                {cls.trainers?.length ? (
-                  cls.trainers.map((trainer) => (
-                    <div
-                      key={trainer._id}
-                      className="cursor-pointer text-center w-24 hover:scale-105 transition-transform"
-                      onClick={() => handleTrainerClick(trainer._id, cls.name)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          handleTrainerClick(trainer._id, cls.name);
-                        }
-                      }}
-                    >
-                      <img
-                        src={trainer.profileImage || '/default-avatar.png'}
-                        alt={trainer.fullName}
-                        className="w-20 h-20 rounded-full object-cover mx-auto shadow-md"
-                      />
-                      <p className="text-sm mt-2">{trainer.fullName}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p className={`text-sm ${textRed}`}>No approved trainers associated.</p>
-                )}
+                {/* Divider */}
+                <hr className={`border-t ${dividerColor}`} />
+
+                {/* Trainers */}
+                <div className="flex flex-wrap gap-4 mt-2">
+                  {cls.trainers?.length ? (
+                    cls.trainers.map((trainer) => (
+                      <div
+                        key={trainer._id}
+                        className="cursor-pointer text-center w-20 hover:scale-105 transition-transform"
+                        onClick={() => handleTrainerClick(trainer._id, cls.name)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            handleTrainerClick(trainer._id, cls.name);
+                          }
+                        }}
+                      >
+                        <img
+                          src={trainer.profileImage || '/default-avatar.png'}
+                          alt={trainer.fullName}
+                          className="w-16 h-16 sm:w-14 sm:h-14 rounded-full object-cover mx-auto shadow-md"
+                        />
+                        <p className="text-sm mt-1">{trainer.fullName}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className={`text-sm ${textRed}`}>No approved trainers associated.</p>
+                  )}
+                </div>
               </div>
             </div>
           ))

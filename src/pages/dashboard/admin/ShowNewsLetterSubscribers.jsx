@@ -19,7 +19,7 @@ const ShowNewsletterSubscribers = () => {
   if (isLoading)
     return (
       <p className={`text-center mt-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-        <Loaging></Loaging>
+        <Loaging />
       </p>
     );
   if (error)
@@ -29,8 +29,12 @@ const ShowNewsletterSubscribers = () => {
       </p>
     );
 
-  // Theme-based classes
-  const containerBg = theme === 'dark' ? 'bg-gray-900 text-gray-300' : 'bg-white text-gray-900';
+  // Reuse same background as AllTrainers
+  const sectionBg =
+    theme === 'dark'
+      ? 'bg-gradient-to-b from-[#0D0D0D] via-[#121212] to-[#1a1a1a]'
+      : 'bg-gradient-to-b from-sky-50 via-sky-100 to-sky-200';
+
   const tableHeaderBg = theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-sky-200 text-gray-700';
   const tableRowBg = (idx) =>
     theme === 'dark'
@@ -44,40 +48,45 @@ const ShowNewsletterSubscribers = () => {
   const borderColor = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
 
   return (
-    <div className={`max-w-5xl mx-auto p-6 rounded-lg shadow-lg ${containerBg}`}>
-      <h2 className={`text-3xl font-bold mb-6 text-center ${theme === 'dark' ? 'neon-text' : ''}`}>
-        Newsletter Subscribers
-      </h2>
+    <section className={`${sectionBg} py-16 min-h-screen w-full`}>
+      <div className="w-full mx-auto px-6 md:px-12">
+        <h2 className="text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
+          Newsletter Subscribers
+        </h2>
 
-      {subscribers.length === 0 ? (
-        <p className={`text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-          No subscribers found.
-        </p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className={`min-w-full text-left border rounded-md ${borderColor}`}>
-            <thead>
-              <tr className={tableHeaderBg}>
-                <th className={`py-3 px-6 border-b ${borderColor}`}>#</th>
-                <th className={`py-3 px-6 border-b ${borderColor}`}>Name</th>
-                <th className={`py-3 px-6 border-b ${borderColor}`}>Email</th>
-                <th className={`py-3 px-6 border-b ${borderColor}`}>Subscribed At</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subscribers.map((sub, idx) => (
-                <tr key={sub._id} className={`${tableRowBg(idx)} ${tableRowHover} border-b ${borderColor}`}>
-                  <td className="py-3 px-6">{idx + 1}</td>
-                  <td className="py-3 px-6">{sub.name || '-'}</td>
-                  <td className="py-3 px-6">{sub.email}</td>
-                  <td className="py-3 px-6">{new Date(sub.subscribedAt).toLocaleString()}</td>
+        {subscribers.length === 0 ? (
+          <p className={`text-center ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+            No subscribers found.
+          </p>
+        ) : (
+          <div className="overflow-x-auto rounded-2xl shadow-lg">
+            <table className={`min-w-full text-left border rounded-md ${borderColor}`}>
+              <thead>
+                <tr className={tableHeaderBg}>
+                  <th className={`py-3 px-6 border-b ${borderColor}`}>#</th>
+                  <th className={`py-3 px-6 border-b ${borderColor}`}>Name</th>
+                  <th className={`py-3 px-6 border-b ${borderColor}`}>Email</th>
+                  <th className={`py-3 px-6 border-b ${borderColor}`}>Subscribed At</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+              </thead>
+              <tbody>
+                {subscribers.map((sub, idx) => (
+                  <tr
+                    key={sub._id}
+                    className={`${tableRowBg(idx)} ${tableRowHover} border-b ${borderColor}`}
+                  >
+                    <td className="py-3 px-6">{idx + 1}</td>
+                    <td className="py-3 px-6">{sub.name || '-'}</td>
+                    <td className="py-3 px-6">{sub.email}</td>
+                    <td className="py-3 px-6">{new Date(sub.subscribedAt).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 

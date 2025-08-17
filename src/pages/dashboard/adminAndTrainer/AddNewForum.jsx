@@ -58,7 +58,7 @@ const AddNewForum = () => {
   };
 
   // 🎨 Light/Dark theme styles
-  const containerBg = theme === 'dark' ? 'bg-[#0f0f0f] border-[#1f1f1f] text-white' : 'bg-white border-gray-300 text-gray-900';
+  const containerBg = theme === 'dark' ? 'bg-gray-900 border-[#1f1f1f] text-white' : 'bg-sky-100 border-gray-300 text-gray-900';
   const inputBg = theme === 'dark' ? 'bg-[#1a1a1a] text-white placeholder-gray-400 border-cyan-500' : 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-300';
   const shadowColor = theme === 'dark' ? 'shadow-[0_0_4px_#00F0FF]' : 'shadow-[0_0_4px_rgba(0,0,0,0.1)]';
   const errorBorder = theme === 'dark' ? 'border-red-500 shadow-[0_0_4px_#FF0000]' : 'border-red-500 shadow-[0_0_4px_rgba(255,0,0,0.3)]';

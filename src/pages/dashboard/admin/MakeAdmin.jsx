@@ -64,9 +64,11 @@ const MakeAdmin = () => {
   const tableBg = theme === "dark" ? "bg-[#333] text-gray-200" : "bg-gray-200 text-gray-800";
   const tableRowHover = theme === "dark" ? "hover:bg-[#2c2c2c]" : "hover:bg-gray-300";
   const searchIconColor = theme === "dark" ? "text-gray-400" : "text-gray-600";
+  const mainBg = theme === "dark" ? "bg-black" : "bg-white";
 
   return (
-    <div className={`p-6 rounded-xl shadow-xl min-h-[80vh] ${containerBg}`}>
+  <div className={`${mainBg} p-2`}>
+      <div className={`p-6 rounded-xl shadow-xl min-h-[80vh] ${containerBg}`}>
       <h2 className="text-3xl font-bold mb-6 text-center text-transparent bg-gradient-to-r from-[#A259FF] to-[#00F0FF] bg-clip-text">
         Admin Panel
       </h2>
@@ -143,6 +145,8 @@ const MakeAdmin = () => {
           </table>
         </div>
       )}
+    </div>
+
     </div>
   );
 };

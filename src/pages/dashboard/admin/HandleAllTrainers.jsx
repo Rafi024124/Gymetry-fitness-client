@@ -60,17 +60,17 @@ const HandleAllTrainers = () => {
     );
 
   // Theme-based classes
-  const bgPage = theme === 'dark' ? 'bg-[#0F0F0F]' : 'bg-sky-50';
+  const bgPage = theme === 'dark' ? 'bg-[#0F0F0F]' : 'bg-sky-100';
   const cardBg = theme === 'dark' ? 'bg-gray-900' : 'bg-white';
   const textColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-900';
   const hoverBg = theme === 'dark' ? 'hover:bg-[#2A2A2A]' : 'hover:bg-sky-100';
   const borderColor = theme === 'dark' ? 'border-gray-700' : 'border-gray-300';
-  const neonText = theme === 'dark' ? 'neon-text' : '';
+ 
 
   return (
     <div className={`min-h-screen px-2 py-10 ${bgPage}`}>
       <div className={`rounded-t-2xl p-2 ${cardBg} shadow-lg`}>
-        <h2 className={`text-3xl font-bold mb-8 ${neonText} text-center`}>
+        <h2 className={`text-3xl font-bold text-center mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500`}>
           All Approved Trainers
         </h2>
 
