@@ -54,7 +54,7 @@ const FeaturedSection = () => {
     } else {
       switch (position) {
         case 0: return 'z-30 scale-105 blur-0';
-        case 1: return 'z-20 translate-x-[240px] scale-90 blur-xs opacity-60';
+        case 1: return 'z-20 translate-x-[240px] scale-90 blur-sm opacity-60';
         case 2: return 'z-10 -translate-x-[240px] scale-90 blur-xs opacity-60';
         default: return 'hidden';
       }

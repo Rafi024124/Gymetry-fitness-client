@@ -6,12 +6,13 @@ import { motion as Motion } from 'framer-motion';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Loaging from '../../../loagind/Loaging';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import { useNavigate } from 'react-router';
 
 
 const FeaturedClasses = () => {
   const { theme } = useContext(ThemeContext); // use theme context
   const axiosSecure = useAxiosSecure();
-
+  const navigate = useNavigate();
   const { data: featuredClasses = [], isLoading, error } = useQuery({
     queryKey: ['featured-classes'],
     queryFn: async () => {
@@ -29,7 +30,7 @@ const FeaturedClasses = () => {
                                  : 'bg-sky-100/60 border-sky-400/30 shadow-[0_0_20px_#38BDF8AA]';
   const titleColor = theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-700';
   const descColor = theme === 'dark' ? 'text-gray-300' : 'text-gray-800';
-  const glowRing = theme === 'dark' ? 'bg-[#00F0FF]/10' : 'bg-sky-300/20';
+  const glowRing = theme === 'dark' ? 'bg-[#00F0FF]/10' : 'bg-sky-400/20';
   const headingText = theme === 'dark' 
     ? 'bg-gradient-to-r from-[#A259FF] via-[#00F0FF] to-[#A259FF] text-transparent bg-clip-text animate-pulse'
     : 'text-sky-700';
@@ -76,10 +77,17 @@ const FeaturedClasses = () => {
             </p>
 
             {/* Booking Info */}
-            <div className="flex items-center gap-2 text-sm text-gray-400">
-              <FaUsers className="text-blue-400" />
-              <span>{cls.bookingCount} Bookings</span>
-            </div>
+           {/* Booking Info */}
+<div className="flex items-center justify-center gap-2 text-sm text-gray-400 mt-2">
+  <FaUsers className="text-blue-400" />
+  <span>{cls.bookingCount} Bookings</span>
+  <button
+    onClick={() => navigate('/allClasses')}
+    className="ml-2 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-sky-400 to-sky-600 text-white hover:from-sky-500 hover:to-sky-700 transition"
+  >
+    Explore Class
+  </button>
+</div>
 
             {/* Glow ring on bottom */}
             <div className={`absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-40 blur-2xl rounded-full pointer-events-none group-hover:opacity-80 transition-opacity duration-500 ${glowRing}`}></div>

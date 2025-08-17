@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { motion as Motion } from 'framer-motion';
 import { FaUserTie, FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
@@ -8,6 +9,7 @@ import { ThemeContext } from '../../../contexts/ThemeContext';
 const TeamSection = () => {
   const axiosSecure = useAxiosSecure();
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const { data: trainers = [], isLoading, error } = useQuery({
     queryKey: ['trainers'],
@@ -34,6 +36,7 @@ const TeamSection = () => {
   const skillText = theme === 'dark' ? 'text-blue-400' : 'text-sky-600';
   const iconColor = theme === 'dark' ? '#A259FF' : '#3b82f6';
   const hoverIconColor = theme === 'dark' ? '#00F0FF' : '#0ea5e9';
+  const buttonGradient = theme === 'dark' ? 'from-[#A259FF] to-[#00F0FF]' : 'from-sky-400 to-sky-600';
   const glowRing = theme === 'dark'
     ? 'bg-[#00F0FF]/10'
     : 'bg-sky-400/20';
@@ -60,7 +63,7 @@ const TeamSection = () => {
             whileHover={{ scale: 1.05, rotateX: 4, rotateY: 2 }}
             transition={{ duration: 0.6, delay: idx * 0.1 }}
             viewport={{ once: true }}
-            className={`relative group p-6 rounded-3xl ${cardBg} overflow-hidden`}
+            className={`relative group p-6 rounded-3xl ${cardBg} overflow-hidden flex flex-col items-center text-center`}
           >
             {/* Hover border glow */}
             <div className={`absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-[#00F0FF] group-hover:shadow-[0_0_30px_#00F0FF] transition-all duration-500 pointer-events-none`}></div>
@@ -83,12 +86,22 @@ const TeamSection = () => {
               <strong>Skills:</strong> {trainer.skills?.join(', ') || 'N/A'}
             </p>
 
-            <div className="flex justify-center mt-6 gap-4 transition-colors duration-300">
+            {/* Know More Button */}
+            <button
+              onClick={() => navigate(`/trainer/${trainer._id}`)}
+              className={`mt-2 mb-4 bg-gradient-to-r ${buttonGradient} hover:from-[#7F3FFF] hover:to-[#00D4D4] text-white py-2 px-6 rounded-full font-semibold shadow-lg hover:shadow-[${hoverIconColor}]/70 transition duration-300`}
+            >
+              Know More
+            </button>
+
+            {/* Social Icons */}
+            <div className="flex justify-center mt-2 gap-4 transition-colors duration-300">
               <a href="#" className={`hover:scale-110 text-[${iconColor}] group-hover:text-[${hoverIconColor}]`}><FaFacebookF /></a>
               <a href="#" className={`hover:scale-110 text-[${iconColor}] group-hover:text-[${hoverIconColor}]`}><FaLinkedinIn /></a>
               <a href="#" className={`hover:scale-110 text-[${iconColor}] group-hover:text-[${hoverIconColor}]`}><FaTwitter /></a>
             </div>
 
+            {/* Glow */}
             <div className={`absolute -bottom-12 left-1/2 -translate-x-1/2 w-52 h-52 ${glowRing} blur-2xl rounded-full pointer-events-none group-hover:opacity-80 transition-opacity duration-500`}></div>
           </Motion.div>
         ))}
