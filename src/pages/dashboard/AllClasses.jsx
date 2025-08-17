@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import Loaging from '../../loagind/Loaging';
 import { AuthContext } from '../../contexts/authContext/AuthContext';
 import useAxios from '../../hooks/useAxios';
 import { ThemeContext } from '../../contexts/ThemeContext';
-
 
 const AllClasses = () => {
   const { theme } = useContext(ThemeContext);
@@ -16,6 +15,7 @@ const AllClasses = () => {
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState(''); // New sort option
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['all-classes', page, searchTerm],
@@ -53,6 +53,18 @@ const AllClasses = () => {
     setSearchTerm(searchInput.trim());
   };
 
+  // Sorting by number of trainers
+  const sortedClasses = [...classes].sort((a, b) => {
+    switch (sortOption) {
+      case 'trainersAsc':
+        return (a.trainers?.length || 0) - (b.trainers?.length || 0); // Few → Many
+      case 'trainersDesc':
+        return (b.trainers?.length || 0) - (a.trainers?.length || 0); // Many → Few
+      default:
+        return 0;
+    }
+  });
+
   // Theme-based classes
   const sectionBg = theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100';
   const cardBg = theme === 'dark' ? 'bg-[#1f1f1f]/60 text-white' : 'bg-white text-gray-900';
@@ -68,7 +80,7 @@ const AllClasses = () => {
         All Classes
       </h2>
 
-      {/* Search */}
+      {/* Search & Sort */}
       <div className="mb-10 flex flex-col sm:flex-row justify-center items-center gap-4">
         <input
           type="text"
@@ -84,12 +96,23 @@ const AllClasses = () => {
         >
           Search
         </button>
+
+        {/* Sort Dropdown */}
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className={`px-4 py-2 rounded-md border ${inputBg}`}
+        >
+          <option value="">Sort by Trainers</option>
+          <option value="trainersAsc">Few → Few Trainers</option>
+          <option value="trainersDesc">Many → Many Trainers</option>
+        </select>
       </div>
 
       {/* Classes List */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {classes.length > 0 ? (
-          classes.map((cls) => (
+        {sortedClasses.length > 0 ? (
+          sortedClasses.map((cls) => (
             <div
               key={cls._id}
               className={`flex flex-col md:flex-row rounded-2xl shadow-xl overflow-hidden ${cardBg} p-6 md:p-8 gap-6 hover:scale-105 transform transition-transform duration-300`}

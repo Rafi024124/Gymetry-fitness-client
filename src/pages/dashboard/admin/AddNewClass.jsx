@@ -40,7 +40,7 @@ const AddNewClass = () => {
   };
 
   // 🎨 Theme Styles
-  const containerBg = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900';
+  const containerBg = theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-sky-100 text-gray-900';
   const inputBg = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900 border border-gray-300';
   const labelText = theme === 'dark' ? 'text-white' : 'text-gray-800';
   const buttonBg = theme === 'dark' ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white';
@@ -82,7 +82,7 @@ const AddNewClass = () => {
 
         <button
           type="submit"
-          className={`w-full py-2 rounded font-semibold ${buttonBg}`}
+          className={`glow-btn w-full py-2 rounded font-semibold ${buttonBg}`}
         >
           Add Class
         </button>

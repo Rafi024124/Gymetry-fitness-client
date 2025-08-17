@@ -182,7 +182,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={!email || !password}
-            className={`w-full py-2 rounded-md font-semibold transition ${
+            className={`glow-btn w-full py-2 rounded-md font-semibold transition ${
               email && password
                 ? theme === "dark"
                   ? "bg-gradient-to-r from-[#A259FF] to-[#00F0FF] text-[#F2F2F2] shadow-glow hover:brightness-110"

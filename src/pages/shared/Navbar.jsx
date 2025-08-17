@@ -147,12 +147,12 @@ const Navbar = () => {
                 <img
                   src={user?.photoURL}
                   alt="User Profile"
-                  className="w-10 h-10 rounded-full"
+                  className=" w-10 h-10 rounded-full"
                 />
               </div>
               <button
                 onClick={handleLogout}
-                className={`px-6 py-2 rounded-lg text-sm font-semibold shadow-md transition duration-300 ${
+                className={`glow-btn px-6 py-2 rounded-lg text-sm font-semibold shadow-md transition duration-300 ${
                   theme === "dark"
                     ? "bg-gradient-to-r from-cyan-400 to-cyan-300 text-white hover:from-cyan-500 hover:to-cyan-400"
                     : "bg-blue-400 text-black hover:bg-blue-500"
@@ -164,7 +164,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/login"
-              className={`px-6 py-2 rounded-lg text-sm font-semibold shadow-md transition duration-300 ${
+              className={`glow-btn px-6 py-2 rounded-lg text-sm font-semibold shadow-md transition duration-300 ${
                 theme === "dark"
                   ? "bg-gradient-to-r from-cyan-400 to-cyan-300 text-white hover:from-cyan-500 hover:to-cyan-400"
                   : "bg-blue-400 text-black hover:bg-blue-500"

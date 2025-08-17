@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import Loaging from '../../../loagind/Loaging';
 
 const ShowNewsletterSubscribers = () => {
   const { theme } = useContext(ThemeContext);
@@ -18,7 +19,7 @@ const ShowNewsletterSubscribers = () => {
   if (isLoading)
     return (
       <p className={`text-center mt-10 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-        Loading subscribers...
+        <Loaging></Loaging>
       </p>
     );
   if (error)

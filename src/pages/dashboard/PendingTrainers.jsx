@@ -120,11 +120,13 @@ const PendingTrainers = () => {
   const headingText = theme === 'dark' ? 'text-[#A259FF] neon-text' : 'text-sky-600';
   const tableHeaderBg = theme === 'dark' ? 'bg-[#333]' : 'bg-gray-200';
   const tableRowHover = theme === 'dark' ? 'hover:bg-[#2c2c2c]' : 'hover:bg-gray-200';
-  const skillBadgeBg = theme === 'dark' ? 'bg-[#A259FF]/20 border-[#A259FF] text-[#A259FF]' : 'bg-sky-200 border-sky-400 text-sky-700';
-  const modalBg = theme === 'dark' ? 'bg-[#1F1F1F] text-white' : 'bg-white text-gray-900';
+  //const skillBadgeBg = theme === 'dark' ? 'bg-[#A259FF]/20 border-[#A259FF] text-[#A259FF]' : 'bg-sky-200 border-sky-400 text-sky-700';
+  //const modalBg = theme === 'dark' ? 'bg-[#1F1F1F] text-white' : 'bg-white text-gray-900';
   const inputBg = theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900';
   const cancelBtn = theme === 'dark' ? 'border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black' : 'border-sky-500 text-sky-600 hover:bg-sky-500 hover:text-white';
-
+  const modalBg = theme === 'dark' ? 'bg-[#1f1f1f] text-white' : 'bg-white text-gray-900';
+  const skillBadgeBg = theme === 'dark' ? 'bg-[#00F0FF]/20 text-[#00F0FF] border-[#00F0FF]/50' 
+                                       : 'bg-sky-100 text-sky-600 border-sky-300';
   return (
     <div className={`p-4 rounded-xl ${sectionBg}`}>
       <h2 className={`text-4xl font-semibold neon-text mb-6 text-center ${headingText}`}>
@@ -196,64 +198,56 @@ const PendingTrainers = () => {
 
       {/* Trainer Details Modal */}
       <dialog id="trainer-details-modal" className="modal">
-        <div className={`modal-box max-w-2xl ${modalBg}`}>
-          <h3 className="font-bold text-2xl text-gray-700 mb-4 flex items-center gap-2">
-            <FaUser className="text-[#A259FF]" /> Trainer Details
-          </h3>
+      <div className={`modal-box max-w-2xl ${modalBg}`}>
+        <h3 className={`font-bold text-2xl mb-4 flex items-center gap-2 ${theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-400'}`}>
+          <FaUser className={`${theme === 'dark' ? 'text-[#00F0FF]' : 'text-sky-400'}`} /> Trainer Details
+        </h3>
 
-          {selectedTrainer && (
-            <div className="space-y-3">
-              <p className="flex items-center gap-2">
-                <FaUser className="text-gray-700" />
-                <span className="font-semibold">Full Name:</span>{' '}
-                {selectedTrainer.fullName}
-              </p>
-              <p className="flex items-center gap-2">
-                <FaEnvelope className="text-gray-700" />
-                <span className="font-semibold">Email:</span>{' '}
-                {selectedTrainer.email}
-              </p>
-              <p className="flex items-center gap-2">
-                <FaBirthdayCake className="text-gray-700" />
-                <span className="font-semibold">Age:</span>{' '}
-                {selectedTrainer.age}
-              </p>
-              <p className="flex items-start gap-2">
-                <FaStar className="text-gray-700 mt-1" />
-                <span className="font-semibold">Skills:</span>
-                <span className="flex flex-wrap gap-2">
-                  {selectedTrainer.skills?.map((skill, i) => (
-                    <span
-                      key={i}
-                      className={`px-3 py-1 border rounded-full text-sm ${skillBadgeBg}`}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </span>
-              </p>
-              <p className="flex items-center gap-2">
-                <FaCalendarAlt className="text-gray-700" />
-                <span className="font-semibold">Available Days:</span>{' '}
-                {selectedTrainer.availableDays?.join(', ')}
-              </p>
-              <p className="flex items-center gap-2">
-                <FaClock className="text-gray-700" />
-                <span className="font-semibold">Available Time:</span>{' '}
-                {selectedTrainer.availableTime}
-              </p>
-            </div>
-          )}
-
-          <div className="modal-action mt-6">
-            <form method="dialog">
-              <button className="btn bg-[#A259FF] text-white hover:bg-[#9333ea]">
-                Close
-              </button>
-            </form>
+        {selectedTrainer && (
+          <div className="space-y-3">
+            <p className="flex items-center gap-2">
+              <FaUser className="text-gray-700" />
+              <span className="font-semibold">Full Name:</span> {selectedTrainer.fullName}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaEnvelope className="text-gray-700" />
+              <span className="font-semibold">Email:</span> {selectedTrainer.email}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaBirthdayCake className="text-gray-700" />
+              <span className="font-semibold">Age:</span> {selectedTrainer.age}
+            </p>
+            <p className="flex items-start gap-2">
+              <FaStar className="text-gray-700 mt-1" />
+              <span className="font-semibold">Skills:</span>
+              <span className="flex flex-wrap gap-2">
+                {selectedTrainer.skills?.map((skill, i) => (
+                  <span key={i} className={`px-3 py-1 border rounded-full text-sm ${skillBadgeBg}`}>
+                    {skill}
+                  </span>
+                ))}
+              </span>
+            </p>
+            <p className="flex items-center gap-2">
+              <FaCalendarAlt className="text-gray-700" />
+              <span className="font-semibold">Available Days:</span> {selectedTrainer.availableDays?.join(', ')}
+            </p>
+            <p className="flex items-center gap-2">
+              <FaClock className="text-gray-700" />
+              <span className="font-semibold">Available Time:</span> {selectedTrainer.availableTime}
+            </p>
           </div>
+        )}
+
+        <div className="modal-action mt-6">
+          <form method="dialog">
+            <button className={`btn ${theme === 'dark' ? 'bg-[#00F0FF] text-black hover:bg-[#22ffff]' : 'bg-sky-400 text-white hover:bg-sky-500'}`}>
+              Close
+            </button>
+          </form>
         </div>
-      </dialog>
+      </div>
+    </dialog>
 
       {/* Reject Feedback Modal */}
       <dialog

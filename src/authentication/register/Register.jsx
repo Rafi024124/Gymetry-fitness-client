@@ -167,7 +167,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className={`w-full py-2 rounded-md font-semibold transition ${
+            className={`glow-btn w-full py-2 rounded-md font-semibold transition ${
               theme === "dark"
                 ? "bg-gradient-to-r from-[#A259FF] to-[#00F0FF] text-black shadow-glow hover:brightness-110"
                 : "bg-sky-500 hover:bg-sky-600 text-white"

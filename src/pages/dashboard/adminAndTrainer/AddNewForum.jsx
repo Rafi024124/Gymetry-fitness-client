@@ -134,7 +134,7 @@ const AddNewForum = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="glow-btn bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Posting...' : '📨 Publish Forum Post'}
           </button>

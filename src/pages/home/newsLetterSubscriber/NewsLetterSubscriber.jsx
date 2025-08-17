@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import Lottie from 'lottie-react';
+import news from '../../../assets/lottie/newsletter.json';
 
 const NewsletterSubscribe = () => {
   const { theme } = useContext(ThemeContext);
@@ -55,7 +57,7 @@ const NewsletterSubscribe = () => {
     } finally {
       setLoading(false);
     }
-};
+  };
 
   // Theme-based styles
   const containerBg = theme === 'dark' ? 'bg-[#0D0D0D]' : 'bg-sky-100';
@@ -66,39 +68,47 @@ const NewsletterSubscribe = () => {
 
   return (
     <div className={`${containerBg} scroll-py-10 py-16`}>
-      <div className={`max-w-md mx-auto p-6 rounded-lg shadow-lg ${cardBg}`}>
-        <h3 className="text-2xl font-semibold mb-4 text-center">
-          Subscribe to our Newsletter
-        </h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            className={`w-full p-3 rounded border ${inputBg}`}
-            value={formData.name}
-            onChange={handleChange}
-            disabled={loading}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            className={`w-full p-3 rounded border ${inputBg}`}
-            value={formData.email}
-            onChange={handleChange}
-            disabled={loading}
-            required
-          />
-          <button
-            type="submit"
-            className={`w-full py-3 glow-btn bg-gradient-to-r ${buttonGradient} ${buttonText} text-xl font-semibold rounded transition duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={loading}
-          >
-            {loading ? 'Subscribing...' : 'Subscribe Now'}
-          </button>
-        </form>
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 px-2">
+        {/* Lottie Animation */}
+        <div className="md:w-1/2 w-full">
+          <Lottie animationData={news} loop={true} className="w-full h-full" />
+        </div>
+
+        {/* Form Card */}
+        <div className={`md:w-1/2 w-full p-6 rounded-lg shadow-lg ${cardBg}`}>
+          <h3 className="text-2xl font-semibold mb-4 text-center">
+            Subscribe to our Newsletter
+          </h3>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className={`w-full p-3 rounded border ${inputBg}`}
+              value={formData.name}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className={`w-full p-3 rounded border ${inputBg}`}
+              value={formData.email}
+              onChange={handleChange}
+              disabled={loading}
+              required
+            />
+            <button
+              type="submit"
+              className={`w-full py-3 glow-btn bg-gradient-to-r ${buttonGradient} ${buttonText} text-xl font-semibold rounded transition duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Subscribing...' : 'Subscribe Now'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
